@@ -18,12 +18,18 @@
             cube = cube, period = period
         )
     }
+    # Update token (for big tiffs and slow networks)
+    cube <- .cube_token_generator(cube)
     # Create assets as jobs
     cube_assets <- .reg_cube_split_assets(
         cube = cube, period = period, timeline = timeline
     )
     # Process each tile sequentially
     cube_assets <- .jobs_map_parallel_dfr(cube_assets, function(asset) {
+        # Update assets class to match cube class
+        class(cube_assets) <- cube_class
+        # Update token (for big tiffs and slow networks)
+        cube_assets <- .cube_token_generator(cube_assets)
         # Manage s2 geometry
         # hold s2 status
         s2_status <- sf::sf_use_s2()

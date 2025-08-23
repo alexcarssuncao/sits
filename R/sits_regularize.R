@@ -257,6 +257,8 @@ sits_regularize.sar_cube <- function(cube, ...,
                                      tiles = NULL,
                                      multicores = 2L,
                                      progress = TRUE) {
+    # Update token (for big tiffs and slow networks)
+    cube <- .cube_token_generator(cube)
     # Preconditions
     .check_raster_cube_files(cube)
     .check_period(period)
@@ -299,7 +301,6 @@ sits_regularize.sar_cube <- function(cube, ...,
     # Prepare parallel processing
     .parallel_start(workers = multicores)
     on.exit(.parallel_stop(), add = TRUE)
-
     # Call regularize in parallel
     .reg_cube(
         cube = cube,
