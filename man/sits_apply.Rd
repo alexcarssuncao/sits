@@ -90,7 +90,7 @@ unaware of matrix sizes, e.g. \code{sqrt()}, \code{sin()},
 
 Examples of valid expressions:
 \enumerate{
-\item \code{NDVI = (B08 - B04/(B08 + B04))} for Sentinel-2 images.
+\item \code{NDVI = (B08 - B04) / (B08 + B04)} for Sentinel-2 images.
 \item \code{EVI = 2.5 * (B05 – B04) / (B05 + 6 * B04 – 7.5 * B02 + 1)} for
 Landsat-8/9 images.
 \item \code{VV_VH_RATIO = VH/VV} for Sentinel-1 images. In this case,

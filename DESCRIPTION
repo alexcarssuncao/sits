@@ -246,6 +246,7 @@ Collate:
     'sits_labels.R'
     'sits_label_classification.R'
     'sits_lighttae.R'
+    'sits_lstm_fcn.R'
     'sits_machine_learning.R'
     'sits_merge.R'
     'sits_mixture_model.R'
