@@ -23,10 +23,6 @@ A plot
 \description{
 Plots trees in an extreme gradient boosting model.
 }
-\note{
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
-}
 \examples{
 if (sits_run_examples()) {
     # Retrieve the samples for Mato Grosso

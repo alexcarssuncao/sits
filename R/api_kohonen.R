@@ -7,7 +7,7 @@
 #' @note
 #'  The implementation of this function was adapted from the `kohonen` R
 #'  Package. The code is open-source, under the GPL license, and is available on
-#'  GitHub (https://github.com/rwehrens/kohonen).
+#'  GitHub \url{https://github.com/rwehrens/kohonen}.
 #' @description
 #'  This auxiliary function gets a shared pointer of a distance function
 #'  implemented in C++. This pointer can then be used as input for the
@@ -34,7 +34,7 @@
 #' @note
 #'  The implementation of this function was adapted from the `kohonen` R
 #'  Package. The code is open-source, under the GPL license, and is available on
-#'  GitHub (https://github.com/rwehrens/kohonen).
+#'  GitHub \url{https://github.com/rwehrens/kohonen}.
 #' @description
 #'  This function calculates the number of NA values in a data matrix
 #'  variable. The operation only calculates if a `max_na_fraction` is specified;
@@ -69,7 +69,7 @@
 #' @note
 #'  The implementation of this function was adapted from the `kohonen` R
 #'  Package. The code is open-source, under the GPL license, and is available on
-#'  GitHub (https://github.com/rwehrens/kohonen).
+#'  GitHub \url{https://github.com/rwehrens/kohonen}.
 #' @description
 #'  This auxiliary function transforms a vector of classes from a Kohonen map
 #'  object into a compatible matrix.
@@ -99,7 +99,7 @@
 #' @note
 #'  The implementation of this function was adapted from the `kohonen` R
 #'  Package. The code is open-source, under the GPL license, and is available on
-#'  GitHub (https://github.com/rwehrens/kohonen).
+#'  GitHub \url{https://github.com/rwehrens/kohonen}.
 #' @description
 #'  This auxiliary function calculates the distance between the initial selected
 #'  weights (samples from the user-defined data) and the user-defined data.
@@ -163,7 +163,7 @@
 #' @note
 #'  The implementation of this function was adapted from the `kohonen` R
 #'  Package. The code is open-source, under the GPL license, and is available on
-#'  GitHub (https://github.com/rwehrens/kohonen).
+#'  GitHub \url{https://github.com/rwehrens/kohonen}.
 #' @description
 #'  This function creates a SOM map based on `codes` from a `Supersom` function.
 #' @param x                 Kohonen object.
@@ -252,7 +252,7 @@
 #' @note
 #'  The implementation of this function was adapted from the `kohonen` R
 #'  Package. The code is open-source, under the GPL license, and is available on
-#'  GitHub (https://github.com/rwehrens/kohonen).
+#'  GitHub \url{https://github.com/rwehrens/kohonen}.
 #' @description
 #'  A supersom is an extension of self-organising maps (SOMs) to multiple data
 #'  layers, possibly with different numbers and different types of variables

@@ -334,7 +334,7 @@ plot.predicted <- function(x, y, ...,
 #' @param  first_quantile First quantile for stretching images
 #' @param  last_quantile  Last quantile for stretching images
 #' @param  max_cog_size   Maximum size of COG overviews (lines or columns)
-#' @param  legend_position Where to place the legend (default = "outside")
+#' @param  legend_position Where to place the legend (default = "inside")
 #'
 #' @return               A plot object with an RGB image
 #'                       or a B/W image on a color scale
@@ -1365,7 +1365,7 @@ plot.uncertainty_vector_cube <- function(x, ...,
 #' @title  Plot classified images
 #' @name   plot.class_cube
 #' @author Gilberto Camara, \email{gilberto.camara@@inpe.br}
-#' @description plots a classified raster using ggplot.
+#' @description plots a classified raster using tmap.
 #'
 #' @param  x               Object of class "class_cube".
 #' @param  y               Ignored.
@@ -1374,7 +1374,6 @@ plot.uncertainty_vector_cube <- function(x, ...,
 #' @param  roi             Spatial extent to plot in WGS 84 - named vector
 #'                         with either (lon_min, lon_max, lat_min, lat_max) or
 #'                         (xmin, xmax, ymin, ymax)
-#' @param  title           Title of the plot.
 #' @param  legend          Named vector that associates labels to colors.
 #' @param  palette         Alternative RColorBrewer palette
 #' @param  scale           Relative scale (0.4 to 1.0) of plot text
@@ -1421,12 +1420,11 @@ plot.uncertainty_vector_cube <- function(x, ...,
 plot.class_cube <- function(x, y, ...,
                             tile = x[["tile"]][[1L]],
                             roi = NULL,
-                            title = "Classified Image",
                             legend = NULL,
                             palette = "Spectral",
                             scale = 1.0,
                             max_cog_size = 1024L,
-                            legend_position = "inside") {
+                            legend_position = "outside") {
     stopifnot(missing(y))
     # set caller to show in errors
     .check_set_caller(".plot_class_cube")
@@ -1528,7 +1526,7 @@ plot.class_vector_cube <- function(x, ...,
                                    line_width = 0.5,
                                    palette = "Spectral",
                                    scale = 1.0,
-                                   legend_position = "inside") {
+                                   legend_position = "outside") {
     # set caller to show in errors
     .check_set_caller(".plot_class_vector_cube")
     # precondition for tiles
@@ -1582,7 +1580,7 @@ plot.class_vector_cube <- function(x, ...,
 #'
 #' @note
 #' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
+#' \url{https://e-sensing.github.io/sitsbook/} for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # Retrieve the samples for Mato Grosso
@@ -1616,9 +1614,6 @@ plot.rfor_model <- function(x, y, ...) {
 #' @return              A plot object produced by the ggplot2 package
 #'                      containing color bars showing the confusion
 #'                      between classes.
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # show accuracy for a set of samples
@@ -1699,9 +1694,6 @@ plot.sits_accuracy <- function(x, y, ..., title = "Confusion matrix") {
 #' @return              A plot object produced by the ggplot2 package
 #'                      containing color bars showing the confusion
 #'                      between classes.
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # create a SOM map
@@ -1814,9 +1806,6 @@ plot.som_evaluate_cluster <- function(x, y, ...,
 #' @return            Called for side effects.
 #'
 #'
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # create a SOM map
@@ -2019,9 +2008,7 @@ plot.som_clean_samples <- function(x, ...) {
 #' @param  height        Height of the output window
 #' @return               A plot
 #'
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
+#'
 #' @examples
 #' if (sits_run_examples()) {
 #'     # Retrieve the samples for Mato Grosso
@@ -2064,9 +2051,6 @@ plot.xgb_model <- function(x, ...,
 #'                       showing the evolution of the loss and
 #'                       accuracy of the model.
 #'
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # Retrieve the samples for Mato Grosso
@@ -2144,14 +2128,11 @@ plot.torch_model <- function(x, y, ...) {
 #' @return               A plot showing the sample-to-sample distances
 #'                       and sample-to-prediction distances.
 #'
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #'
 #' @references Hanna Meyer and Edzer Pebesma,
 #' "Machine learning-based global maps of ecological variables and the
 #' challenge of assessing them" Nature Communications, 13,2022.
-#' DOI: 10.1038/s41467-022-29838-9.
+#' \url{DOI: 10.1038/s41467-022-29838-9}.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # read a shapefile for the state of Mato Grosso, Brazil

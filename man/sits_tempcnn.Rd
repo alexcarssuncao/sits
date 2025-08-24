@@ -91,10 +91,7 @@ If you use this method, please cite the original tempCNN paper.
 The torch version is based on the code made available by the BreizhCrops
 team: Marc Russwurm, Charlotte Pelletier, Marco Korner, Maximilian Zollner.
 The original python code is available at the website
-https://github.com/dl4sits/BreizhCrops. This code is licensed as GPL-3.
-
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
+\url{https://github.com/dl4sits/BreizhCrops}. This code is licensed as GPL-3.
 }
 \examples{
 if (sits_run_examples()) {
@@ -135,7 +132,7 @@ if (sits_run_examples()) {
 Charlotte Pelletier, Geoffrey Webb and François Petitjean,
 "Temporal Convolutional Neural Network for the Classification
 of Satellite Image Time Series",
-Remote Sensing, 11,523, 2019. DOI: 10.3390/rs11050523.
+Remote Sensing, 11,523, 2019. \url{DOI: 10.3390/rs11050523}.
 }
 \author{
 Charlotte Pelletier, \email{charlotte.pelletier@univ-ubs.fr}

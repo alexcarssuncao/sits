@@ -29,10 +29,6 @@ The plot function produces different plots based on the input data.
 If type is "codes", plots the vector weight for in each neuron.
 If type is "mapping", shows where samples are mapped.
 }
-\note{
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
-}
 \examples{
 if (sits_run_examples()) {
     # create a SOM map

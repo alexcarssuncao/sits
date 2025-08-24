@@ -21,10 +21,6 @@ and to find an optimal point of convergence using gradient descent.
 This function extracts a fraction of the predictors to serve as test values
 for the deep learning algorithm.
 }
-\note{
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
-}
 \examples{
 if (sits_run_examples()) {
     pred <- sits_predictors(samples_modis_ndvi)

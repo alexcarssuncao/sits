@@ -27,10 +27,6 @@ takes the a list of accuracy assessments generated
 by \code{\link[sits]{sits_accuracy}}
 and saves them in an Excel spreadsheet.
 }
-\note{
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
-}
 \examples{
 if (sits_run_examples()) {
     # A dataset containing a tibble with time series samples

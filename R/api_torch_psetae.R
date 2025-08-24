@@ -11,11 +11,11 @@
 #'
 #' This function is based on the paper by Vivien Garnot referenced below
 #' and code available on github at
-#' https://github.com/VSainteuf/pytorch-psetae.
+#' \url{https://github.com/VSainteuf/pytorch-psetae}.
 #'
 #' We also used the code made available by Maja Schneider in her work with
 #' Marco Körner referenced below and available at
-#' https://github.com/maja601/RC2020-psetae.
+#' \url{https://github.com/maja601/RC2020-psetae}.
 #'
 #' There is an important difference: the model
 #' proposed by Garnot assumes that the samples are available by parcel.
@@ -111,12 +111,12 @@
 #' This function part of the implementation of the paper by Vivien Garnot
 #' referenced below. We used the code made available by Maja Schneider in her
 #' work with Marco Körner referenced below and available at
-#' https://github.com/maja601/RC2020-psetae.
+#' \url{https://github.com/maja601/RC2020-psetae}.
 #'
 #' @references
 #' Vivien Sainte Fare Garnot and Loic Landrieu,
 #' "Lightweight Temporal Self-Attention for Classifying Satellite Image
-#' Time Series", https://arxiv.org/abs/2007.00586
+#' Time Series", \url{https://arxiv.org/abs/2007.00586}
 #'
 #' Schneider, Maja; Körner, Marco,
 #' "[Re] Satellite Image Time Series Classification
@@ -124,19 +124,6 @@
 #'
 #' This function part of the implementation of the paper by Vivien Garnot
 #' referenced below.
-#'
-#' We used the code made available by Maja Schneider in her work with
-#' Marco Körner referenced below and available at
-#' https://github.com/maja601/RC2020-psetae.
-#'
-#' @references
-#' Vivien Sainte Fare Garnot and Loic Landrieu,
-#' "Lightweight Temporal Self-Attention for Classifying Satellite Image
-#' Time Series", https://arxiv.org/abs/2007.00586
-#'
-#' Schneider, Maja; Körner, Marco,
-#' "[Re] Satellite Image Time Series Classification
-#' with Pixel-Set Encoders and Temporal Self-Attention." ReScience C7(2), 2021.
 #'
 #' @param timeline          Timeline of input time series.
 #' @param dim_encoder       Dimension of the positional encoder.
@@ -211,11 +198,11 @@
 #'
 #' This function is based on the paper by Vivien Garnot referenced below
 #' and code available on github at
-#' https://github.com/VSainteuf/pytorch-psetae.
+#' \url{https://github.com/VSainteuf/pytorch-psetae}.
 #'
 #' We also used the code made available by Maja Schneider in her work with
 #' Marco Körner referenced below and available at
-#' https://github.com/maja601/RC2020-psetae.
+#' \url{https://github.com/maja601/RC2020-psetae}.
 #'
 #' If you use this method, please cite Garnot's and Schneider's work.
 #'
@@ -563,13 +550,13 @@
 #' @description Defines a torch module for temporal attention encoding.
 #'
 #' This implementation is based on the code made available by Vivien Garnot
-#' https://github.com/VSainteuf/lightweight-temporal-attention-pytorch
+#' \url{https://github.com/VSainteuf/lightweight-temporal-attention-pytorch}.
 #'
 #'
 #' @references
 #' Vivien Sainte Fare Garnot and Loic Landrieu,
 #' "Lightweight Temporal Self-Attention for Classifying Satellite Image
-#' Time Series", https://arxiv.org/abs/2007.00586
+#' Time Series",\url{https://arxiv.org/abs/2007.00586}.
 #'
 #'
 #' @param timeline                  Timeline of input time series.
@@ -708,12 +695,12 @@
 #' and take the summation of the reweighted values.
 #'
 #' This implementation is based on the code made available by Vivien Garnot
-#' https://github.com/VSainteuf/lightweight-temporal-attention-pytorch
+#' \url{https://github.com/VSainteuf/lightweight-temporal-attention-pytorch}
 #'
 #' @references
 #' Vivien Sainte Fare Garnot and Loic Landrieu,
 #' "Lightweight Temporal Self-Attention for Classifying Satellite Image
-#' Time Series", https://arxiv.org/abs/2007.00586
+#' Time Series", \url{https://arxiv.org/abs/2007.00586}.
 #'
 #'
 #' @param temperature               Weight score of the attention module.
@@ -778,12 +765,12 @@
 #' and take the summation of the reweighted values.
 #'
 #' This implementation is based on the code made available by Vivien Garnot
-#' https://github.com/VSainteuf/lightweight-temporal-attention-pytorch
+#' \url{https://github.com/VSainteuf/lightweight-temporal-attention-pytorch}.
 #'
 #' @references
 #' Vivien Sainte Fare Garnot and Loic Landrieu,
 #' "Lightweight Temporal Self-Attention for Classifying Satellite Image
-#' Time Series", https://arxiv.org/abs/2007.00586
+#' Time Series", \url{https://arxiv.org/abs/2007.00586}.
 #'
 #'
 #' @param n_heads         Number of attention heads.

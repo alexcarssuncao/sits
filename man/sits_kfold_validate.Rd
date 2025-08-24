@@ -61,9 +61,6 @@ is determine for each instance in the dataset, and an overall
 accuracy estimate is provided.
 
 This function returns the confusion matrix, and Kappa values.
-
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
 }
 \examples{
 if (sits_run_examples()) {

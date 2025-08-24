@@ -2,7 +2,7 @@
 % Please edit documentation in R/sits_lstm_fcn.R
 \name{sits_lstm_fcn}
 \alias{sits_lstm_fcn}
-\title{Train an lstm and fcn neural network}
+\title{Train a Long Short Term Memory Fully Convolutional Network}
 \usage{
 sits_lstm_fcn(
   samples = NULL,
@@ -73,7 +73,8 @@ A fitted model to be used for classification.
 }
 \description{
 Uses a branched neural network consisting of
- a lstm branch and a three-layer fully convolutional branch
+ a lstm (long short term memory) branch and a three-layer fully
+ convolutional branch (FCN)
  followed by concatenation to classify time series data.
 
 This function is based on the paper by Fazle Karim, Somshubra Majumdar,
@@ -82,7 +83,7 @@ LSTM with FCN paper.
 
 The torch version is based on the code made available by the titu1994.
 The original python code is available at the website
-https://github.com/titu1994/LSTM-FCN. This code is licensed as GPL-3.
+\url{https://github.com/titu1994/LSTM-FCN}. This code is licensed as GPL-3.
 }
 \references{
 F. Karim, S. Majumdar, H. Darabi and S. Chen,

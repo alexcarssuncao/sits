@@ -25,12 +25,12 @@
 #' The torch version is based on the code made available by the BreizhCrops
 #' team: Marc Russwurm, Charlotte Pelletier, Marco Korner, Maximilian Zollner.
 #' The original python code is available at the website
-#' https://github.com/dl4sits/BreizhCrops. This code is licensed as GPL-3.
+#' \url{https://github.com/dl4sits/BreizhCrops}. This code is licensed as GPL-3.
 #'
 #' @references Charlotte Pelletier, Geoffrey Webb and François Petitjean,
 #' "Temporal Convolutional Neural Network for the Classification
 #' of Satellite Image Time Series",
-#' Remote Sensing, 11,523, 2019. DOI: 10.3390/rs11050523.
+#' Remote Sensing, 11,523, 2019. \url{DOI: 10.3390/rs11050523}.
 #'
 #' @param samples            Time series with the training samples.
 #' @param samples_validation Time series with the validation samples. if the
@@ -61,9 +61,6 @@
 #'
 #' @return A fitted model to be used for classification.
 #'
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # create a TempCNN model
