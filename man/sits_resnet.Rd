@@ -128,7 +128,7 @@ Data Mining and Knowledge Discovery, 33(4): 917--963, 2019.
 Zhiguang Wang, Weizhong Yan, and Tim Oates,
 "Time series classification from scratch with deep neural networks:
  A strong baseline",
- 2017 international joint conference on neural networks (IJCNN).
+ 2017 International Joint conference on Neural Networks (IJCNN).
 }
 \author{
 Gilberto Camara, \email{gilberto.camara@inpe.br}

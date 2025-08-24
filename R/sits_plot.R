@@ -2132,7 +2132,7 @@ plot.torch_model <- function(x, y, ...) {
 #' @references Hanna Meyer and Edzer Pebesma,
 #' "Machine learning-based global maps of ecological variables and the
 #' challenge of assessing them" Nature Communications, 13,2022.
-#' DOI: 10.1038/s41467-022-29838-9.
+#' \url{DOI: 10.1038/s41467-022-29838-9}.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # read a shapefile for the state of Mato Grosso, Brazil

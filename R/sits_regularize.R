@@ -15,7 +15,7 @@
 #'
 #' @references Appel, Marius; Pebesma, Edzer. On-demand processing of data cubes
 #'  from satellite image collections with the gdalcubes library. Data, v. 4,
-#'  n. 3, p. 92, 2019. DOI: 10.3390/data4030092.
+#'  n. 3, p. 92, 2019. \url{DOI: 10.3390/data4030092}.
 #'
 #' @param cube        \code{raster_cube} object whose observation
 #'                    period and/or spatial resolution is not constant.

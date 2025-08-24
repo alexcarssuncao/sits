@@ -58,6 +58,14 @@ A fitted model to be used for classification.
 \description{
 Implementation of Temporal Attention Encoder (TAE)
 for satellite image time series classification.
+
+TAE is a simplified version of the well-known self-attention architeture
+used in large language models.
+Its modified self-attention scheme that uses the input
+embeddings as values. TAE defines a single master query for each sequence,
+computed from the temporal average of the queries. This master query is compared
+to the sequence of keys to produce a single attention mask
+used to weight the temporal mean of values into a single feature vector.
 }
 \note{
 \code{sits} provides a set of default values for all classification models.

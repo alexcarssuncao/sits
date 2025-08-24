@@ -21,10 +21,6 @@ normalized. This applies to the "SVM" method and to all deep learning ones.
 To normalize the predictors, it is required that the statistics per band
 for each sample have been obtained by the "sits_stats" function.
 }
-\note{
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
-}
 \examples{
 if (sits_run_examples()) {
     stats <- sits_stats(samples_modis_ndvi)

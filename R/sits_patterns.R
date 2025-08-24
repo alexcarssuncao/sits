@@ -13,14 +13,20 @@
 #' approximation that fits the assumptions of the statistical model,
 #' based on a smooth function.
 #'
-#' This method is based on the "createPatterns" method of the dtwSat package,
+#' This method is based on the "createPatterns" method of the R dtwSat package,
 #' which is also described in the reference paper.
 #'
 #' @references Maus V, Camara G, Cartaxo R, Sanchez A, Ramos F, Queiroz GR.
 #' A Time-Weighted Dynamic Time Warping Method for Land-Use
 #' and Land-Cover Mapping. IEEE Journal of Selected Topics in Applied
 #' Earth Observations and Remote Sensing, 9(8):3729-3739,
-#' August 2016. ISSN 1939-1404. doi:10.1109/JSTARS.2016.2517118.
+#' August 2016. ISSN 1939-1404. \url{doi:10.1109/JSTARS.2016.2517118}.
+#'
+#' Maus, V., Câmara, G., Appel, M., & Pebesma, E. (2019).
+#' dtwSat: Time-Weighted Dynamic Time Warping for Satellite Image
+#' Time Series Analysis in R. Journal of Statistical Software, 88(5), 1–31.
+#' \url{https://doi.org/10.18637/jss.v088.i05}.
+
 #'
 #' @param  data          Time series.
 #' @param  freq          Interval in days for estimates.

@@ -39,7 +39,7 @@
 #' Zhiguang Wang, Weizhong Yan, and Tim Oates,
 #' "Time series classification from scratch with deep neural networks:
 #'  A strong baseline",
-#'  2017 international joint conference on neural networks (IJCNN).
+#'  2017 International Joint conference on Neural Networks (IJCNN).
 #'
 #' @param samples            Time series with the training samples.
 #' @param samples_validation Time series with the validation samples. If

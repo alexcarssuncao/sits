@@ -6,7 +6,24 @@
 #' @author Charlotte Pelletier, \email{charlotte.pelletier@@univ-ubs.fr}
 #'
 #' @description Implementation of Light Temporal Attention Encoder (L-TAE)
-#' for satellite image time series
+#' for satellite image time series. This is a lightweight version of the
+#' temporal attention encoder proposed by Garnot et al. For the TAE,
+#' please see \code{\link[sits]{sits_tae}}.
+#'
+#' TAE is a simplified version of the well-known self-attention architeture
+#' which is used in large language models.
+#' Its modified self-attention scheme that uses the input
+#' embeddings as values. TAE defines a single master query for each sequence,
+#' computed from the temporal average of the queries. This master query is compared
+#' to the sequence of keys to produce a single attention mask
+#' used to weight the temporal mean of values into a single feature vector.
+#'
+#' The lightweight version of TAE further simplifies the TAE model.
+#' It defines master query of each head as a model parameter instead
+#' of the results of a linear layer, as is done it TAE.
+#' The authors argue that such simplification reduces the number of parameters,
+#' while the lack of flexibility is compensated by the larger number of available heads.
+#'
 #'
 #' @note
 #' \code{sits} provides a set of default values for all classification models.
