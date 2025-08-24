@@ -132,7 +132,7 @@ if (sits_run_examples()) {
 Charlotte Pelletier, Geoffrey Webb and François Petitjean,
 "Temporal Convolutional Neural Network for the Classification
 of Satellite Image Time Series",
-Remote Sensing, 11,523, 2019. \url{https://doi.org/10.3390/rs11050523}.
+Remote Sensing, 11,523, 2019. \doi{10.3390/rs11050523}.
 }
 \author{
 Charlotte Pelletier, \email{charlotte.pelletier@univ-ubs.fr}
