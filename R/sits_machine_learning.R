@@ -283,7 +283,7 @@ sits_lightgbm <- function(samples = NULL,
 #'                         (to be passed to \code{\link[sits]{sits_classify}})
 #' @note
 #' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
+#' \url{https://e-sensing.github.io/sitsbook/} for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # Example of training a model for time series classification
@@ -418,7 +418,7 @@ sits_svm <- function(samples = NULL, formula = sits_formula_linear(),
 #'
 #' @note
 #' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
+#' \url{https://e-sensing.github.io/sitsbook/} for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # Example of training a model for time series classification

@@ -61,6 +61,14 @@ A fitted model to be used for classification.
 \description{
 Implementation of Temporal Attention Encoder (TAE)
 for satellite image time series classification.
+
+TAE is a simplified version of the well-known self-attention architeture
+used in large language models.
+Its modified self-attention scheme that uses the input
+embeddings as values. TAE defines a single master query for each sequence,
+computed from the temporal average of the queries. This master query is compared
+to the sequence of keys to produce a single attention mask
+used to weight the temporal mean of values into a single feature vector.
 }
 \note{
 \code{sits} provides a set of default values for all classification models.
@@ -72,11 +80,11 @@ using \code{\link[sits]{sits_tuning}}.
 
 This function is based on the paper by Vivien Garnot referenced below
 and code available on github at
-https://github.com/VSainteuf/pytorch-psetae.
+\url{https://github.com/VSainteuf/pytorch-psetae}.
 
 We also used the code made available by Maja Schneider in her work with
 Marco Körner referenced below and available at
-https://github.com/maja601/RC2020-psetae.
+\url{https://github.com/maja601/RC2020-psetae}.
 
 If you use this method, please cite Garnot's and Schneider's work.
 }

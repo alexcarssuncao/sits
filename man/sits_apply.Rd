@@ -100,9 +100,9 @@ available in Planetary Computer to decibels. Also, set the
 \code{normalized} parameter to FALSE.
 }
 
-\code{sits_apply()} accepts a predefined set of kernel functions
+\code{sits_apply()} also accepts a predefined set of kernel functions
 (see below) that can be applied to pixels considering its
-neighborhood. \code{sits_apply()} considers a neighborhood of a
+neighborhood. The function considers a neighborhood of a
 pixel as a set of pixels equidistant to it (including itself).
 This neighborhood forms a square window (also known as kernel)
 around the central pixel
@@ -111,6 +111,7 @@ parameter to adjust the size of the kernel window.
 The image is conceptually mirrored at the edges so that neighborhood
 including a pixel outside the image is equivalent to take the
 'mirrored' pixel inside the edge.
+
 \code{sits_apply()} applies a function to the kernel and its result
 is assigned to a corresponding central pixel on a new matrix.
 The kernel slides throughout the input image and this process

@@ -1,10 +1,10 @@
-#' @title Dynamic Time Warping for Detect changes.
+#' @title Dynamic Time Warping to detect changes.
 #' @name sits_dtw
 #'
 #' @author Felipe Carlos, \email{efelipecarlos@@gmail.com}
 #' @author Felipe Carvalho, \email{felipe.carvalho@@inpe.br}
 #'
-#' @description Create a Dynamic Time Warping (DTW) method for the
+#' @description Create a Dynamic Time Warping (DTW) method to work together
 #' \code{\link[sits]{sits_detect_change_method}}.
 #'
 #' @param  samples       Time series with the training samples.

@@ -23,9 +23,6 @@ Plots a deep learning model developed using torch.
 }
 \note{
 This code has been lifted from the "keras" package.
-
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
 }
 \examples{
 if (sits_run_examples()) {

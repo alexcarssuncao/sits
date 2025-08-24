@@ -22,10 +22,6 @@ of the distribution of each band of the samples. This values are used as
 minimum and maximum values in the normalization operation performed by
 the sits_pred_normalize() function.
 }
-\note{
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
-}
 \examples{
 if (sits_run_examples()) {
     stats <- sits_stats(samples_modis_ndvi)

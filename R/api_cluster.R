@@ -12,7 +12,7 @@
 #' 4) Fowlkes-Mallows; and 5) Variation of Information index
 #' Please refer to the documentation in that package for more details.
 #'
-#' @references "dtwclust" package (https://CRAN.R-project.org/package=dtwclust)
+#' @references "dtwclust" R package.
 #'
 #' @param samples   A tibble with `cluster` column.
 #'
@@ -51,7 +51,7 @@
 #' result for a chosen set of similarity measures
 #' (see \code{\link[dtwclust]{tsclust}}).
 #'
-#' @references `dtwclust` package (https://CRAN.R-project.org/package=dtwclust)
+#' @references `dtwclust` R package.
 #'
 #' @param samples         Time series data and metadata
 #'                        to be used to generate the dendrogram.

@@ -143,7 +143,7 @@ if (sits_run_examples()) {
 
 }
 \references{
-\code{RStoolbox} package (https://github.com/bleutner/RStoolbox/)
+\code{RStoolbox} R package.
 }
 \author{
 Felipe Carvalho, \email{felipe.carvalho@inpe.br}

@@ -10,12 +10,11 @@
   ...,
   tile = x[["tile"]][[1L]],
   roi = NULL,
-  title = "Classified Image",
   legend = NULL,
   palette = "Spectral",
   scale = 1,
   max_cog_size = 1024L,
-  legend_position = "inside"
+  legend_position = "outside"
 )
 }
 \arguments{
@@ -30,8 +29,6 @@
 \item{roi}{Spatial extent to plot in WGS 84 - named vector
 with either (lon_min, lon_max, lat_min, lat_max) or
 (xmin, xmax, ymin, ymax)}
-
-\item{title}{Title of the plot.}
 
 \item{legend}{Named vector that associates labels to colors.}
 
@@ -49,7 +46,7 @@ A  color map, where each pixel has the color
                         parameter.
 }
 \description{
-plots a classified raster using ggplot.
+plots a classified raster using tmap.
 }
 \note{
 The following optional parameters are available to allow for detailed

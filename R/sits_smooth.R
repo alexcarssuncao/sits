@@ -75,7 +75,7 @@
 #' Felipe Souza, Felipe Carlos, Anielli Souza, Ana Rorato,
 #' Ana Paula Dal’Asta, “Bayesian inference
 #' for post-processing of remote sensing image classification”.
-#' Remote Sensing, 16(23), 4572, 2024. DOI: https://doi.org/10.3390/rs16234572.
+#' Remote Sensing, 16(23), 4572, 2024. \url{https://doi.org/10.3390/rs16234572}.
 #'
 #' @examples
 #' if (sits_run_examples()) {

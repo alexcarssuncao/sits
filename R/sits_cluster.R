@@ -22,7 +22,7 @@
 #' \code{link[sits]{sits_cluster_dendro()}}
 #' and removes labels that are minority in each cluster.
 #'
-#' @references "dtwclust" package (https://CRAN.R-project.org/package=dtwclust)
+#' @references "dtwclust" R package.
 #'
 #' @param samples         Tibble with input set of time series (class "sits").
 #' @param bands           Bands to be used in the clustering
@@ -44,7 +44,7 @@
 #'
 #' @note
 #' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
+#' \url{https://e-sensing.github.io/sitsbook/} for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # default

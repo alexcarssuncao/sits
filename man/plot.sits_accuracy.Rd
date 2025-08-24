@@ -23,10 +23,6 @@ A plot object produced by the ggplot2 package
 \description{
 Plot a bar graph with informations about the confusion matrix
 }
-\note{
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
-}
 \examples{
 if (sits_run_examples()) {
     # show accuracy for a set of samples

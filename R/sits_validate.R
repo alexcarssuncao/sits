@@ -37,9 +37,6 @@
 #'
 #' @return A \code{caret::confusionMatrix} object to be used for
 #'         validation assessment.
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #'
 #' @examples
 #' if (sits_run_examples()) {

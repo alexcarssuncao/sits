@@ -19,7 +19,7 @@
 #' SMC-3, 6, 610-621, 1973, DOI: 10.1109/TSMC.1973.4309314.
 #'
 #' Hall-Beyer, M., "GLCM Texture Tutorial",
-#' 2007, http://www.fp.ucalgary.ca/mhallbey/tutorial.htm.
+#' 2007, \url{http://www.fp.ucalgary.ca/mhallbey/tutorial.htm}.
 #'
 #' Hall-Beyer, M., "Practical guidelines for choosing GLCM textures to use
 #' in landscape classification tasks over a range of moderate spatial scales",
