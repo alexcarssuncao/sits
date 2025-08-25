@@ -90,7 +90,6 @@ sits_labels.default <- function(data) {
     sits_labels(data)
 }
 #' @title Change the labels of a set of time series
-#' @name `sits_labels<-`
 #' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
 #'
 #' @description Given a sits tibble with a set of labels, renames the labels
@@ -117,9 +116,8 @@ sits_labels.default <- function(data) {
     # get the meta-type (sits or cube)
     UseMethod("sits_labels<-", data)
 }
-#' @name `sits_labels<-`
+#' @title Change the labels of a set of time series
 #' @export
-#'
 `sits_labels<-.sits` <- function(data, value) {
     # does the input data exist?
     .check_samples(data)
@@ -137,8 +135,7 @@ sits_labels.default <- function(data) {
     data[["label"]] <- value[data[["label"]]]
     data
 }
-#' @name `sits_labels<-`
-#' @return    A probs or class_cube cube with modified labels.
+#' @title Change the labels of a set of time series
 #' @export
 `sits_labels<-.probs_cube` <- function(data, value) {
     .check_set_caller("sits_labels_assign_probs_cube")
@@ -151,9 +148,8 @@ sits_labels.default <- function(data) {
     data[["labels"]] <- list(value)
     data
 }
-#' @name `sits_labels<-`
+#' @title Change the labels of a set of time series
 #' @export
-#'
 `sits_labels<-.class_cube` <- function(data, value) {
     .check_set_caller("sits_labels_assign_class_cube")
     # precondition
@@ -170,7 +166,7 @@ sits_labels.default <- function(data) {
         row
     })
 }
-#' @name `sits_labels<-`
+#' @title Change the labels of a set of time series
 #' @export
 `sits_labels<-.default` <- function(data, value) {
     data <- tibble::as_tibble(data)
