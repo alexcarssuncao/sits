@@ -900,8 +900,6 @@ plot.vector_cube <- function(x, ...,
 #' @return               A plot containing probabilities associated
 #'                       to each class for each pixel.
 #'
-#' @notes
-#'
 #'  To define a \code{roi} use one of:
 #'      \itemize{
 #'        \item{A path to a shapefile with polygons;}
