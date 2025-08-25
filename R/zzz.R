@@ -5,15 +5,9 @@
         sprintf(
             "Loaded sits v%s.
         See ?sits for help, citation(\"sits\") for use in publication.
-        Documentation avaliable in %s.",
+        Documentation avaliable in %s",
             utils::packageDescription("sits")[["Version"]],
             "https://e-sensing.github.io/sitsbook/"
-        )
-    )
-    packageStartupMessage(
-        sprintf(
-            "Important: Please read \"Release Notes for SITS 1.5.3\" in
-                https://github.com/e-sensing/sits."
         )
     )
 }
