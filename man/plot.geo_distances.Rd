@@ -38,7 +38,7 @@ if (sits_run_examples()) {
 Hanna Meyer and Edzer Pebesma,
 "Machine learning-based global maps of ecological variables and the
 challenge of assessing them" Nature Communications, 13,2022.
-\url{DOI: 10.1038/s41467-022-29838-9}.
+\doi{10.1038/s41467-022-29838-9}.
 }
 \author{
 Felipe Souza, \email{lipecaso@gmail.com}

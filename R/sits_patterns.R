@@ -25,7 +25,7 @@
 #' Maus, V., Câmara, G., Appel, M., & Pebesma, E. (2019).
 #' dtwSat: Time-Weighted Dynamic Time Warping for Satellite Image
 #' Time Series Analysis in R. Journal of Statistical Software, 88(5), 1–31.
-#' \url{https://doi.org/10.18637/jss.v088.i05}.
+#' \doi{10.18637/jss.v088.i05}.
 
 #'
 #' @param  data          Time series.

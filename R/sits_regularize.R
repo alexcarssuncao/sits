@@ -15,7 +15,7 @@
 #'
 #' @references Appel, Marius; Pebesma, Edzer. On-demand processing of data cubes
 #'  from satellite image collections with the gdalcubes library. Data, v. 4,
-#'  n. 3, p. 92, 2019. \url{DOI: 10.3390/data4030092}.
+#'  n. 3, p. 92, 2019. \doi{10.3390/data4030092}.
 #'
 #' @param cube        \code{raster_cube} object whose observation
 #'                    period and/or spatial resolution is not constant.
@@ -257,6 +257,8 @@ sits_regularize.sar_cube <- function(cube, ...,
                                      tiles = NULL,
                                      multicores = 2L,
                                      progress = TRUE) {
+    # Update token (for big tiffs and slow networks)
+    cube <- .cube_token_generator(cube)
     # Preconditions
     .check_raster_cube_files(cube)
     .check_period(period)
@@ -299,7 +301,6 @@ sits_regularize.sar_cube <- function(cube, ...,
     # Prepare parallel processing
     .parallel_start(workers = multicores)
     on.exit(.parallel_stop(), add = TRUE)
-
     # Call regularize in parallel
     .reg_cube(
         cube = cube,

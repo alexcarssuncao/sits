@@ -30,7 +30,7 @@
 #' @references Charlotte Pelletier, Geoffrey Webb and François Petitjean,
 #' "Temporal Convolutional Neural Network for the Classification
 #' of Satellite Image Time Series",
-#' Remote Sensing, 11,523, 2019. \url{DOI: 10.3390/rs11050523}.
+#' Remote Sensing, 11,523, 2019. \doi{10.3390/rs11050523}.
 #'
 #' @param samples            Time series with the training samples.
 #' @param samples_validation Time series with the validation samples. if the

@@ -16,6 +16,7 @@ sits_lighttae(
   lr_decay_rate = 1,
   patience = 20L,
   min_delta = 0.01,
+  seed = NULL,
   verbose = FALSE
 )
 }
@@ -54,6 +55,8 @@ training stops.}
 
 \item{min_delta}{Minimum improvement in loss function
 to reset the patience counter.}
+
+\item{seed}{Seed for random values.}
 
 \item{verbose}{Verbosity mode (TRUE/FALSE). Default is FALSE.}
 }

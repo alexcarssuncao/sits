@@ -1,3 +1,21 @@
+#' @title Torch seed
+#' @name .torch_seed
+#' @author Felipe Carlos, \email{efelipecarlos@@gmail.com}
+#' @author Felipe Carvalho, \email{felipe.carvalho@@inpe.br}
+#' @keywords internal
+#' @noRd
+#'
+#' @return seed for torch
+#'
+.torch_seed <- function(seed = NULL) {
+    # If seed it is not defined, create a random one
+    if (!.has(seed)) {
+        seed <- sample.int(100000L, 1L)
+    }
+    # return
+    seed
+}
+
 #' @title Organize samples into training and test
 #' @name .torch_train_test_samples
 #' @author Gilberto Camara, \email{gilberto.camara@@inpe.br}

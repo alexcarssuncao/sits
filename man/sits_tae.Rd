@@ -16,6 +16,7 @@ sits_tae(
   lr_decay_rate = 0.95,
   patience = 20L,
   min_delta = 0.01,
+  seed = NULL,
   verbose = FALSE
 )
 }
@@ -49,6 +50,8 @@ weight_decay:       L2 regularization}
 training stops.}
 
 \item{min_delta}{Minimum improvement to reset the patience counter.}
+
+\item{seed}{Seed for random values.}
 
 \item{verbose}{Verbosity mode (TRUE/FALSE). Default is FALSE.}
 }

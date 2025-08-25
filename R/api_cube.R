@@ -1425,6 +1425,12 @@ NULL
         fi_tile <- .fi(tile)
         fi_paths <- .fi_paths(fi_tile)
 
+        # check if path is null
+        # (this can happen in asset organizations used during cube regularization)
+        if (all(is.null(fi_paths))) {
+            return(TRUE)
+        }
+
         are_local_paths <- !startsWith(fi_paths, prefix = "/vsi")
         # ignore in case of regularized and local cubes
         if (all(are_local_paths)) {

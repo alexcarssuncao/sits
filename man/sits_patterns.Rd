@@ -48,7 +48,7 @@ August 2016. ISSN 1939-1404. \url{doi:10.1109/JSTARS.2016.2517118}.
 Maus, V., Câmara, G., Appel, M., & Pebesma, E. (2019).
 dtwSat: Time-Weighted Dynamic Time Warping for Satellite Image
 Time Series Analysis in R. Journal of Statistical Software, 88(5), 1–31.
-\url{https://doi.org/10.18637/jss.v088.i05}.
+\doi{10.18637/jss.v088.i05}.
 }
 \author{
 Victor Maus, \email{vwmaus1@gmail.com}
