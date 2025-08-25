@@ -48,6 +48,7 @@ Useful links:
 \itemize{
   \item \url{https://github.com/e-sensing/sits/}
   \item \url{https://e-sensing.github.io/sitsbook/}
+  \item \url{https://e-sensing.github.io/sits/}
   \item Report bugs at \url{https://github.com/e-sensing/sits/issues}
 }
 
