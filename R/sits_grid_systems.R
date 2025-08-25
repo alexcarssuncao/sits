@@ -63,8 +63,6 @@ sits_tiles_to_roi <- function(tiles, grid_system = "MGRS") {
 #'
 #'      Defining a region of interest using \code{SpatExtent} or XY values not
 #'      in WGS84 requires the \code{crs} parameter to be specified.
-#'      \code{sits_regularize()} function will crop the images
-#'      that contain the region of interest()
 #' @examples
 #' if (sits_run_examples()) {
 #' # Defining a ROI
@@ -110,8 +108,6 @@ sits_roi_to_mgrs <- function(roi) {
 #'
 #'      Defining a region of interest using \code{SpatExtent} or XY values not
 #'      in WGS84 requires the \code{crs} parameter to be specified.
-#'      \code{sits_regularize()} function will crop the images
-#'      that contain the region of interest().
 #'
 #'      The \code{grid_system} parameter allows the user to
 #'      reproject the files to a grid system which is

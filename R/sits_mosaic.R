@@ -28,14 +28,18 @@
 #' @return a sits cube with only one tile.
 #'
 #' @note
-#'  The "roi" parameter defines a region of interest. It can be
-#'  an sf_object, a shapefile, or a bounding box vector with
-#'  named XY values (\code{xmin}, \code{xmax}, \code{ymin}, \code{ymax}) or
-#'  named lat/long values (\code{lon_min}, \code{lon_max},
-#'    \code{lat_min}, \code{lat_max}).
+#'  To define a \code{roi} use one of:
+#'  \itemize{
+#'       \item{A path to a shapefile with polygons;}
+#'       \item{A \code{sfc} or \code{sf} object from \code{sf} package;}
+#'       \item{A \code{SpatExtent} object from \code{terra} package;}
+#'       \item{A named \code{vector} (\code{"lon_min"},
+#'             \code{"lat_min"}, \code{"lon_max"}, \code{"lat_max"}) in WGS84;}
+#'       \item{A named \code{vector} (\code{"xmin"}, \code{"xmax"},
+#'              \code{"ymin"}, \code{"ymax"}) with XY coordinates.}
+#'  }
 #'
-#'  When the data cube has tiles that cover different UTM grid zones,
-#'  the user should specify the CRS of the mosaic. We use
+#'  The user should specify the CRS of the mosaic. We use
 #'  "EPSG:3857" (Pseudo-Mercator) as the default.
 #'
 #' @examples
