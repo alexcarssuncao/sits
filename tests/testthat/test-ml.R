@@ -283,6 +283,43 @@ test_that("FCN-LSTM model", {
     expect_true(nrow(sits_show_prediction(point_class)) == 17)
 })
 
+test_that("model seed is available", {
+    # MLP
+    mlp <- sits_train(
+        samples_modis_ndvi, sits_mlp(epochs = 2)
+    )
+
+    expect_false(is.null(environment(mlp)[["torch_seed"]]))
+
+    # TAE
+    tae <- sits_train(
+        samples_modis_ndvi, sits_tae(epochs = 2)
+    )
+
+    expect_false(is.null(environment(tae)[["torch_seed"]]))
+
+    # LightTAE
+    lighttae <- sits_train(
+        samples_modis_ndvi, sits_lighttae(epochs = 2)
+    )
+
+    expect_false(is.null(environment(lighttae)[["torch_seed"]]))
+
+    # ResNet
+    resnet <- sits_train(
+        samples_modis_ndvi, sits_resnet(epochs = 2)
+    )
+
+    expect_false(is.null(environment(resnet)[["torch_seed"]]))
+
+    # TempCNN
+    tempcnn <- sits_train(
+        samples_modis_ndvi, sits_tempcnn(epochs = 2)
+    )
+
+    expect_false(is.null(environment(tempcnn)[["torch_seed"]]))
+})
+
 test_that("normalization new version", {
     #
     # New normalization

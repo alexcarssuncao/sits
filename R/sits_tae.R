@@ -126,8 +126,6 @@ sits_tae <- function(samples = NULL,
     .check_set_caller("sits_tae")
     # Verifies if 'torch' and 'luz' packages is installed
     .check_require_packages(c("torch", "luz"))
-    # Check seed
-    .check_int_parameter(seed, allow_null = TRUE)
     # documentation mode? verbose is FALSE
     verbose <- .message_verbose(verbose)
     # Function that trains a torch model based on samples
@@ -139,7 +137,6 @@ sits_tae <- function(samples = NULL,
             stop(.conf("messages", "sits_train_base_data"), call. = FALSE)
         }
         # Pre-conditions:
-        # Pre-conditions
         .check_pre_sits_lighttae(
             samples = samples, epochs = epochs,
             batch_size = batch_size,
@@ -148,6 +145,9 @@ sits_tae <- function(samples = NULL,
             patience = patience, min_delta = min_delta,
             verbose = verbose
         )
+        # Other pre-conditions:
+        .check_int_parameter(seed, allow_null = TRUE)
+
         # Check validation_split parameter if samples_validation is not passed
         if (is.null(samples_validation)) {
             .check_num_parameter(validation_split, exclusive_min = 0.0, max = 0.5)

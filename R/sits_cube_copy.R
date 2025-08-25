@@ -24,8 +24,8 @@
 #'                   }
 #' @param res        An integer value corresponds to the output
 #'                   spatial resolution of the images. Default is NULL.
-#' @param crs        Reference system for output cube (by default,
-#'                   the same CRS from the input cube is assumed)
+#' @param crs        The Coordinate Reference System (CRS) of the roi.
+#'                   (see details below).
 #' @param n_tries    Number of attempts to download the same image.
 #'                   Default is 3.
 #' @param multicores Number of cores for parallel downloading
@@ -59,6 +59,21 @@
 #'          classified map by selecting the label with the highest probability
 #'          from a smoothed cube.}
 #' }
+#'
+#' The \code{roi} parameter is used to crop cube images. To define a \code{roi}
+#' use one of:
+#' \itemize{
+#'      \item{A path to a shapefile with polygons;}
+#'      \item{A \code{sfc} or \code{sf} object from \code{sf} package;}
+#'      \item{A \code{SpatExtent} object from \code{terra} package;}
+#'      \item{A named \code{vector} (\code{"lon_min"},
+#'            \code{"lat_min"}, \code{"lon_max"}, \code{"lat_max"}) in WGS84;}
+#'      \item{A named \code{vector} (\code{"xmin"}, \code{"xmax"},
+#'          \code{"ymin"}, \code{"ymax"}) with XY coordinates.}
+#'  }
+#' Defining a region of interest using \code{SpatExtent} or XY values not in
+#' WGS84 requires the \code{crs} parameter to be specified.
+#'
 #' @examples
 #' if (sits_run_examples()) {
 #'     # Creating a sits cube from BDC

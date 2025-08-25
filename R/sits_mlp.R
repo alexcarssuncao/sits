@@ -31,6 +31,7 @@
 #'                           training stops.
 #' @param min_delta	         Minimum improvement in loss function
 #'                           to reset the patience counter.
+#' @param seed               Seed for random values.
 #' @param verbose            Verbosity mode (TRUE/FALSE). Default is FALSE.
 #' @return                   A torch mlp model to be used for classification.
 #'
@@ -114,6 +115,7 @@ sits_mlp <- function(samples = NULL,
                      validation_split = 0.2,
                      patience = 20L,
                      min_delta = 0.01,
+                     seed = NULL,
                      verbose = FALSE) {
     # set caller for error msg
     .check_set_caller("sits_mlp")
@@ -140,6 +142,9 @@ sits_mlp <- function(samples = NULL,
             dropout_rates = dropout_rates, patience = patience,
             min_delta = min_delta, verbose = verbose
         )
+        # Other pre-conditions:
+        .check_int_parameter(seed, allow_null = TRUE)
+
         # Check opt_hparams
         # Get parameters list and remove the 'param' parameter
         optim_params_function <- formals(optimizer)[-1L]
@@ -181,9 +186,11 @@ sits_mlp <- function(samples = NULL,
         # Create the test data
         test_x <- as.matrix(.pred_features(test_samples))
         test_y <- unname(code_labels[.pred_references(test_samples)])
-
+        # Create a torch seed (we define a new variable to allow users
+        # to access this seed number from the model environment)
+        torch_seed <- .torch_seed(seed)
         # Set torch seed
-        torch::torch_manual_seed(sample.int(100000L, 1L))
+        torch::torch_manual_seed(torch_seed)
         # Define the MLP architecture
         mlp_model <- torch::nn_module(
             initialize = function(num_pred, layers, dropout_rates, y_dim) {

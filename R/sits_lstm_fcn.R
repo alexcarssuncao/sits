@@ -46,6 +46,7 @@
 #'                           training stops.
 #' @param min_delta	         Minimum improvement in loss function
 #'                           to reset the patience counter.
+#' @param seed               Seed for random values.
 #' @param verbose            Verbosity mode (TRUE/FALSE). Default is FALSE.
 #'
 #' @return A fitted model to be used for classification.
@@ -72,9 +73,12 @@ sits_lstm_fcn <- function(samples = NULL,
                           lr_decay_rate = 0.95,
                           patience = 20,
                           min_delta = 0.01,
+                          seed = NULL,
                           verbose = FALSE) {
     # set caller for error msg
     .check_set_caller("sits_lstm_fcn")
+    # Verifies if 'torch' and 'luz' packages is installed
+    .check_require_packages(c("torch", "luz"))
     # Function that trains a torch model based on samples
     train_fun <- function(samples) {
         # does not support working with DEM or other base data
@@ -124,6 +128,8 @@ sits_lstm_fcn <- function(samples = NULL,
         .check_int_parameter(patience)
         .check_num_parameter(min_delta, min = 0)
         .check_lgl_parameter(verbose)
+        .check_int_parameter(seed, allow_null = TRUE)
+
         # Samples labels
         labels <- .samples_labels(samples)
         # Samples bands
@@ -186,8 +192,11 @@ sits_lstm_fcn <- function(samples = NULL,
             dim = c(n_samples_test, n_times, n_bands)
         )
         test_y <- unname(code_labels[.pred_references(test_samples)])
+        # Create a torch seed (we define a new variable to allow users
+        # to access this seed number from the model environment)
+        torch_seed <- .torch_seed(seed)
         # Set torch seed
-        torch::torch_manual_seed(sample.int(10^5, 1))
+        torch::torch_manual_seed(torch_seed)
         # The LSTM/FCN for time series:
         lstm_fcn_model <- torch::nn_module(
             classname = "model_lstm_fcn",

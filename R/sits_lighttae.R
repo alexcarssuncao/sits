@@ -144,8 +144,6 @@ sits_lighttae <- function(samples = NULL,
     .check_set_caller("sits_lighttae")
     # Verifies if 'torch' and 'luz' packages is installed
     .check_require_packages(c("torch", "luz"))
-    # Check seed
-    .check_int_parameter(seed, allow_null = TRUE)
     # documentation mode? verbose is FALSE
     verbose <- .message_verbose(verbose)
     # Function that trains a torch model based on samples
@@ -171,6 +169,8 @@ sits_lighttae <- function(samples = NULL,
             patience = patience, min_delta = min_delta,
             verbose = verbose
         )
+        # Other pre-conditions:
+        .check_int_parameter(seed, allow_null = TRUE)
 
         # Check opt_hparams
         # Get parameters list and remove the 'param' parameter
