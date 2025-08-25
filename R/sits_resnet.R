@@ -26,7 +26,7 @@
 #'
 #' The R-torch version also considered the code by Ignacio Oguiza,
 #' whose implementation is available at
-#' \url{https://github.com/timeseriesAI/tsai/blob/main/tsai/models/ResNet.py.}
+#' \url{https://github.com/timeseriesAI/tsai/blob/main/tsai/models/ResNet.py}.
 #'
 #' There are differences between Wang's Keras code and Oguiza torch code.
 #' In this case, we have used Wang's keras code as the main reference.

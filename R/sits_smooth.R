@@ -6,7 +6,7 @@
 #' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
 #'
 #' @description Takes a set of classified raster layers with probabilities,
-#'              whose metadata is]created by \code{\link[sits]{sits_cube}},
+#'              whose metadata is created by \code{\link[sits]{sits_cube}},
 #'              and applies a Bayesian smoothing function.
 #'
 #' @param  cube              Probability data cube.

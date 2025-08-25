@@ -64,7 +64,7 @@
 #' @param resampling Resampling method.
 #'                   Options: \code{near}, \code{bilinear}, \code{bicubic} or
 #'                   others supported by gdalwarp
-#'                   (see \url{https://gdal.org/programs/gdalwarp.html}.
+#'                   (see \url{https://gdal.org/programs/gdalwarp.html}).
 #'                   Default is "bilinear".
 #'
 #' @return           \code{Cube_view} object from gdalcubes.

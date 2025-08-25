@@ -556,7 +556,7 @@
 #' @references
 #' Vivien Sainte Fare Garnot and Loic Landrieu,
 #' "Lightweight Temporal Self-Attention for Classifying Satellite Image
-#' Time Series",\url{https://arxiv.org/abs/2007.00586}.
+#' Time Series", \url{https://arxiv.org/abs/2007.00586}.
 #'
 #'
 #' @param timeline                  Timeline of input time series.
