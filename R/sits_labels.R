@@ -117,6 +117,10 @@ sits_labels.default <- function(data) {
     UseMethod("sits_labels<-", data)
 }
 #' @title Change the labels of a set of time series
+#' @param  data      Data cube or time series.
+#' @param  value     A character vector used to convert labels. Labels will
+#'                   be renamed to the respective value positioned at the
+#'                   labels order returned by \code{\link{sits_labels}}.
 #' @export
 `sits_labels<-.sits` <- function(data, value) {
     # does the input data exist?
@@ -136,6 +140,10 @@ sits_labels.default <- function(data) {
     data
 }
 #' @title Change the labels of a set of time series
+#' @param  data      Data cube or time series.
+#' @param  value     A character vector used to convert labels. Labels will
+#'                   be renamed to the respective value positioned at the
+#'                   labels order returned by \code{\link{sits_labels}}.
 #' @export
 `sits_labels<-.probs_cube` <- function(data, value) {
     .check_set_caller("sits_labels_assign_probs_cube")
@@ -149,6 +157,10 @@ sits_labels.default <- function(data) {
     data
 }
 #' @title Change the labels of a set of time series
+#' @param  data      Data cube or time series.
+#' @param  value     A character vector used to convert labels. Labels will
+#'                   be renamed to the respective value positioned at the
+#'                   labels order returned by \code{\link{sits_labels}}.
 #' @export
 `sits_labels<-.class_cube` <- function(data, value) {
     .check_set_caller("sits_labels_assign_class_cube")
@@ -167,6 +179,10 @@ sits_labels.default <- function(data) {
     })
 }
 #' @title Change the labels of a set of time series
+#' @param  data      Data cube or time series.
+#' @param  value     A character vector used to convert labels. Labels will
+#'                   be renamed to the respective value positioned at the
+#'                   labels order returned by \code{\link{sits_labels}}.
 #' @export
 `sits_labels<-.default` <- function(data, value) {
     data <- tibble::as_tibble(data)

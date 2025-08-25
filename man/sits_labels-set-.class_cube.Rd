@@ -6,6 +6,13 @@
 \usage{
 \method{sits_labels}{class_cube}(data) <- value
 }
+\arguments{
+\item{data}{Data cube or time series.}
+
+\item{value}{A character vector used to convert labels. Labels will
+be renamed to the respective value positioned at the
+labels order returned by \code{\link{sits_labels}}.}
+}
 \description{
 Change the labels of a set of time series
 }
