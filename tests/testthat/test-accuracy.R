@@ -1,4 +1,4 @@
-test_that("conf_matrix -2 classes", {
+test_that("conf_matrix - 2 classes", {
     data(cerrado_2classes)
     set.seed(1234)
     train_data <- sits_sample(cerrado_2classes, frac = 0.5)
