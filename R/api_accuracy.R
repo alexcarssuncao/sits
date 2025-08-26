@@ -194,6 +194,9 @@
     .check_chr_contains(colnames(validation), "label")
     # transform the `sf` object in a valid
     validation |>
+        sf::st_transform(
+            crs = "EPSG:4326"
+        ) |>
         dplyr::mutate(
             geom = sf::st_geometry(validation)
         ) |>
