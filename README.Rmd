@@ -1,8 +1,4 @@
-
-   
 ---
-title: "SITS - Satellite Image Time Series Analysis for Earth Observation Data Cubes"
-authors: Rolf Simoes, Gilberto Camara, Felipe Souza, Lorena Santos, Pedro Andrade, Alexandre Carvalho, Gilberto Queiroz, Karine Ferreira
 output: github_document
 ---
 
@@ -19,7 +15,7 @@ set.seed(4242)
 torch::torch_manual_seed(1234)
 ```
 
-<img src="inst/extdata/sticker/sits_sticker.png" alt="SITS icon" align="right" height="150" width="150"/>
+# SITS - Satellite Image Time Series Analysis for Earth Observation Data Cubes <img src="man/figures/sits_sticker.png" align="right" width="150" alt="SITS icon" />
 
 <!-- badges: start -->
 
@@ -52,7 +48,7 @@ torch::torch_manual_seed(1234)
 12. Improve results with active learning and self-supervised learning methods.
 
 ```{r sits, echo=FALSE, out.width="60%", out.height="60%", fig.align="center", fig.cap="Conceptual view of data cubes (source: authors)"}
-knitr::include_graphics("inst/extdata/markdown/figures/sits_general_view.jpg")
+knitr::include_graphics("man/figures/sits_general_view.jpg")
 ```
 
 
@@ -141,7 +137,7 @@ s2_cube <- sits_cube(
 This cube is irregular. The timelines of tiles `"20LKP"` and `"20LLKP"` and the resolutions of the bands are different. Sentinel-2 bands `"B03"` and `"B08"` have 10-meters resolution, while band `"B11"` and the cloud band `"SCL"` have 20-meters resolution. Irregular collections need an additional processing step to be converted to regular data cubes, as described below.
 
 ```{r dcconcept, echo=FALSE, out.width="90%", out.height="90%", fig.align="center", fig.cap="Conceptual view of data cubes (source: authors)"}
-knitr::include_graphics("inst/extdata/markdown/figures/datacube_conception.jpg")
+knitr::include_graphics("man/figures/datacube_conception.jpg")
 ```
 
 After defining an irregular ARD image collection from a cloud service using `sits_cube()`, users should run `sits_regularize()` to build a regular data cube. This function uses the [gdalcubes R package](https://github.com/appelmar/gdalcubes), described in [Appel and Pebesma, 2019](https://www.mdpi.com/2306-5729/4/3/92). 

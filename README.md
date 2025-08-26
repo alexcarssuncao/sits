@@ -1,10 +1,7 @@
-SITS - Satellite Image Time Series Analysis for Earth Observation Data
-Cubes
-================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="inst/extdata/sticker/sits_sticker.png" alt="SITS icon" align="right" height="150" width="150"/>
+# SITS - Satellite Image Time Series Analysis for Earth Observation Data Cubes <img src="man/figures/sits_sticker.png" align="right" width="150" alt="SITS icon" />
 
 <!-- badges: start -->
 
@@ -56,7 +53,7 @@ earth observation data cubes. The basic workflow in `sits` is:
 
 <div class="figure" style="text-align: center">
 
-<img src="inst/extdata/markdown/figures/sits_general_view.jpg" alt="Conceptual view of data cubes (source: authors)" width="60%" height="60%" />
+<img src="man/figures/sits_general_view.jpg" alt="Conceptual view of data cubes (source: authors)" width="60%" height="60%" />
 <p class="caption">
 
 Conceptual view of data cubes (source: authors)
@@ -100,11 +97,9 @@ devtools::install_github("e-sensing/sits", dependencies = TRUE)
 # load the sits library
 library(sits)
 #> SITS - satellite image time series analysis.
-#> Loaded sits v1.5.3.
+#> Loaded sits v1.5.3-1.
 #>         See ?sits for help, citation("sits") for use in publication.
-#>         Documentation avaliable in https://e-sensing.github.io/sitsbook/.
-#> Important: Please read "Release Notes for SITS 1.5.3" in
-#>                 https://github.com/e-sensing/sits.
+#>         Documentation avaliable in https://e-sensing.github.io/sitsbook/
 ```
 
 ### Configuring the Python environment
@@ -141,8 +136,8 @@ configuration in most cases.
 ### Image Collections Accessible by `sits`
 
 Users create data cubes from analysis-ready data (ARD) image collections
-available in cloud services. The collections accessible in `sits` 1.5.3
-are:
+available in cloud services. The collections accessible in `sits`
+1.5.3.1 are:
 
 - Brazil Data Cube -
   [BDC](https://data.inpe.br/bdc/web/en/home-page-2/): Open data
@@ -205,7 +200,7 @@ described below.
 
 <div class="figure" style="text-align: center">
 
-<img src="inst/extdata/markdown/figures/datacube_conception.jpg" alt="Conceptual view of data cubes (source: authors)" width="90%" height="90%" />
+<img src="man/figures/datacube_conception.jpg" alt="Conceptual view of data cubes (source: authors)" width="90%" height="90%" />
 <p class="caption">
 
 Conceptual view of data cubes (source: authors)
@@ -318,7 +313,7 @@ tempcnn_model <- sits_train(
     samples = samples_modis_ndvi,
     ml_method = sits_tempcnn()
 )
-# Select NDVI band of the  point to be classified
+# Select NDVI band of the point to be classified
 # Classify using TempCNN model
 # Plot the result
 point_mt_6bands |>
@@ -360,20 +355,21 @@ probs_cube <- sits_classify(
     ml_model = tempcnn_model,
     output_dir = tempdir()
 )
+#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 # apply a bayesian smoothing to remove outliers
 bayes_cube <- sits_smooth(
     cube = probs_cube,
     output_dir = tempdir()
 )
+#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 # generate a thematic map
 label_cube <- sits_label_classification(
     cube = bayes_cube,
     output_dir = tempdir()
 )
+#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 # plot the the labelled cube
-plot(label_cube,
-    title = "Land use and Land cover in Sinop, MT, Brazil in 2018"
-)
+plot(label_cube)
 ```
 
 <div class="figure" style="text-align: center">
