@@ -108,6 +108,8 @@
 #' @export
 sits_get_data <- function(cube, samples, ...) {
     .check_set_caller("sits_get_data")
+    # Token generation
+    cube <- .cube_token_generator(cube)
     # Pre-conditions
     .check_is_raster_cube(cube)
     .check_cube_is_regular(cube)

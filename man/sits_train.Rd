@@ -16,7 +16,7 @@ Model fitted to input data
                          to be passed to \code{\link[sits]{sits_classify}}
 }
 \description{
-Given a tibble with a set of distance measures,
+Given a tibble with a set of time series,
    returns trained models. Currently, sits supports the following models:
 \itemize{
      \item{support vector machines:  \code{\link[sits]{sits_svm}};}
