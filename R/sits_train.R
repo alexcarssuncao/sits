@@ -5,7 +5,7 @@
 #' @author Gilberto Camara, \email{gilberto.camara@@inpe.br}
 #' @author Alexandre Ywata de Carvalho, \email{alexandre.ywata@@ipea.gov.br}
 #'
-#' @description Given a tibble with a set of distance measures,
+#' @description Given a tibble with a set of time series,
 #'    returns trained models. Currently, sits supports the following models:
 #' \itemize{
 #'      \item{support vector machines:  \code{\link[sits]{sits_svm}};}

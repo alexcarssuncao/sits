@@ -278,7 +278,7 @@ sits_lighttae <- function(samples = NULL,
                 # by .ml_normalize.torch_model function
             }
         )
-        # torch 12.0 with luz not working with Apple MPS
+        # verify if GPU is available
         cpu_train <- .torch_cpu_train()
         # Train the model using luz
         torch_model <-
@@ -331,7 +331,6 @@ sits_lighttae <- function(samples = NULL,
             # Verifies if torch package is installed
             .check_require_packages("torch")
             # Set torch threads to 1
-            # Note: function does not work on MacOS
             suppressWarnings(torch::torch_set_num_threads(1L))
             # Unserialize model
             torch_model[["model"]] <- .torch_unserialize_model(serialized_model)

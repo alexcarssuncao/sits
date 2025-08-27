@@ -240,7 +240,7 @@ sits_tae <- function(samples = NULL,
                 # softmax is done after classification - removed from here
             }
         )
-        # torch 12.0 not working with Apple MPS
+        # train with CPU or GPU?
         cpu_train <- .torch_cpu_train()
         # train the model using luz
         torch_model <-
@@ -287,7 +287,6 @@ sits_tae <- function(samples = NULL,
             # Verifies if torch package is installed
             .check_require_packages("torch")
             # Set torch threads to 1
-            # Note: function does not work on MacOS
             suppressWarnings(torch::torch_set_num_threads(1L))
             # Unserialize model
             torch_model[["model"]] <- .torch_unserialize_model(serialized_model)
