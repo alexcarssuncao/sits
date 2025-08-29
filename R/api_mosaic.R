@@ -85,6 +85,7 @@
 #' @noRd
 #' @param  cube         Data cube
 #' @param  crs          CRS of the mosaic
+#' @param  res          Mosaic spatial resolution
 #' @param  output_dir   Directory where file will be written
 #' @param  multicores   Number of cores used for regularization.
 #' @param  version      Version of result.
@@ -92,6 +93,7 @@
 #' @return              Merged data cube
 .mosaic_merge_tiles <- function(cube,
                                 crs,
+                                res,
                                 output_dir,
                                 multicores,
                                 version,
@@ -139,20 +141,24 @@
             )
             return(base_tile)
         }
-
+        # Define gdal parameters
+        gdal_params <- list(
+            "-ot" = .gdal_data_type[[.data_type(band_conf)]],
+            "-of" = .conf("gdal_presets", "image", "of"),
+            "-co" = .conf("gdal_presets", "image", "co"),
+            "-t_srs" = .as_crs(crs),
+            "-wo" = paste0("NUM_THREADS=", multicores),
+            "-multi" = FALSE,
+            "-srcnodata" = .miss_value(band_conf)
+        )
+        if (.has(res)) {
+            gdal_params[["-tr"]] <- list(res, res)
+        }
         # Generate raster mosaic
         .gdal_warp(
             file = out_file,
             base_files = cube_files,
-            params = list(
-                "-ot" = .gdal_data_type[[.data_type(band_conf)]],
-                "-of" = .conf("gdal_presets", "image", "of"),
-                "-co" = .conf("gdal_presets", "image", "co"),
-                "-t_srs" = .as_crs(crs),
-                "-wo" = paste0("NUM_THREADS=", multicores),
-                "-multi" = FALSE,
-                "-srcnodata" = .miss_value(band_conf)
-            ),
+            params = gdal_params,
             quiet = TRUE
         )
         # Create COG overviews

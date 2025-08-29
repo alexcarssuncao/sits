@@ -192,6 +192,7 @@ test_that("One-date, mosaic with class cube from STAC", {
     testthat::skip_if(purrr::is_null(label_cube),
         message = "TERRASCOPE is not accessible"
     )
+
     # crop and reproject classified image
     suppressWarnings({
         mosaic_class <- sits_mosaic(
@@ -214,7 +215,37 @@ test_that("One-date, mosaic with class cube from STAC", {
     expect_equal(bbox_cube[["xmax"]], bbox_roi[["xmax"]], tolerance = 100000)
     expect_equal(bbox_cube[["ymax"]], bbox_roi[["ymax"]], tolerance = 100000)
 
-    # delete files
-    unlink(label_cube$file_info[[1]]$path)
+    # delete first mosaic
     unlink(mosaic_class$file_info[[1]]$path)
+
+    # crop and resampling classified image
+    suppressWarnings({
+        mosaic_class <- sits_mosaic(
+            cube = label_cube,
+            roi = roi,
+            crs = 3857,
+            res = 240,
+            output_dir = output_dir,
+            version = "v1",
+            multicores = 1,
+            progress = FALSE
+        )
+    })
+
+    mosaic_class_file <- mosaic_class$file_info[[1]]$path
+
+    expect_equal(mosaic_class[["tile"]], "MOSAIC")
+    expect_equal(nrow(mosaic_class), 1)
+    bbox_cube <- sits_bbox(mosaic_class)
+    bbox_roi <- sf::st_bbox(roi)
+
+    expect_equal(terra::res(terra::rast(mosaic_class_file)), c(240, 240))
+    expect_equal(bbox_cube[["xmin"]], bbox_roi[["xmin"]], tolerance = 100000)
+    expect_equal(bbox_cube[["ymin"]], bbox_roi[["ymin"]], tolerance = 100000)
+    expect_equal(bbox_cube[["xmax"]], bbox_roi[["xmax"]], tolerance = 100000)
+    expect_equal(bbox_cube[["ymax"]], bbox_roi[["ymax"]], tolerance = 100000)
+
+    # delete files
+    unlink(mosaic_class_file)
+    unlink(label_cube$file_info[[1]]$path)
 })

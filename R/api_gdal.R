@@ -274,7 +274,7 @@
         "-dstnodata" = miss_value,
         "-overwrite" = overwrite
     )
-    if (.has(list(...))) {
+    if (.has(.dissolve(list(...)))) {
         gdal_params <- utils::modifyList(gdal_params, as.list(...))
     }
     .gdal_warp(
