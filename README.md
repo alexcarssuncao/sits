@@ -355,19 +355,16 @@ probs_cube <- sits_classify(
     ml_model = tempcnn_model,
     output_dir = tempdir()
 )
-#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 # apply a bayesian smoothing to remove outliers
 bayes_cube <- sits_smooth(
     cube = probs_cube,
     output_dir = tempdir()
 )
-#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 # generate a thematic map
 label_cube <- sits_label_classification(
     cube = bayes_cube,
     output_dir = tempdir()
 )
-#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 # plot the the labelled cube
 plot(label_cube)
 ```
