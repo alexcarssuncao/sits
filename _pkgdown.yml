@@ -1,4 +1,12 @@
 url: https://e-sensing.github.io/sits/
+navbar:
+  structure:
+    left:  [reference, news, book]
+    right: [search, github]
+  components:
+    book:
+      text: Book
+      href: https://e-sensing.github.io/sitsbook/
 template:
   bootstrap: 5
   bslib:
