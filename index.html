@@ -35,6 +35,7 @@
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
+<li class="nav-item"><a class="nav-link" href="https://e-sensing.github.io/sitsbook/">Book</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -276,19 +277,16 @@ Classification of NDVI time series using TempCNN
 <span>    ml_model <span class="op">=</span> <span class="va">tempcnn_model</span>,</span>
 <span>    output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
 <span><span class="co"># apply a bayesian smoothing to remove outliers</span></span>
 <span><span class="va">bayes_cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sits_smooth.html">sits_smooth</a></span><span class="op">(</span></span>
 <span>    cube <span class="op">=</span> <span class="va">probs_cube</span>,</span>
 <span>    output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
 <span><span class="co"># generate a thematic map</span></span>
 <span><span class="va">label_cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sits_label_classification.html">sits_label_classification</a></span><span class="op">(</span></span>
 <span>    cube <span class="op">=</span> <span class="va">bayes_cube</span>,</span>
 <span>    output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
 <span><span class="co"># plot the the labelled cube</span></span>
 <span><span class="fu"><a href="reference/plot.html">plot</a></span><span class="op">(</span><span class="va">label_cube</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">

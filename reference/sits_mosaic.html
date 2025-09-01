@@ -25,6 +25,7 @@ use sits_mosaic."></head><body>
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+<li class="nav-item"><a class="nav-link" href="https://e-sensing.github.io/sitsbook/">Book</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/e-sensing/sits/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -106,13 +107,14 @@ crop the images in parallel.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>The "roi" parameter defines a region of interest. It can be
- an sf_object, a shapefile, or a bounding box vector with
- named XY values (<code>xmin</code>, <code>xmax</code>, <code>ymin</code>, <code>ymax</code>) or
- named lat/long values (<code>lon_min</code>, <code>lon_max</code>,
-   <code>lat_min</code>, <code>lat_max</code>).</p>
-<p>When the data cube has tiles that cover different UTM grid zones,
- the user should specify the CRS of the mosaic. We use
+    <p>To define a <code>roi</code> use one of:</p><ul><li><p>A path to a shapefile with polygons;</p></li>
+<li><p>A <code>sfc</code> or <code>sf</code> object from <code>sf</code> package;</p></li>
+<li><p>A <code>SpatExtent</code> object from <code>terra</code> package;</p></li>
+<li><p>A named <code>vector</code> (<code>"lon_min"</code>,
+            <code>"lat_min"</code>, <code>"lon_max"</code>, <code>"lat_max"</code>) in WGS84;</p></li>
+<li><p>A named <code>vector</code> (<code>"xmin"</code>, <code>"xmax"</code>,
+             <code>"ymin"</code>, <code>"ymax"</code>) with XY coordinates.</p></li>
+</ul><p>The user should specify the CRS of the mosaic. We use
  "EPSG:3857" (Pseudo-Mercator) as the default.</p>
     </div>
     <div class="section level2">
