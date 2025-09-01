@@ -18,6 +18,7 @@
 #'                   an EPSG code number (e.g. 4326).
 #'                   Default is "EPSG:3857" - WGS 84 / Pseudo-Mercator.
 #' @param roi        Region of interest (see below).
+#' @param res        Spatial resolution of the mosaic. Default is NULL.
 #' @param multicores Number of cores that will be used to
 #'                   crop the images in parallel.
 #' @param output_dir Directory for output images.
@@ -91,12 +92,14 @@ sits_mosaic <- function(cube,
                         roi = NULL,
                         multicores = 2L,
                         output_dir,
+                        res = NULL,
                         version = "v1",
                         progress = TRUE) {
     .check_set_caller("sits_mosaic")
     # Pre-conditions
     .check_is_raster_cube(cube)
     .check_crs(crs)
+    .check_int_parameter(res, allow_null = TRUE)
     .check_int_parameter(multicores, min = 1L, max = 2048L)
     .check_output_dir(output_dir)
     # Check version and progress
@@ -133,6 +136,7 @@ sits_mosaic <- function(cube,
         output_dir = output_dir,
         multicores = multicores,
         version = version,
-        progress = progress
+        progress = progress,
+        res = res
     )
 }

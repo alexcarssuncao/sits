@@ -10,6 +10,7 @@ sits_mosaic(
   roi = NULL,
   multicores = 2L,
   output_dir,
+  res = NULL,
   version = "v1",
   progress = TRUE
 )
@@ -29,6 +30,8 @@ Default is "EPSG:3857" - WGS 84 / Pseudo-Mercator.}
 crop the images in parallel.}
 
 \item{output_dir}{Directory for output images.}
+
+\item{res}{Spatial resolution of the mosaic. Default is NULL.}
 
 \item{version}{Version of resulting image
 (in the case of multiple tests)}
