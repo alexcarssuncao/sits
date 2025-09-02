@@ -91,6 +91,7 @@ Suggests:
     mgcv,
     nnet,
     openxlsx,
+    parallelly,
     proxy,
     randomForestExplainer,
     RColorBrewer,

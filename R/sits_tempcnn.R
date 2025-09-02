@@ -100,7 +100,7 @@
 sits_tempcnn <- function(samples = NULL,
                          samples_validation = NULL,
                          cnn_layers = c(64L, 64L, 64L),
-                         cnn_kernels = c(5L, 5L, 5L),
+                         cnn_kernels = c(3L, 3L, 3L),
                          cnn_dropout_rates = c(0.20, 0.20, 0.20),
                          dense_layer_nodes = 256L,
                          dense_layer_dropout_rate = 0.50,

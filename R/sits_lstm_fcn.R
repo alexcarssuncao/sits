@@ -29,7 +29,6 @@
 #' @param lstm_dropout       Dropout rate of the lstm layer.
 #' @param cnn_layers         Number of 1D convolutional filters per layer
 #' @param cnn_kernels        Size of the 1D convolutional kernels.
-#' @param cnn_dropout_rates  Dropout rates for 1D convolutional filters.
 #' @param epochs             Number of iterations to train the model.
 #' @param batch_size         Number of samples per gradient update.
 #' @param validation_split   Fraction of training data to be used for
@@ -55,10 +54,9 @@ sits_lstm_fcn <- function(samples = NULL,
                           samples_validation = NULL,
                           cnn_layers = c(128, 256, 128),
                           cnn_kernels = c(8, 5, 3),
-                          cnn_dropout_rates = c(0.0, 0.0, 0.0),
                           lstm_width = 8,
                           lstm_dropout = 0.8,
-                          epochs = 5,
+                          epochs = 50,
                           batch_size = 64,
                           validation_split = 0.2,
                           optimizer = torch::optim_adamw,
@@ -92,9 +90,6 @@ sits_lstm_fcn <- function(samples = NULL,
         .check_int_parameter(cnn_kernels,
                              len_min = length(cnn_layers),
                              len_max = length(cnn_layers)
-        )
-        .check_num_parameter(cnn_dropout_rates, min = 0, max = 1,
-                             len_min = length(cnn_layers), len_max = length(cnn_layers)
         )
         .check_int_parameter(lstm_width, len_max = 2^31 - 1)
         .check_num_parameter(lstm_dropout, min = 0, max = 1)
@@ -204,7 +199,6 @@ sits_lstm_fcn <- function(samples = NULL,
                                   kernel_sizes,
                                   hidden_dims,
                                   lstm_width,
-                                  cnn_dropout_rates,
                                   lstm_dropout) {
                 # Upper branch: LSTM with dimension shift
                 self$lstm <- torch::nn_lstm(
@@ -217,26 +211,23 @@ sits_lstm_fcn <- function(samples = NULL,
                 # Lstm's dropout
                 self$dropout <- torch::nn_dropout(p = lstm_dropout)
                 # Lower branch: Fully Convolutional Layers and avg pooling
-                self$conv_bn_relu1 <- .torch_conv1D_batch_norm_relu_dropout(
+                self$conv_bn_relu1 <- .torch_conv1D_batch_norm_relu(
                     input_dim = n_bands,
                     output_dim = hidden_dims[[1]],
                     kernel_size = kernel_sizes[[1]],
-                    padding = as.integer(kernel_sizes[[1]] %/% 2),
-                    dropout_rate = cnn_dropout_rates[[1]]
+                    padding = as.integer(kernel_sizes[[1]] %/% 2)
                 )
-                self$conv_bn_relu2 <- .torch_conv1D_batch_norm_relu_dropout(
+                self$conv_bn_relu2 <- .torch_conv1D_batch_norm_relu(
                     input_dim = hidden_dims[[1]],
                     output_dim = hidden_dims[[2]],
                     kernel_size = kernel_sizes[[2]],
-                    padding = as.integer(kernel_sizes[[2]] %/% 2),
-                    dropout_rate = cnn_dropout_rates[[2]]
+                    padding = as.integer(kernel_sizes[[2]] %/% 2)
                 )
-                self$conv_bn_relu3 <- .torch_conv1D_batch_norm_relu_dropout(
+                self$conv_bn_relu3 <- .torch_conv1D_batch_norm_relu(
                     input_dim = hidden_dims[[2]],
                     output_dim = n_bands,
                     kernel_size = kernel_sizes[[3]],
-                    padding = as.integer(kernel_sizes[[3]] %/% 2),
-                    dropout_rate = cnn_dropout_rates[[3]]
+                    padding = as.integer(kernel_sizes[[3]] %/% 2)
                 )
                 # Global average pooling
                 self$pooling <- torch::nn_adaptive_avg_pool1d(output_size = lstm_width)
@@ -266,7 +257,10 @@ sits_lstm_fcn <- function(samples = NULL,
             }
         )
         # train with CPU or GPU?
-        cpu_train <- .torch_cpu_train()
+        if (torch::cuda_is_available())
+            cpu_train <- FALSE
+        else
+            cpu_train <- TRUE
         # Train the model using luz
         torch_model <-
             luz::setup(
@@ -285,7 +279,6 @@ sits_lstm_fcn <- function(samples = NULL,
                 kernel_sizes = cnn_kernels,
                 hidden_dims = cnn_layers,
                 lstm_width = lstm_width,
-                cnn_dropout_rates = cnn_dropout_rates,
                 lstm_dropout = lstm_dropout
             ) |>
             luz::fit(
