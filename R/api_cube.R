@@ -142,6 +142,27 @@ NULL
         )
     }
 }
+#' @title Strategy function to define a `hls_cube` data cube class
+#' @name .cube_class_strategy_hls
+#' @keywords internal
+#' @noRd
+#' @param  base_class   Base cube class.
+#' @param  source       Cube source.
+#' @param  collection   Cube collection.
+#' @param  s3_classs    S3 class defined for the cube.
+#' @param  cube_class   Current cube class.
+#' @return cube classes
+.cube_class_strategy_hls <- function(base_class, source, collection, s3_class, cube_class, ...) {
+    is_hls_cube <- .try(
+        {
+            .conf("sources", source, "collections", collection, "hls_cube")
+        },
+        .default = FALSE
+    )
+    if (is_hls_cube) {
+        unique(c(base_class, "hls_cube", s3_class, cube_class))
+    }
+}
 #' @title Registry of class definition strategies
 #' @name .cube_class_rules
 #' @keywords internal
@@ -158,7 +179,9 @@ NULL
         # Rainfall cube
         .cube_class_strategy_rainfall,
         # Class cube
-        .cube_class_strategy_class
+        .cube_class_strategy_class,
+        # HLS Cube
+        .cube_class_strategy_hls
     )
 }
 #' @title Define data cube class based on a set of rules
