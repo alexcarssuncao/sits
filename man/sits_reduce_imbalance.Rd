@@ -74,8 +74,9 @@ if (sits_run_examples()) {
 \references{
 The reference paper on SMOTE is
 N. V. Chawla, K. W. Bowyer, L. O.Hall, W. P. Kegelmeyer,
-“SMOTE: synthetic minority over-sampling technique,”
-Journal of artificial intelligence research, 321-357, 2002.
+“SMOTE: synthetic minority over-sampling technique”,
+Journal of artificial intelligence research, 321-357, 2002,
+\doi{10.1613/jair.953}.
 
 The SOM map technique for time series is described in the paper:
 Lorena Santos, Karine Ferreira, Gilberto Camara, Michelle Picoli,

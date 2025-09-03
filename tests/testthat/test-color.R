@@ -91,13 +91,11 @@ test_that("legend", {
 
 
     expect_warning({
-        expect_warning({
-            .colors_get(labels_2,
-                legend = def_legend_2,
-                palette = "Set3",
-                rev = TRUE
-            )
-        })
+        .colors_get(labels_2,
+                    legend = def_legend_2,
+                    palette = "Set3",
+                    rev = TRUE
+        )
     })
     if (doc_mode) {
         Sys.setenv("SITS_DOCUMENTATION_MODE" = "TRUE")

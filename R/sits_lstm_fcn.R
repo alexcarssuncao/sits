@@ -19,7 +19,7 @@
 #' @references F. Karim, S. Majumdar, H. Darabi and S. Chen,
 #' "LSTM Fully Convolutional Networks for Time Series Classification,"
 #'  in IEEE Access, vol. 6, pp. 1662-1669, 2018,
-#'  doi: 10.1109/ACCESS.2017.2779939.
+#'  \doi{10.1109/ACCESS.2017.2779939}.
 #'
 #' @param samples            Time series with the training samples.
 #' @param samples_validation Time series with the validation samples. if the

@@ -46,13 +46,13 @@
 #' and Temporal Self-Attention",
 #' 2020 Conference on Computer Vision and Pattern Recognition.
 #' pages 12322-12331.
-#' DOI: 10.1109/CVPR42600.2020.01234
+#' \doi{10.1109/CVPR42600.2020.01234}.
 #'
 #' Schneider, Maja; Körner, Marco,
 #' "[Re] Satellite Image Time Series Classification
 #' with Pixel-Set Encoders and Temporal Self-Attention."
 #' ReScience C 7 (2), 2021.
-#' DOI: 10.5281/zenodo.4835356
+#' \doi{10.5281/zenodo.4835356}.
 #'
 #'
 #' @param n_bands                   Number of bands per pixel.
@@ -212,13 +212,13 @@
 #' and Temporal Self-Attention",
 #' 2020 Conference on Computer Vision and Pattern Recognition.
 #' pages 12322-12331.
-#' DOI: 10.1109/CVPR42600.2020.01234
+#' \doi{10.1109/CVPR42600.2020.01234}.
 #'
 #' Schneider, Maja; Körner, Marco,
 #' "[Re] Satellite Image Time Series Classification
 #' with Pixel-Set Encoders and Temporal Self-Attention."
 #' ReScience C 7 (2), 2021.
-#' DOI: 10.5281/zenodo.4835356
+#' \doi{10.5281/zenodo.4835356}
 #'
 #' @param timeline                  Timeline of input time series.
 #' @param dim_encoder               Dimension of the positional encoder.

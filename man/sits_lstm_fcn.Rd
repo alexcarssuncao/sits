@@ -89,7 +89,7 @@ The original python code is available at the website
 F. Karim, S. Majumdar, H. Darabi and S. Chen,
 "LSTM Fully Convolutional Networks for Time Series Classification,"
  in IEEE Access, vol. 6, pp. 1662-1669, 2018,
- doi: 10.1109/ACCESS.2017.2779939.
+ \doi{10.1109/ACCESS.2017.2779939}.
 }
 \author{
 Alexandre Assuncao, \email{alexcarssuncao@gmail.com}

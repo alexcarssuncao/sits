@@ -222,7 +222,7 @@
         roi <- .cube_as_sf(cube)
     }
 
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with roi
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )
@@ -303,7 +303,7 @@
 #' @export
 .reg_tile_convert.grd_cube <- function(cube, grid_system,
                                        roi = NULL, tiles = NULL) {
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with roi
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )
@@ -354,7 +354,7 @@
                                        grid_system,
                                        roi = NULL,
                                        tiles = NULL) {
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with ROI
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )
@@ -420,7 +420,7 @@
                                        grid_system,
                                        roi = NULL,
                                        tiles = NULL) {
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with ROI
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )
@@ -484,7 +484,7 @@
                                             grid_system,
                                             roi = NULL,
                                             tiles = NULL) {
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with ROI
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )
@@ -545,7 +545,7 @@
                                        grid_system,
                                        roi = NULL,
                                        tiles = NULL) {
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with ROI
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )

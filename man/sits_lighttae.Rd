@@ -138,7 +138,7 @@ Vivien Garnot, Loic Landrieu, Sebastien Giordano, and Nesrine Chehata,
 and Temporal Self-Attention",
 2020 Conference on Computer Vision and Pattern Recognition.
 pages 12322-12331.
-DOI: 10.1109/CVPR42600.2020.01234
+\doi{10.1109/CVPR42600.2020.01234}
 
 Vivien Garnot, Loic Landrieu,
 "Lightweight Temporal Self-Attention  for Classifying
@@ -149,7 +149,7 @@ Schneider, Maja; Körner, Marco,
 "[Re] Satellite Image Time Series Classification
 with Pixel-Set Encoders and Temporal Self-Attention."
 ReScience C 7 (2), 2021.
-DOI: 10.5281/zenodo.4835356
+\doi{10.5281/zenodo.4835356}
 }
 \author{
 Gilberto Camara, \email{gilberto.camara@inpe.br}

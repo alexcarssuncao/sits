@@ -16,29 +16,29 @@
 #' Robert M. Haralick, K. Shanmugam, Its'Hak Dinstein,
 #' "Textural Features for Image Classification",
 #' IEEE Transactions on Systems, Man, and Cybernetics,
-#' SMC-3, 6, 610-621, 1973, DOI: 10.1109/TSMC.1973.4309314.
+#' SMC-3, 6, 610-621, 1973, \doi{10.1109/TSMC.1973.4309314}.
 #'
 #' Hall-Beyer, M., "GLCM Texture Tutorial",
-#' 2007, \url{http://www.fp.ucalgary.ca/mhallbey/tutorial.htm}.
+#' 2007, \doi{10.13140/RG.2.2.12424.21767}.
 #'
 #' Hall-Beyer, M., "Practical guidelines for choosing GLCM textures to use
 #' in landscape classification tasks over a range of moderate spatial scales",
 #' International Journal of Remote Sensing, 38, 1312–1338, 2017,
-#' DOI: 10.1080/01431161.2016.1278314.
+#' \doi{10.1080/01431161.2016.1278314}.
 #'
 #' A. Baraldi and F. Panniggiani, "An investigation of the textural
 #' characteristics associated with gray level co-occurrence matrix statistical
 #' parameters," IEEE Transactions on Geoscience and Remote Sensing, 33, 2,
-#' 293-304, 1995, DOI: 10.1109/TGRS.1995.8746010.
+#' 293-304, 1995, \doi{10.1109/TGRS.1995.8746010}.
 #'
 #' Shokr, M. E., "Evaluation of second-order texture parameters for sea ice
 #' classification from radar images",
-#' J. Geophys. Res., 96, 10625–10640, 1991, DOI:10.1029/91JC00693.
+#' J. Geophys. Res., 96, 10625–10640, 1991, \doi{10.1029/91JC00693}.
 #'
 #' Peng Gong, Danielle J. Marceau, Philip J. Howarth, "A comparison of
 #' spatial feature extraction algorithms for land-use classification
 #' with SPOT HRV data", Remote Sensing of Environment, 40, 2, 1992, 137-151,
-#' DOI: 10.1016/0034-4257(92)90011-8.
+#' \doi{10.1016/0034-4257(92)90011-8}.
 #'
 #' @param cube          Valid sits cube
 #' @param window_size   An odd number representing the size of the

@@ -2,6 +2,18 @@
 
 # What's new in SITS version 1.5.3
 
+### Hotfix version 1.5.3-1
+* Improve documentation for `sits_labels`
+* Improve documentation for `sits_train`
+* Improve documentation of `roi` parameter in `sits_mosaic` and `sits_plot`
+* Improve `sits_accuracy` messages when results are empty
+* Update `TAE` implementation to make better use of embeddings
+* Fix MPC token management in `sits_cube_copy`
+* Fix error in message for missing colors
+* Fix division by zero error in `sits_texture`
+* Add `res` parameter in `sits_mosaic`
+
+### New features in SITS version 1.5.3
 * Introduce a Python API for SITS (pysits)
 * New version of the documentation on code and sitsbook
 * Implement SAR texture measures based on co-occurrence matrices
