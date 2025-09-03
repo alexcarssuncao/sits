@@ -422,6 +422,7 @@ sources:
                 open_data_token: false
                 metadata_search : "tile"
                 ext_tolerance: 0
+                hls_cube: true
                 grid_system  : "MGRS"
                 dates        : "2015 to now"
             HLSL30          :
@@ -476,5 +477,6 @@ sources:
                 open_data_token: false
                 metadata_search : "tile"
                 ext_tolerance: 0
+                hls_cube: true
                 grid_system  : "MGRS"
                 dates        : "2013 to now"

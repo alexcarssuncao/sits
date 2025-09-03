@@ -614,7 +614,7 @@ test_that("diff bands (1) | same interval | same tiles (1) |
     merged_cube <- sits_merge(hls_cube_s2, hls_cube_l8)
 
     # test
-    expect_equal(length(sits_timeline(merged_cube)), 19)
+    expect_equal(length(sits_timeline(merged_cube)), 25)
     expect_equal(sits_bands(merged_cube), c("BLUE", "CLOUD", "GREEN", "RED"))
 })
 
