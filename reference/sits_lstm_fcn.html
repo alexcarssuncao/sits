@@ -48,7 +48,7 @@ https://github.com/titu1994/LSTM-FCN. This code is licensed as GPL-3."></head><b
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Train a Long Short Term Memory Fully Convolutional Network</h1>
-      <small class="dont-index">Source: <a href="https://github.com/e-sensing/sits/blob/HEAD/R/sits_lstm_fcn.R" class="external-link"><code>R/sits_lstm_fcn.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/e-sensing/sits/blob/master/R/sits_lstm_fcn.R" class="external-link"><code>R/sits_lstm_fcn.R</code></a></small>
       <div class="d-none name"><code>sits_lstm_fcn.Rd</code></div>
     </div>
 
@@ -72,10 +72,9 @@ The original python code is available at the website
 <span>  samples_validation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cnn_layers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">128</span>, <span class="fl">256</span>, <span class="fl">128</span><span class="op">)</span>,</span>
 <span>  cnn_kernels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span>  cnn_dropout_rates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  lstm_width <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>  lstm_dropout <span class="op">=</span> <span class="fl">0.8</span>,</span>
-<span>  epochs <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  epochs <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>  batch_size <span class="op">=</span> <span class="fl">64</span>,</span>
 <span>  validation_split <span class="op">=</span> <span class="fl">0.2</span>,</span>
 <span>  optimizer <span class="op">=</span> <span class="fu">torch</span><span class="fu">::</span><span class="va"><a href="https://torch.mlverse.org/docs/reference/optim_adamw.html" class="external-link">optim_adamw</a></span>,</span>
@@ -109,10 +108,6 @@ the <code>validation_split</code> parameter is ignored.</p></dd>
 
 <dt id="arg-cnn-kernels">cnn_kernels<a class="anchor" aria-label="anchor" href="#arg-cnn-kernels"></a></dt>
 <dd><p>Size of the 1D convolutional kernels.</p></dd>
-
-
-<dt id="arg-cnn-dropout-rates">cnn_dropout_rates<a class="anchor" aria-label="anchor" href="#arg-cnn-dropout-rates"></a></dt>
-<dd><p>Dropout rates for 1D convolutional filters.</p></dd>
 
 
 <dt id="arg-lstm-width">lstm_width<a class="anchor" aria-label="anchor" href="#arg-lstm-width"></a></dt>
@@ -183,7 +178,8 @@ to reset the patience counter.</p></dd>
     <p>F. Karim, S. Majumdar, H. Darabi and S. Chen,
 "LSTM Fully Convolutional Networks for Time Series Classification,"
  in IEEE Access, vol. 6, pp. 1662-1669, 2018,
- doi: 10.1109/ACCESS.2017.2779939.</p>
+ <a href="https://doi.org/10.1109/ACCESS.2017.2779939" class="external-link">doi:10.1109/ACCESS.2017.2779939</a>
+.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

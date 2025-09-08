@@ -84,6 +84,7 @@ Conceptual view of data cubes (source: authors)
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
 <p>Detailed documentation on how to use <code>sits</code> is available in the e-book <a href="https://e-sensing.github.io/sitsbook/">“Satellite Image Time Series Analysis on Earth Observation Data Cubes”</a>.</p>
+<p>Code documentation on the <code>sits</code> functions is available in the <a href="https://e-sensing.github.io/sits/">pkgdown format</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -101,7 +102,7 @@ Conceptual view of data cubes (source: authors)
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"sits"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The latest supported version is available on github. It may have additional fixes from the version available from CRAN.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"e-sensing/sits"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"e-sensing/sits"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># load the sits library</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/e-sensing/sits/" class="external-link">sits</a></span><span class="op">)</span></span>
@@ -231,30 +232,31 @@ Conceptual view of data cubes (source: authors)
 <li>Extreme gradient boosting (<code><a href="reference/sits_xgboost.html">sits_xgboost()</a></code>)</li>
 <li>Multi-layer perceptrons (<code><a href="reference/sits_mlp.html">sits_mlp()</a></code>)</li>
 <li>1D convolution neural networks (<code><a href="reference/sits_tempcnn.html">sits_tempcnn()</a></code>)</li>
+<li>Residual neural networks (<code><a href="reference/sits_resnet.html">sits_resnet()</a></code>)</li>
 <li>Temporal self-attention encoder (<code><a href="reference/sits_tae.html">sits_tae()</a></code>)</li>
 <li>Lightweight temporal attention encoder (<code><a href="reference/sits_lighttae.html">sits_lighttae()</a></code>)</li>
 </ul>
-<p>The following example illustrate how to train a dataset and classify an individual time series. First we use the <code><a href="reference/sits_train.html">sits_train()</a></code> function with two parameters: the training dataset (described above) and the chosen machine learning model (in this case, TempCNN). The trained model is then used to classify a time series from Mato Grosso Brazilian state, using <code><a href="reference/sits_classify.html">sits_classify()</a></code>. The results can be shown in text format using the function <code><a href="reference/sits_show_prediction.html">sits_show_prediction()</a></code> or graphically using <code>plot</code>.</p>
+<p>The following example illustrate how to train a dataset and classify an individual time series. First we use the <code><a href="reference/sits_train.html">sits_train()</a></code> function with two parameters: the training dataset (described above) and the chosen machine learning model (in this case, Random Forest). The trained model is then used to classify a time series from Mato Grosso Brazilian state, using <code><a href="reference/sits_classify.html">sits_classify()</a></code>. The results can be shown in text format using the function <code><a href="reference/sits_show_prediction.html">sits_show_prediction()</a></code> or graphically using <code>plot</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># training data set</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"samples_modis_ndvi"</span><span class="op">)</span></span>
 <span><span class="co"># point to be classified</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"point_mt_6bands"</span><span class="op">)</span></span>
-<span><span class="co"># Train a deep learning model</span></span>
-<span><span class="va">tempcnn_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sits_train.html">sits_train</a></span><span class="op">(</span></span>
+<span><span class="co"># Train a random forest model</span></span>
+<span><span class="va">rfor_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sits_train.html">sits_train</a></span><span class="op">(</span></span>
 <span>    samples <span class="op">=</span> <span class="va">samples_modis_ndvi</span>,</span>
-<span>    ml_method <span class="op">=</span> <span class="fu"><a href="reference/sits_tempcnn.html">sits_tempcnn</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    ml_method <span class="op">=</span> <span class="fu"><a href="reference/sits_rfor.html">sits_rfor</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># Select NDVI band of the point to be classified</span></span>
 <span><span class="co"># Classify using TempCNN model</span></span>
 <span><span class="co"># Plot the result</span></span>
 <span><span class="va">point_mt_6bands</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="reference/sits_select.html">sits_select</a></span><span class="op">(</span>bands <span class="op">=</span> <span class="st">"NDVI"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="reference/sits_classify.html">sits_classify</a></span><span class="op">(</span><span class="va">tempcnn_model</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="reference/sits_classify.html">sits_classify</a></span><span class="op">(</span><span class="va">rfor_model</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="reference/plot.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="reference/figures/README-unnamed-chunk-9-1.png" alt="Classification of NDVI time series using TempCNN"><p class="caption">
-Classification of NDVI time series using TempCNN
+<img src="reference/figures/README-unnamed-chunk-9-1.png" alt="Classification of NDVI time series using Random Forest"><p class="caption">
+Classification of NDVI time series using Random Forest
 </p>
 </div>
 <p>The following example shows how to classify a data cube organized as a set of raster images. The result can also be visualized interactively using <code><a href="reference/sits_view.html">sits_view()</a></code>.</p>
@@ -274,7 +276,7 @@ Classification of NDVI time series using TempCNN
 <span><span class="co"># Filter the pixels in the cube to remove noise</span></span>
 <span><span class="va">probs_cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sits_classify.html">sits_classify</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">sinop</span>,</span>
-<span>    ml_model <span class="op">=</span> <span class="va">tempcnn_model</span>,</span>
+<span>    ml_model <span class="op">=</span> <span class="va">rfor_model</span>,</span>
 <span>    output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># apply a bayesian smoothing to remove outliers</span></span>
@@ -357,7 +359,6 @@ Land use and Land cover in Sinop, MT, Brazil in 2018
 <div class="community">
 <h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
-<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
