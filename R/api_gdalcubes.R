@@ -64,7 +64,7 @@
 #' @param resampling Resampling method.
 #'                   Options: \code{near}, \code{bilinear}, \code{bicubic} or
 #'                   others supported by gdalwarp
-#'                   (see https://gdal.org/programs/gdalwarp.html).
+#'                   (see \url{https://gdal.org/programs/gdalwarp.html}).
 #'                   Default is "bilinear".
 #'
 #' @return           \code{Cube_view} object from gdalcubes.
@@ -427,7 +427,7 @@
 #'
 #' @references Appel, Marius; Pebesma, Edzer. On-demand processing of data cubes
 #'  from satellite image collections with the gdalcubes library. Data, v. 4,
-#'  n. 3, p. 92, 2019. DOI: 10.3390/data4030092.
+#'  n. 3, p. 92, 2019. \doi{10.3390/data4030092}.
 #'
 #'
 #' @param cube       Data cube whose spacing of observation

@@ -1,6 +1,6 @@
 Package: sits
 Type: Package
-Version: 1.5.3
+Version: 1.5.3-1
 Title: Satellite Image Time Series Analysis for Earth Observation Data Cubes
 Authors@R: c(person('Rolf', 'Simoes', role = c('aut'), email = 'rolfsimoes@gmail.com'),
              person('Gilberto', 'Camara', role = c('aut', 'cre', 'ths'), email = 'gilberto.camara.inpe@gmail.com'),
@@ -38,7 +38,7 @@ Description: An end-to-end toolkit for land use and land cover classification
 Encoding: UTF-8
 Language: en-US
 Depends: R (>= 4.1.0)
-URL: https://github.com/e-sensing/sits/, https://e-sensing.github.io/sitsbook/
+URL: https://github.com/e-sensing/sits/, https://e-sensing.github.io/sitsbook/, https://e-sensing.github.io/sits/
 BugReports: https://github.com/e-sensing/sits/issues
 License: GPL-2
 ByteCompile: true
@@ -48,6 +48,7 @@ Imports:
     dplyr (>= 1.1.0),
     grDevices,
     graphics,
+    httr2 (>= 1.1.0),
     leafgl,
     leaflet (>= 2.2.2),
     lubridate,
@@ -83,7 +84,6 @@ Suggests:
     gdalcubes (>= 0.7.0),
     geojsonsf,
     ggplot2,
-    httr2 (>= 1.1.0),
     jsonlite,
     kohonen (>= 3.0.11),
     lightgbm,
@@ -91,6 +91,7 @@ Suggests:
     mgcv,
     nnet,
     openxlsx,
+    parallelly,
     proxy,
     randomForestExplainer,
     RColorBrewer,
@@ -246,6 +247,7 @@ Collate:
     'sits_labels.R'
     'sits_label_classification.R'
     'sits_lighttae.R'
+    'sits_lstm_fcn.R'
     'sits_machine_learning.R'
     'sits_merge.R'
     'sits_mixture_model.R'

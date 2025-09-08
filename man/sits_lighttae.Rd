@@ -16,6 +16,7 @@ sits_lighttae(
   lr_decay_rate = 1,
   patience = 20L,
   min_delta = 0.01,
+  seed = NULL,
   verbose = FALSE
 )
 }
@@ -55,6 +56,8 @@ training stops.}
 \item{min_delta}{Minimum improvement in loss function
 to reset the patience counter.}
 
+\item{seed}{Seed for random values.}
+
 \item{verbose}{Verbosity mode (TRUE/FALSE). Default is FALSE.}
 }
 \value{
@@ -62,7 +65,23 @@ A fitted model to be used for classification of data cubes.
 }
 \description{
 Implementation of Light Temporal Attention Encoder (L-TAE)
-for satellite image time series
+for satellite image time series. This is a lightweight version of the
+temporal attention encoder proposed by Garnot et al. For the TAE,
+please see \code{\link[sits]{sits_tae}}.
+
+TAE is a simplified version of the well-known self-attention architeture
+which is used in large language models.
+Its modified self-attention scheme that uses the input
+embeddings as values. TAE defines a single master query for each sequence,
+computed from the temporal average of the queries. This master query is compared
+to the sequence of keys to produce a single attention mask
+used to weight the temporal mean of values into a single feature vector.
+
+The lightweight version of TAE further simplifies the TAE model.
+It defines master query of each head as a model parameter instead
+of the results of a linear layer, as is done it TAE.
+The authors argue that such simplification reduces the number of parameters,
+while the lack of flexibility is compensated by the larger number of available heads.
 }
 \note{
 \code{sits} provides a set of default values for all classification models.
@@ -74,12 +93,12 @@ using \code{\link[sits]{sits_tuning}}.
 
 This function is based on the paper by Vivien Garnot referenced below
 and code available on github at
-https://github.com/VSainteuf/lightweight-temporal-attention-pytorch
+\url{https://github.com/VSainteuf/lightweight-temporal-attention-pytorch}
 If you use this method, please cite the original TAE and the LTAE paper.
 
 We also used the code made available by Maja Schneider in her work with
 Marco Körner referenced below and available at
-https://github.com/maja601/RC2020-psetae.
+\url{https://github.com/maja601/RC2020-psetae}.
 }
 \examples{
 if (sits_run_examples()) {
@@ -119,7 +138,7 @@ Vivien Garnot, Loic Landrieu, Sebastien Giordano, and Nesrine Chehata,
 and Temporal Self-Attention",
 2020 Conference on Computer Vision and Pattern Recognition.
 pages 12322-12331.
-DOI: 10.1109/CVPR42600.2020.01234
+\doi{10.1109/CVPR42600.2020.01234}
 
 Vivien Garnot, Loic Landrieu,
 "Lightweight Temporal Self-Attention  for Classifying
@@ -130,7 +149,7 @@ Schneider, Maja; Körner, Marco,
 "[Re] Satellite Image Time Series Classification
 with Pixel-Set Encoders and Temporal Self-Attention."
 ReScience C 7 (2), 2021.
-DOI: 10.5281/zenodo.4835356
+\doi{10.5281/zenodo.4835356}
 }
 \author{
 Gilberto Camara, \email{gilberto.camara@inpe.br}

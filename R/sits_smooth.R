@@ -6,7 +6,7 @@
 #' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
 #'
 #' @description Takes a set of classified raster layers with probabilities,
-#'              whose metadata is]created by \code{\link[sits]{sits_cube}},
+#'              whose metadata is created by \code{\link[sits]{sits_cube}},
 #'              and applies a Bayesian smoothing function.
 #'
 #' @param  cube              Probability data cube.
@@ -75,7 +75,7 @@
 #' Felipe Souza, Felipe Carlos, Anielli Souza, Ana Rorato,
 #' Ana Paula Dal’Asta, “Bayesian inference
 #' for post-processing of remote sensing image classification”.
-#' Remote Sensing, 16(23), 4572, 2024. DOI: https://doi.org/10.3390/rs16234572.
+#' Remote Sensing, 16(23), 4572, 2024. \doi{10.3390/rs16234572}.
 #'
 #' @examples
 #' if (sits_run_examples()) {

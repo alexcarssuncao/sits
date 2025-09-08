@@ -9,6 +9,14 @@
 #' @description Implementation of Temporal Attention Encoder (TAE)
 #' for satellite image time series classification.
 #'
+#' TAE is a simplified version of the well-known self-attention architeture
+#' used in large language models.
+#' Its modified self-attention scheme that uses the input
+#' embeddings as values. TAE defines a single master query for each sequence,
+#' computed from the temporal average of the queries. This master query is compared
+#' to the sequence of keys to produce a single attention mask
+#' used to weight the temporal mean of values into a single feature vector.
+#'
 #' @note
 #' \code{sits} provides a set of default values for all classification models.
 #' These settings have been chosen based on testing by the authors.
@@ -19,11 +27,11 @@
 #'
 #' This function is based on the paper by Vivien Garnot referenced below
 #' and code available on github at
-#' https://github.com/VSainteuf/pytorch-psetae.
+#' \url{https://github.com/VSainteuf/pytorch-psetae}.
 #'
 #' We also used the code made available by Maja Schneider in her work with
 #' Marco Körner referenced below and available at
-#' https://github.com/maja601/RC2020-psetae.
+#' \url{https://github.com/maja601/RC2020-psetae}.
 #'
 #' If you use this method, please cite Garnot's and Schneider's work.
 #'
@@ -33,13 +41,13 @@
 #' and Temporal Self-Attention",
 #' 2020 Conference on Computer Vision and Pattern Recognition.
 #' pages 12322-12331.
-#' DOI: 10.1109/CVPR42600.2020.01234
+#' \doi{10.1109/CVPR42600.2020.01234}.
 #'
 #' Schneider, Maja; Körner, Marco,
 #' "[Re] Satellite Image Time Series Classification
 #' with Pixel-Set Encoders and Temporal Self-Attention."
 #' ReScience C 7 (2), 2021.
-#' DOI: 10.5281/zenodo.4835356
+#' \doi{10.5281/zenodo.4835356}.
 #'
 #' @param samples            Time series with the training samples.
 #' @param samples_validation Time series with the validation samples. if the
@@ -60,6 +68,7 @@
 #' @param patience           Number of epochs without improvements until
 #'                           training stops.
 #' @param min_delta	         Minimum improvement to reset the patience counter.
+#' @param seed               Seed for random values.
 #' @param verbose            Verbosity mode (TRUE/FALSE). Default is FALSE.
 #'
 #' @return A fitted model to be used for classification.
@@ -111,6 +120,7 @@ sits_tae <- function(samples = NULL,
                      lr_decay_rate = 0.95,
                      patience = 20L,
                      min_delta = 0.01,
+                     seed = NULL,
                      verbose = FALSE) {
     # set caller for error msg
     .check_set_caller("sits_tae")
@@ -127,7 +137,6 @@ sits_tae <- function(samples = NULL,
             stop(.conf("messages", "sits_train_base_data"), call. = FALSE)
         }
         # Pre-conditions:
-        # Pre-conditions
         .check_pre_sits_lighttae(
             samples = samples, epochs = epochs,
             batch_size = batch_size,
@@ -136,6 +145,9 @@ sits_tae <- function(samples = NULL,
             patience = patience, min_delta = min_delta,
             verbose = verbose
         )
+        # Other pre-conditions:
+        .check_int_parameter(seed, allow_null = TRUE)
+
         # Check validation_split parameter if samples_validation is not passed
         if (is.null(samples_validation)) {
             .check_num_parameter(validation_split, exclusive_min = 0.0, max = 0.5)
@@ -192,8 +204,11 @@ sits_tae <- function(samples = NULL,
             dim = c(n_samples_test, n_times, n_bands)
         )
         test_y <- unname(code_labels[.pred_references(test_samples)])
+        # Create a torch seed (we define a new variable to allow users
+        # to access this seed number from the model environment)
+        torch_seed <- .torch_seed(seed)
         # Set torch seed
-        torch::torch_manual_seed(sample.int(100000L, 1L))
+        torch::torch_manual_seed(torch_seed)
         # Define the PSE-TAE model
         pse_tae_model <- torch::nn_module(
             classname = "model_pse_tae",
@@ -225,7 +240,7 @@ sits_tae <- function(samples = NULL,
                 # softmax is done after classification - removed from here
             }
         )
-        # torch 12.0 not working with Apple MPS
+        # train with CPU or GPU?
         cpu_train <- .torch_cpu_train()
         # train the model using luz
         torch_model <-
@@ -272,7 +287,6 @@ sits_tae <- function(samples = NULL,
             # Verifies if torch package is installed
             .check_require_packages("torch")
             # Set torch threads to 1
-            # Note: function does not work on MacOS
             suppressWarnings(torch::torch_set_num_threads(1L))
             # Unserialize model
             torch_model[["model"]] <- .torch_unserialize_model(serialized_model)

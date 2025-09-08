@@ -21,12 +21,12 @@
 #' The R-torch version is based on the code made available by Zhiguang Wang,
 #' author of the original paper. The code was developed in python using keras.
 #'
-#' https://github.com/cauchyturing
+#' \url{https://github.com/cauchyturing}
 #' (repo: UCR_Time_Series_Classification_Deep_Learning_Baseline)
 #'
 #' The R-torch version also considered the code by Ignacio Oguiza,
 #' whose implementation is available at
-#' https://github.com/timeseriesAI/tsai/blob/main/tsai/models/ResNet.py.
+#' \url{https://github.com/timeseriesAI/tsai/blob/main/tsai/models/ResNet.py}.
 #'
 #' There are differences between Wang's Keras code and Oguiza torch code.
 #' In this case, we have used Wang's keras code as the main reference.
@@ -39,7 +39,7 @@
 #' Zhiguang Wang, Weizhong Yan, and Tim Oates,
 #' "Time series classification from scratch with deep neural networks:
 #'  A strong baseline",
-#'  2017 international joint conference on neural networks (IJCNN).
+#'  2017 International Joint conference on Neural Networks (IJCNN).
 #'
 #' @param samples            Time series with the training samples.
 #' @param samples_validation Time series with the validation samples. If
@@ -65,13 +65,12 @@
 #'                           training stops.
 #' @param min_delta	         Minimum improvement in loss function
 #'                           to reset the patience counter.
+#' @param seed               Seed for random values.
 #' @param verbose            Verbosity mode (TRUE/FALSE). Default is FALSE.
 #'
 #' @return A fitted model to be used for classification.
 #'
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
+
 #' @examples
 #' if (sits_run_examples()) {
 #'     # create a ResNet model
@@ -120,6 +119,7 @@ sits_resnet <- function(samples = NULL,
                         lr_decay_rate = 0.95,
                         patience = 20,
                         min_delta = 0.01,
+                        seed = NULL,
                         verbose = FALSE) {
     # set caller for error msg
     .check_set_caller("sits_resnet")
@@ -159,6 +159,9 @@ sits_resnet <- function(samples = NULL,
             x = optim_params_function,
             val = opt_hparams
         )
+        # Other pre-conditions:
+        .check_int_parameter(seed, allow_null = TRUE)
+
         # Sample labels
         sample_labels <- .samples_labels(samples)
         # Sample bands
@@ -204,9 +207,11 @@ sits_resnet <- function(samples = NULL,
             dim = c(n_samples_test, n_times, n_bands)
         )
         test_y <- unname(code_labels[.pred_references(test_samples)])
-
+        # Create a torch seed (we define a new variable to allow users
+        # to access this seed number from the model environment)
+        torch_seed <- .torch_seed(seed)
         # Set torch seed
-        torch::torch_manual_seed(sample.int(100000L, 1L))
+        torch::torch_manual_seed(torch_seed)
         # Define the Resnet architecture
         # Block associated to ResNet
         resnet_block <- torch::nn_module(
@@ -333,7 +338,6 @@ sits_resnet <- function(samples = NULL,
             # Verifies if torch package is installed
             .check_require_packages("torch")
             # Set torch threads to 1
-            # Note: function does not work on MacOS
             suppressWarnings(torch::torch_set_num_threads(1L))
             # Unserialize model
             torch_model[["model"]] <- .torch_unserialize_model(serialized_model)

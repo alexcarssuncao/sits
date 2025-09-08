@@ -86,9 +86,6 @@ sits_predictors <- function(samples) {
 #'
 #' @return The Y predictors for the sample: data.frame with one row per sample.
 #'
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     pred <- sits_predictors(samples_modis_ndvi)
@@ -135,9 +132,6 @@ sits_pred_references <- function(pred) {
 #'
 #' @return A data.frame with normalized predictor values
 #'
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     stats <- sits_stats(samples_modis_ndvi)
@@ -165,9 +159,6 @@ sits_pred_normalize <- function(pred, stats) {
 #'
 #' @return A data.frame with the chosen fraction of the X-Y predictors.
 #'
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     pred <- sits_predictors(samples_modis_ndvi)
@@ -193,9 +184,6 @@ sits_pred_sample <- function(pred, frac) {
 #' @return A list with the 2% and 98% quantiles for each band of the
 #' training data.
 #'
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     stats <- sits_stats(samples_modis_ndvi)

@@ -576,42 +576,45 @@ test_that("diff bands (1) | same interval | same tiles (1) |
     hls_cube_s2 <- .try(
         {
             sits_cube(
-                source = "HLS",
+                source = "MPC",
                 collection = "HLSS30",
                 roi = roi,
                 bands = c("BLUE", "GREEN", "RED", "CLOUD"),
-                start_date = as.Date("2020-06-01"),
-                end_date = as.Date("2020-09-01"),
+                start_date = as.Date("2024-06-01"),
+                end_date = as.Date("2024-09-01"),
                 progress = FALSE
             )
         },
         .default = NULL
+    )
+    testthat::skip_if(purrr::is_null(hls_cube_s2),
+                      message = "HLS is not accessible"
     )
 
     hls_cube_l8 <- .try(
         {
             sits_cube(
-                source = "HLS",
+                source = "MPC",
                 collection = "HLSL30",
                 roi = roi,
                 bands = c("BLUE", "GREEN", "RED", "CLOUD"),
-                start_date = as.Date("2020-06-01"),
-                end_date = as.Date("2020-09-01"),
+                start_date = as.Date("2024-06-01"),
+                end_date = as.Date("2024-09-01"),
                 progress = FALSE
             )
         },
         .default = NULL
     )
 
-    testthat::skip_if(purrr::is_null(c(hls_cube_s2, hls_cube_l8)),
-        message = "HLS is not accessible"
+    testthat::skip_if(purrr::is_null(hls_cube_l8),
+        message = "HLS in MPC is not accessible"
     )
 
     # merge
     merged_cube <- sits_merge(hls_cube_s2, hls_cube_l8)
 
     # test
-    expect_equal(length(sits_timeline(merged_cube)), 19)
+    expect_equal(length(sits_timeline(merged_cube)), 25)
     expect_equal(sits_bands(merged_cube), c("BLUE", "CLOUD", "GREEN", "RED"))
 })
 

@@ -5,15 +5,21 @@
 #' @author Gilberto Camara, \email{gilberto.camara@@inpe.br}
 #' @author Alexandre Ywata de Carvalho, \email{alexandre.ywata@@ipea.gov.br}
 #'
-#' @description Given a tibble with a set of distance measures,
+#' @description Given a tibble with a set of time series,
 #'    returns trained models. Currently, sits supports the following models:
-#' 'svm' (see \code{\link[sits]{sits_svm}}),
-#' random forests (see \code{\link[sits]{sits_rfor}}),
-#' extreme gradient boosting (see \code{\link[sits]{sits_xgboost}}),
-#' and different deep learning functions, including multi-layer perceptrons
-#' (see \code{\link[sits]{sits_mlp}}), 1D convolution neural
-#' networks \code{\link[sits]{sits_tempcnn}},
-#' self-attention encoders \code{\link[sits]{sits_lighttae}}
+#' \itemize{
+#'      \item{support vector machines:  \code{\link[sits]{sits_svm}};}
+#'      \item{random forests:  \code{\link[sits]{sits_rfor}};}
+#'      \item{extreme gradient boosting: \code{\link[sits]{sits_xgboost}};}
+#'      \item{light gradient boosting: \code{\link[sits]{sits_lightgbm}};}
+#'      \item{multi-layer perceptrons: \code{\link[sits]{sits_mlp}};}
+#'      \item{temporal CNN: \code{\link[sits]{sits_tempcnn}};}
+#'      \item{residual network encoders: \code{\link[sits]{sits_resnet}};}
+#'      \item{LSTM with convolutional networks: \code{\link[sits]{sits_lstm_fcn}};}
+#'      \item{temporal self-attention encoders:
+#'         \code{\link[sits]{sits_lighttae}} and
+#'         \code{\link[sits]{sits_tae}}.}
+#' }
 #'
 #' @param  samples          Time series with the training samples.
 #' @param  ml_method        Machine learning method.

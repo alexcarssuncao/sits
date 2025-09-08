@@ -46,25 +46,25 @@ These functions support hierarchical agglomerative clustering in
 sits. They provide support from creating a dendrogram and using it for
 cleaning samples.
 
-\code{link[sits]{sits_cluster_dendro()}} takes a tibble with time series and
+\code{\link[=sits_cluster_dendro]{sits_cluster_dendro()}} takes a tibble with time series and
 produces a sits tibble with an added "cluster" column. The function first
 calculates a dendrogram and obtains a validity index for best clustering
 using the adjusted Rand Index. After cutting the dendrogram using the chosen
 validity index, it assigns a cluster to each sample.
 
-\code{link[sits]{sits_cluster_frequency()}} computes the contingency
+\code{\link[=sits_cluster_frequency]{sits_cluster_frequency()}} computes the contingency
 table between labels
 and clusters and produces a matrix.
-Its input is a tibble produced by \code{link[sits]{sits_cluster_dendro()}}.
+Its input is a tibble produced by \code{\link[=sits_cluster_dendro]{sits_cluster_dendro()}}.
 
-\code{link[sits]{sits_cluster_clean()}} takes a tibble with time series
+\code{\link[=sits_cluster_clean]{sits_cluster_clean()}} takes a tibble with time series
 that has an additional `cluster` produced by
-\code{link[sits]{sits_cluster_dendro()}}
+\code{\link[=sits_cluster_dendro]{sits_cluster_dendro()}}
 and removes labels that are minority in each cluster.
 }
 \note{
 Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
+\url{https://e-sensing.github.io/sitsbook/} for detailed examples.
 }
 \examples{
 if (sits_run_examples()) {
@@ -78,7 +78,7 @@ if (sits_run_examples()) {
 
 }
 \references{
-"dtwclust" package (https://CRAN.R-project.org/package=dtwclust)
+"dtwclust" R package.
 }
 \author{
 Rolf Simoes, \email{rolfsimoes@gmail.com}

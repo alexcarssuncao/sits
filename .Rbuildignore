@@ -27,3 +27,6 @@ LICENSE
 .rcookies
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

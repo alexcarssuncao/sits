@@ -45,14 +45,15 @@
 #' @references
 #' The reference paper on SMOTE is
 #' N. V. Chawla, K. W. Bowyer, L. O.Hall, W. P. Kegelmeyer,
-#' “SMOTE: synthetic minority over-sampling technique,”
-#' Journal of artificial intelligence research, 321-357, 2002.
+#' “SMOTE: synthetic minority over-sampling technique”,
+#' Journal of artificial intelligence research, 321-357, 2002,
+#' \doi{10.1613/jair.953}.
 #'
 #' The SOM map technique for time series is described in the paper:
 #' Lorena Santos, Karine Ferreira, Gilberto Camara, Michelle Picoli,
 #' Rolf Simoes, “Quality control and class noise reduction of satellite
 #' image time series”. ISPRS Journal of Photogrammetry and Remote Sensing,
-#' vol. 177, pp 75-88, 2021. https://doi.org/10.1016/j.isprsjprs.2021.04.014.
+#' vol. 177, pp 75-88, 2021. \doi{10.1016/j.isprsjprs.2021.04.014}.
 #'
 #' @examples
 #' if (sits_run_examples()) {

@@ -36,7 +36,7 @@ There are five options for the specifying the input
 \item{A shapefile: see \code{\link[sits]{sits_get_data.shp}}. }
 \item{An \code{sf} object: see \code{\link[sits]{sits_get_data.sf}}.}
 \item{A \code{sits} tibble: see \code{\link[sits]{sits_get_data.sits}}. }
-\item{A data.frame: see see \code{\link[sits]{sits_get_data.data.frame}}.}
+\item{A data.frame: see \code{\link[sits]{sits_get_data.data.frame}}.}
 }
 }
 \note{

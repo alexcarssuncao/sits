@@ -4,13 +4,13 @@
 #' @author Felipe Carlos, \email{efelipecarlos@@gmail.com}
 #'
 #' @description
-#' This function implements the algorithm described by Johanes Reiche
-#' referenced below.
+#' This function implements the BayTS algorithm described by Johanes Reiche
+#' for near-real time deforestation detection.
 #'
 #' @references Reiche J, De Bruin S, Hoekman D, Verbesselt J, Herold M,
 #' "A Bayesian approach to combine Landsat and ALOS PALSAR time
 #' series for near real-time deforestation detection.",
-#' Remote Sensing, 7, 2015 DOI: 10.3390/rs70504973.
+#' Remote Sensing, 7, 2015 \doi{10.3390/rs70504973}.
 #'
 #'
 #' @param  samples      Time series with the training samples

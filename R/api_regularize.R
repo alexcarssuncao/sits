@@ -18,12 +18,18 @@
             cube = cube, period = period
         )
     }
+    # Update token (for big tiffs and slow networks)
+    cube <- .cube_token_generator(cube)
     # Create assets as jobs
     cube_assets <- .reg_cube_split_assets(
         cube = cube, period = period, timeline = timeline
     )
     # Process each tile sequentially
     cube_assets <- .jobs_map_parallel_dfr(cube_assets, function(asset) {
+        # Update assets class to match cube class
+        class(cube_assets) <- cube_class
+        # Update token (for big tiffs and slow networks)
+        cube_assets <- .cube_token_generator(cube_assets)
         # Manage s2 geometry
         # hold s2 status
         s2_status <- sf::sf_use_s2()
@@ -216,7 +222,7 @@
         roi <- .cube_as_sf(cube)
     }
 
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with roi
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )
@@ -297,7 +303,7 @@
 #' @export
 .reg_tile_convert.grd_cube <- function(cube, grid_system,
                                        roi = NULL, tiles = NULL) {
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with roi
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )
@@ -348,7 +354,7 @@
                                        grid_system,
                                        roi = NULL,
                                        tiles = NULL) {
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with ROI
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )
@@ -414,7 +420,7 @@
                                        grid_system,
                                        roi = NULL,
                                        tiles = NULL) {
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with ROI
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )
@@ -478,7 +484,7 @@
                                             grid_system,
                                             roi = NULL,
                                             tiles = NULL) {
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with ROI
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )
@@ -539,7 +545,7 @@
                                        grid_system,
                                        roi = NULL,
                                        tiles = NULL) {
-    # generate system grid tiles and intersects it with doi
+    # generate system grid tiles and intersects it with ROI
     tiles_filtered <- .grid_filter_tiles(
         grid_system = grid_system, tiles = tiles, roi = roi
     )

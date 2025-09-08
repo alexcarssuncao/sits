@@ -212,7 +212,6 @@ sits_accuracy.class_cube <- function(data, ...,
         if (nrow(points_tile) < 1L) {
             return(NULL)
         }
-
         # convert the tibble to a matrix
         xy <- matrix(c(points_tile[["X"]], points_tile[["Y"]]),
             nrow = nrow(points_tile),
@@ -243,6 +242,9 @@ sits_accuracy.class_cube <- function(data, ...,
             reference = reference
         )
     })
+    if (.has_not(.dissolve(pred_ref_lst))) {
+        stop(.conf("messages", "sits_accuracy_class_cube_no_validation_points"))
+    }
     # retrieve predicted and reference vectors for all rows of the cube
     pred_ref <- do.call(rbind, pred_ref_lst)
     # is this data valid?

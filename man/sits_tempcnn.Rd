@@ -8,7 +8,7 @@ sits_tempcnn(
   samples = NULL,
   samples_validation = NULL,
   cnn_layers = c(64L, 64L, 64L),
-  cnn_kernels = c(5L, 5L, 5L),
+  cnn_kernels = c(3L, 3L, 3L),
   cnn_dropout_rates = c(0.2, 0.2, 0.2),
   dense_layer_nodes = 256L,
   dense_layer_dropout_rate = 0.5,
@@ -21,6 +21,7 @@ sits_tempcnn(
   lr_decay_rate = 0.95,
   patience = 20L,
   min_delta = 0.01,
+  seed = NULL,
   verbose = FALSE
 )
 }
@@ -66,6 +67,8 @@ training stops.}
 \item{min_delta}{Minimum improvement in loss function
 to reset the patience counter.}
 
+\item{seed}{Seed for random values.}
+
 \item{verbose}{Verbosity mode (TRUE/FALSE). Default is FALSE.}
 }
 \value{
@@ -91,10 +94,7 @@ If you use this method, please cite the original tempCNN paper.
 The torch version is based on the code made available by the BreizhCrops
 team: Marc Russwurm, Charlotte Pelletier, Marco Korner, Maximilian Zollner.
 The original python code is available at the website
-https://github.com/dl4sits/BreizhCrops. This code is licensed as GPL-3.
-
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
+\url{https://github.com/dl4sits/BreizhCrops}. This code is licensed as GPL-3.
 }
 \examples{
 if (sits_run_examples()) {
@@ -135,7 +135,7 @@ if (sits_run_examples()) {
 Charlotte Pelletier, Geoffrey Webb and François Petitjean,
 "Temporal Convolutional Neural Network for the Classification
 of Satellite Image Time Series",
-Remote Sensing, 11,523, 2019. DOI: 10.3390/rs11050523.
+Remote Sensing, 11,523, 2019. \doi{10.3390/rs11050523}.
 }
 \author{
 Charlotte Pelletier, \email{charlotte.pelletier@univ-ubs.fr}

@@ -67,7 +67,7 @@
 #' Lorena Santos, Karine Ferreira, Gilberto Camara, Michelle Picoli,
 #' Rolf Simoes, “Quality control and class noise reduction of satellite
 #' image time series”. ISPRS Journal of Photogrammetry and Remote Sensing,
-#' vol. 177, pp 75-88, 2021. https://doi.org/10.1016/j.isprsjprs.2021.04.014.
+#' vol. 177, pp 75-88, 2021. \doi{10.1016/j.isprsjprs.2021.04.014}.
 #'
 #'
 #' @return

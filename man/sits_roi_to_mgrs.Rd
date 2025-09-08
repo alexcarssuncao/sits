@@ -29,8 +29,6 @@ To define a \code{roi} use one of:
 
      Defining a region of interest using \code{SpatExtent} or XY values not
      in WGS84 requires the \code{crs} parameter to be specified.
-     \code{sits_regularize()} function will crop the images
-     that contain the region of interest()
 }
 \examples{
 if (sits_run_examples()) {

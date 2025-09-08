@@ -25,12 +25,12 @@
 #' The torch version is based on the code made available by the BreizhCrops
 #' team: Marc Russwurm, Charlotte Pelletier, Marco Korner, Maximilian Zollner.
 #' The original python code is available at the website
-#' https://github.com/dl4sits/BreizhCrops. This code is licensed as GPL-3.
+#' \url{https://github.com/dl4sits/BreizhCrops}. This code is licensed as GPL-3.
 #'
 #' @references Charlotte Pelletier, Geoffrey Webb and François Petitjean,
 #' "Temporal Convolutional Neural Network for the Classification
 #' of Satellite Image Time Series",
-#' Remote Sensing, 11,523, 2019. DOI: 10.3390/rs11050523.
+#' Remote Sensing, 11,523, 2019. \doi{10.3390/rs11050523}.
 #'
 #' @param samples            Time series with the training samples.
 #' @param samples_validation Time series with the validation samples. if the
@@ -57,13 +57,11 @@
 #'                           training stops.
 #' @param min_delta	         Minimum improvement in loss function
 #'                           to reset the patience counter.
+#' @param seed               Seed for random values.
 #' @param verbose            Verbosity mode (TRUE/FALSE). Default is FALSE.
 #'
 #' @return A fitted model to be used for classification.
 #'
-#' @note
-#' Please refer to the sits documentation available in
-#' <https://e-sensing.github.io/sitsbook/> for detailed examples.
 #' @examples
 #' if (sits_run_examples()) {
 #'     # create a TempCNN model
@@ -102,7 +100,7 @@
 sits_tempcnn <- function(samples = NULL,
                          samples_validation = NULL,
                          cnn_layers = c(64L, 64L, 64L),
-                         cnn_kernels = c(5L, 5L, 5L),
+                         cnn_kernels = c(3L, 3L, 3L),
                          cnn_dropout_rates = c(0.20, 0.20, 0.20),
                          dense_layer_nodes = 256L,
                          dense_layer_dropout_rate = 0.50,
@@ -119,6 +117,7 @@ sits_tempcnn <- function(samples = NULL,
                          lr_decay_rate = 0.95,
                          patience = 20L,
                          min_delta = 0.01,
+                         seed = NULL,
                          verbose = FALSE) {
     # set caller for error msg
     .check_set_caller("sits_tempcnn")
@@ -151,6 +150,9 @@ sits_tempcnn <- function(samples = NULL,
             patience = patience, min_delta = min_delta,
             verbose = verbose
         )
+        # Other pre-conditions:
+        .check_int_parameter(seed, allow_null = TRUE)
+
         # Check opt_hparams
         # Get parameters list and remove the 'param' parameter
         optim_params_function <- formals(optimizer)[-1L]
@@ -204,9 +206,11 @@ sits_tempcnn <- function(samples = NULL,
             dim = c(n_samples_test, n_times, n_bands)
         )
         test_y <- unname(code_labels[.pred_references(test_samples)])
-
+        # Create a torch seed (we define a new variable to allow users
+        # to access this seed number from the model environment)
+        torch_seed <- .torch_seed(seed)
         # Set torch seed
-        torch::torch_manual_seed(sample.int(100000L, 1L))
+        torch::torch_manual_seed(torch_seed)
         # Define the TempCNN architecture
         tcnn_model <- torch::nn_module(
             classname = "model_tcnn",
@@ -321,7 +325,6 @@ sits_tempcnn <- function(samples = NULL,
             # Verifies if torch package is installed
             .check_require_packages("torch")
             # Set torch threads to 1
-            # Note: function does not work on MacOS
             suppressWarnings(torch::torch_set_num_threads(1L))
             # Unserialize model
             torch_model[["model"]] <- .torch_unserialize_model(serialized_model)

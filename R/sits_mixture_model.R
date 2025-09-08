@@ -11,7 +11,7 @@
 #' fractions of each endmember. The NNLS was implemented by Jakob
 #' Schwalb-Willmann in RStoolbox package (licensed as GPL>=3).
 #'
-#' @references \code{RStoolbox} package (https://github.com/bleutner/RStoolbox/)
+#' @references \code{RStoolbox} R package.
 #'
 #' @param data        A sits data cube or a sits tibble.
 #' @param endmembers  Reference spectral endmembers.

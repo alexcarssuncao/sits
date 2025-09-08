@@ -32,9 +32,12 @@
 #' @returns Called for side effects
 .message_warnings_colors_get <- function(missing, palette) {
     if (.message_warnings()) {
-        warning(.conf("messages", ".colors_get_missing"), toString(missing))
-        warning(.conf("messages", ".colors_get_missing_palette"), palette)
-        # grDevices does not work with one color missing
+        miss_colors <- paste(.conf("messages", ".colors_get_missing"),
+                        toString(missing))
+        palette_str <- paste(.conf("messages", ".colors_get_missing_palette"),
+                            palette)
+        full_msg <- paste(miss_colors, "-", palette_str)
+        warning(full_msg)
     }
 }
 #' @title Warning when cube has no CLOUD band

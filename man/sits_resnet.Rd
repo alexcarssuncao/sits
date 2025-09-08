@@ -18,6 +18,7 @@ sits_resnet(
   lr_decay_rate = 0.95,
   patience = 20,
   min_delta = 0.01,
+  seed = NULL,
   verbose = FALSE
 )
 }
@@ -59,6 +60,8 @@ training stops.}
 \item{min_delta}{Minimum improvement in loss function
 to reset the patience counter.}
 
+\item{seed}{Seed for random values.}
+
 \item{verbose}{Verbosity mode (TRUE/FALSE). Default is FALSE.}
 }
 \value{
@@ -78,19 +81,15 @@ Please refer to the paper for more details.
 The R-torch version is based on the code made available by Zhiguang Wang,
 author of the original paper. The code was developed in python using keras.
 
-https://github.com/cauchyturing
+\url{https://github.com/cauchyturing}
 (repo: UCR_Time_Series_Classification_Deep_Learning_Baseline)
 
 The R-torch version also considered the code by Ignacio Oguiza,
 whose implementation is available at
-https://github.com/timeseriesAI/tsai/blob/main/tsai/models/ResNet.py.
+\url{https://github.com/timeseriesAI/tsai/blob/main/tsai/models/ResNet.py}.
 
 There are differences between Wang's Keras code and Oguiza torch code.
 In this case, we have used Wang's keras code as the main reference.
-}
-\note{
-Please refer to the sits documentation available in
-<https://e-sensing.github.io/sitsbook/> for detailed examples.
 }
 \examples{
 if (sits_run_examples()) {
@@ -132,7 +131,7 @@ Data Mining and Knowledge Discovery, 33(4): 917--963, 2019.
 Zhiguang Wang, Weizhong Yan, and Tim Oates,
 "Time series classification from scratch with deep neural networks:
  A strong baseline",
- 2017 international joint conference on neural networks (IJCNN).
+ 2017 International Joint conference on Neural Networks (IJCNN).
 }
 \author{
 Gilberto Camara, \email{gilberto.camara@inpe.br}

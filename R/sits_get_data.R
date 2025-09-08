@@ -17,7 +17,7 @@
 #' \item{A shapefile: see \code{\link[sits]{sits_get_data.shp}}. }
 #' \item{An \code{sf} object: see \code{\link[sits]{sits_get_data.sf}}.}
 #' \item{A \code{sits} tibble: see \code{\link[sits]{sits_get_data.sits}}. }
-#' \item{A data.frame: see see \code{\link[sits]{sits_get_data.data.frame}}.}
+#' \item{A data.frame: see \code{\link[sits]{sits_get_data.data.frame}}.}
 #' }
 #'
 #' @note
@@ -108,6 +108,8 @@
 #' @export
 sits_get_data <- function(cube, samples, ...) {
     .check_set_caller("sits_get_data")
+    # Token generation
+    cube <- .cube_token_generator(cube)
     # Pre-conditions
     .check_is_raster_cube(cube)
     .check_cube_is_regular(cube)
@@ -365,7 +367,7 @@ sits_get_data.shp <- function(cube,
 #' <longitude, latitude, start_date, end_date, label>.
 #'
 #' @note
-#' #' For sf objects, the following parameters are relevant:
+#' For sf objects, the following parameters are relevant:
 #' \itemize{
 #' \item{\code{label}: label to be assigned to the samples.
 #' Should only be used if all geometries have a single label.}

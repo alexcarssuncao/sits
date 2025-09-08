@@ -1810,24 +1810,15 @@
 #' @return Called for side effects.
 #' @keywords internal
 #' @noRd
-.check_labels_class_cube <- function(cube) {
+.check_labels_class_cube <- function(cube, multicores, memsize) {
     .check_set_caller(".check_labels_class_cube")
-    # select the files for the classified cube
-    files <- unlist(.cube_paths(cube))
-    # open the first file
-    classes_list <- purrr::map(files, function(file) {
-        r <- .raster_open_rast(file)
-        # get the frequency table
-        freq <- .raster_freq(r)
-        # get the classes as numerical values
-        classes_tile <- as.character(freq[["value"]])
-        names(classes_tile) <- file
-        classes_tile
-    })
-    classes_num <- unique(unlist(classes_list))
-    classes_num <- classes_num[!is.na(classes_num)]
+    # Get values from cube
+    classes_num <- .cube_unique_values(cube, multicores, memsize)
+    # Transform in characters
+    classes_num <- as.character(classes_num)
+    # Get label names
     labels_num <- names(unlist(.cube_labels(cube, dissolve = FALSE)))
-    # do the labels and raster numbers match?
+    # Do the labels and raster numbers match?
     .check_that(all(classes_num %in% labels_num))
 }
 #' @title Does the probs cube contains required labels?

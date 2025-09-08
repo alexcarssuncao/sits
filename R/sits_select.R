@@ -74,6 +74,8 @@ sits_select.raster_cube <- function(data, ...,
                                     end_date = NULL,
                                     dates = NULL,
                                     tiles = NULL) {
+    # Update token (for big tiffs and slow networks)
+    data <- .cube_token_generator(data)
     # Pre-conditions
     .check_raster_cube_files(data)
     # Selected raster cube attributes

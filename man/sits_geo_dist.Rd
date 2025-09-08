@@ -59,7 +59,7 @@ if (sits_run_examples()) {
 Meyer, H., Pebesma, E. "Machine learning-based global maps of
 ecological variables and the challenge of assessing them",
 Nature Communications 13, 2208 (2022).
-https://doi.org/10.1038/s41467-022-29838-9
+\doi{10.1038/s41467-022-29838-9}.
 }
 \author{
 Alber Sanchez, \email{alber.ipia@inpe.br}

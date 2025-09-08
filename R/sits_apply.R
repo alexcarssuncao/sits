@@ -57,7 +57,7 @@
 #'
 #' Examples of valid expressions:
 #' \enumerate{
-#' \item \code{NDVI = (B08 - B04/(B08 + B04))} for Sentinel-2 images.
+#' \item \code{NDVI = (B08 - B04) / (B08 + B04)} for Sentinel-2 images.
 #' \item \code{EVI = 2.5 * (B05 – B04) / (B05 + 6 * B04 – 7.5 * B02 + 1)} for
 #' Landsat-8/9 images.
 #' \item \code{VV_VH_RATIO = VH/VV} for Sentinel-1 images. In this case,
@@ -67,9 +67,9 @@
 #' \code{normalized} parameter to FALSE.
 #' }
 #'
-#' \code{sits_apply()} accepts a predefined set of kernel functions
+#' \code{sits_apply()} also accepts a predefined set of kernel functions
 #' (see below) that can be applied to pixels considering its
-#' neighborhood. \code{sits_apply()} considers a neighborhood of a
+#' neighborhood. The function considers a neighborhood of a
 #' pixel as a set of pixels equidistant to it (including itself).
 #' This neighborhood forms a square window (also known as kernel)
 #' around the central pixel
@@ -78,6 +78,7 @@
 #' The image is conceptually mirrored at the edges so that neighborhood
 #' including a pixel outside the image is equivalent to take the
 #' 'mirrored' pixel inside the edge.
+#'
 #' \code{sits_apply()} applies a function to the kernel and its result
 #' is assigned to a corresponding central pixel on a new matrix.
 #' The kernel slides throughout the input image and this process

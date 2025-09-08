@@ -16,15 +16,21 @@ Model fitted to input data
                          to be passed to \code{\link[sits]{sits_classify}}
 }
 \description{
-Given a tibble with a set of distance measures,
+Given a tibble with a set of time series,
    returns trained models. Currently, sits supports the following models:
-'svm' (see \code{\link[sits]{sits_svm}}),
-random forests (see \code{\link[sits]{sits_rfor}}),
-extreme gradient boosting (see \code{\link[sits]{sits_xgboost}}),
-and different deep learning functions, including multi-layer perceptrons
-(see \code{\link[sits]{sits_mlp}}), 1D convolution neural
-networks \code{\link[sits]{sits_tempcnn}},
-self-attention encoders \code{\link[sits]{sits_lighttae}}
+\itemize{
+     \item{support vector machines:  \code{\link[sits]{sits_svm}};}
+     \item{random forests:  \code{\link[sits]{sits_rfor}};}
+     \item{extreme gradient boosting: \code{\link[sits]{sits_xgboost}};}
+     \item{light gradient boosting: \code{\link[sits]{sits_lightgbm}};}
+     \item{multi-layer perceptrons: \code{\link[sits]{sits_mlp}};}
+     \item{temporal CNN: \code{\link[sits]{sits_tempcnn}};}
+     \item{residual network encoders: \code{\link[sits]{sits_resnet}};}
+     \item{LSTM with convolutional networks: \code{\link[sits]{sits_lstm_fcn}};}
+     \item{temporal self-attention encoders:
+        \code{\link[sits]{sits_lighttae}} and
+        \code{\link[sits]{sits_tae}}.}
+}
 }
 \note{
 The main \code{sits} classification workflow has the following steps:

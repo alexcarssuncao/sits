@@ -56,7 +56,7 @@ with either (lon_min, lon_max, lat_min, lat_max) or
 
 \item{max_cog_size}{Maximum size of COG overviews (lines or columns)}
 
-\item{legend_position}{Where to place the legend (default = "outside")}
+\item{legend_position}{Where to place the legend (default = "inside")}
 }
 \value{
 A plot object with an RGB image

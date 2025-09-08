@@ -1,8 +1,4 @@
-
-   
 ---
-title: "SITS - Satellite Image Time Series Analysis for Earth Observation Data Cubes"
-authors: Rolf Simoes, Gilberto Camara, Felipe Souza, Lorena Santos, Pedro Andrade, Alexandre Carvalho, Gilberto Queiroz, Karine Ferreira
 output: github_document
 ---
 
@@ -19,7 +15,7 @@ set.seed(4242)
 torch::torch_manual_seed(1234)
 ```
 
-<img src="inst/extdata/sticker/sits_sticker.png" alt="SITS icon" align="right" height="150" width="150"/>
+# SITS - Satellite Image Time Series Analysis for Earth Observation Data Cubes <img src="man/figures/sits_sticker.png" align="right" width="150" alt="SITS icon" />
 
 <!-- badges: start -->
 
@@ -52,13 +48,15 @@ torch::torch_manual_seed(1234)
 12. Improve results with active learning and self-supervised learning methods.
 
 ```{r sits, echo=FALSE, out.width="60%", out.height="60%", fig.align="center", fig.cap="Conceptual view of data cubes (source: authors)"}
-knitr::include_graphics("inst/extdata/markdown/figures/sits_general_view.jpg")
+knitr::include_graphics("man/figures/sits_general_view.jpg")
 ```
 
 
 ## Documentation 
 
 Detailed documentation on how to use `sits` is available in the e-book ["Satellite Image Time Series Analysis on Earth Observation Data Cubes"](https://e-sensing.github.io/sitsbook/).
+
+Code documentation on the `sits` functions is available in the [pkgdown format](https://e-sensing.github.io/sits/).
 
 ## Installation
 
@@ -141,7 +139,7 @@ s2_cube <- sits_cube(
 This cube is irregular. The timelines of tiles `"20LKP"` and `"20LLKP"` and the resolutions of the bands are different. Sentinel-2 bands `"B03"` and `"B08"` have 10-meters resolution, while band `"B11"` and the cloud band `"SCL"` have 20-meters resolution. Irregular collections need an additional processing step to be converted to regular data cubes, as described below.
 
 ```{r dcconcept, echo=FALSE, out.width="90%", out.height="90%", fig.align="center", fig.cap="Conceptual view of data cubes (source: authors)"}
-knitr::include_graphics("inst/extdata/markdown/figures/datacube_conception.jpg")
+knitr::include_graphics("man/figures/datacube_conception.jpg")
 ```
 
 After defining an irregular ARD image collection from a cloud service using `sits_cube()`, users should run `sits_regularize()` to build a regular data cube. This function uses the [gdalcubes R package](https://github.com/appelmar/gdalcubes), described in [Appel and Pebesma, 2019](https://www.mdpi.com/2306-5729/4/3/92). 
@@ -203,34 +201,35 @@ available in `sits`:
 -   Extreme gradient boosting (`sits_xgboost()`)
 -   Multi-layer perceptrons (`sits_mlp()`)
 -   1D convolution neural networks (`sits_tempcnn()`)
+-   Residual neural networks (`sits_resnet()`)
 -   Temporal self-attention encoder (`sits_tae()`) 
 -   Lightweight temporal attention encoder (`sits_lighttae()`)
 
 The following example illustrate how to train a dataset and classify an
 individual time series. First we use the `sits_train()` function with two
 parameters: the training dataset (described above) and the chosen
-machine learning model (in this case, TempCNN). 
+machine learning model (in this case, Random Forest). 
 The trained model is then used to classify a time series from Mato Grosso
 Brazilian state, using `sits_classify()`. The results can be shown in text
 format using the function `sits_show_prediction()` or graphically using
 `plot`.
 
-```{r, tidy = "styler", fig.align="center", fig.height=3.5, fig.width=7, fig.cap="Classification of NDVI time series using TempCNN", cache=TRUE}
+```{r, tidy = "styler", fig.align="center", fig.height=3.5, fig.width=7, fig.cap="Classification of NDVI time series using Random Forest", cache=TRUE}
 # training data set
 data("samples_modis_ndvi")
 # point to be classified
 data("point_mt_6bands")
-# Train a deep learning model
-tempcnn_model <- sits_train(
+# Train a random forest model
+rfor_model <- sits_train(
     samples = samples_modis_ndvi,
-    ml_method = sits_tempcnn()
+    ml_method = sits_rfor()
 )
-# Select NDVI band of the  point to be classified
+# Select NDVI band of the point to be classified
 # Classify using TempCNN model
 # Plot the result
 point_mt_6bands |>
     sits_select(bands = "NDVI") |>
-    sits_classify(tempcnn_model) |>
+    sits_classify(rfor_model) |>
     plot()
 ```
 
@@ -254,7 +253,7 @@ sinop <- sits_cube(
 # Filter the pixels in the cube to remove noise
 probs_cube <- sits_classify(
     data = sinop,
-    ml_model = tempcnn_model,
+    ml_model = rfor_model,
     output_dir = tempdir()
 )
 # apply a bayesian smoothing to remove outliers
@@ -268,9 +267,7 @@ label_cube <- sits_label_classification(
     output_dir = tempdir()
 )
 # plot the the labelled cube
-plot(label_cube,
-    title = "Land use and Land cover in Sinop, MT, Brazil in 2018"
-)
+plot(label_cube)
 ```
 
 

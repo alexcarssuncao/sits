@@ -18,6 +18,7 @@
 #'                   an EPSG code number (e.g. 4326).
 #'                   Default is "EPSG:3857" - WGS 84 / Pseudo-Mercator.
 #' @param roi        Region of interest (see below).
+#' @param res        Spatial resolution of the mosaic. Default is NULL.
 #' @param multicores Number of cores that will be used to
 #'                   crop the images in parallel.
 #' @param output_dir Directory for output images.
@@ -28,14 +29,18 @@
 #' @return a sits cube with only one tile.
 #'
 #' @note
-#'  The "roi" parameter defines a region of interest. It can be
-#'  an sf_object, a shapefile, or a bounding box vector with
-#'  named XY values (\code{xmin}, \code{xmax}, \code{ymin}, \code{ymax}) or
-#'  named lat/long values (\code{lon_min}, \code{lon_max},
-#'    \code{lat_min}, \code{lat_max}).
+#'  To define a \code{roi} use one of:
+#'  \itemize{
+#'       \item{A path to a shapefile with polygons;}
+#'       \item{A \code{sfc} or \code{sf} object from \code{sf} package;}
+#'       \item{A \code{SpatExtent} object from \code{terra} package;}
+#'       \item{A named \code{vector} (\code{"lon_min"},
+#'             \code{"lat_min"}, \code{"lon_max"}, \code{"lat_max"}) in WGS84;}
+#'       \item{A named \code{vector} (\code{"xmin"}, \code{"xmax"},
+#'              \code{"ymin"}, \code{"ymax"}) with XY coordinates.}
+#'  }
 #'
-#'  When the data cube has tiles that cover different UTM grid zones,
-#'  the user should specify the CRS of the mosaic. We use
+#'  The user should specify the CRS of the mosaic. We use
 #'  "EPSG:3857" (Pseudo-Mercator) as the default.
 #'
 #' @examples
@@ -87,12 +92,14 @@ sits_mosaic <- function(cube,
                         roi = NULL,
                         multicores = 2L,
                         output_dir,
+                        res = NULL,
                         version = "v1",
                         progress = TRUE) {
     .check_set_caller("sits_mosaic")
     # Pre-conditions
     .check_is_raster_cube(cube)
     .check_crs(crs)
+    .check_int_parameter(res, allow_null = TRUE)
     .check_int_parameter(multicores, min = 1L, max = 2048L)
     .check_output_dir(output_dir)
     # Check version and progress
@@ -129,6 +136,7 @@ sits_mosaic <- function(cube,
         output_dir = output_dir,
         multicores = multicores,
         version = version,
-        progress = progress
+        progress = progress,
+        res = res
     )
 }

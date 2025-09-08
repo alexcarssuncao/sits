@@ -27,8 +27,7 @@
 \item{tile}{Tile to be plotted.}
 
 \item{roi}{Spatial extent to plot in WGS 84 - named vector
-with either (lon_min, lon_max, lat_min, lat_max) or
-(xmin, xmax, ymin, ymax)}
+(see notes below)}
 
 \item{labels}{Labels to plot.}
 
@@ -49,6 +48,22 @@ with either (lon_min, lon_max, lat_min, lat_max) or
 \value{
 A plot containing probabilities associated
                       to each class for each pixel.
+
+ To define a \code{roi} use one of:
+     \itemize{
+       \item{A path to a shapefile with polygons;}
+       \item{A \code{sfc} or \code{sf} object from \code{sf} package;}
+       \item{A \code{SpatExtent} object from \code{terra} package;}
+       \item{A named \code{vector} (\code{"lon_min"},
+            \code{"lat_min"}, \code{"lon_max"}, \code{"lat_max"}) in WGS84;}
+       \item{A named \code{vector} (\code{"xmin"}, \code{"xmax"},
+             \code{"ymin"}, \code{"ymax"}) with XY coordinates.}
+      }
+
+     Defining a region of interest using \code{SpatExtent} or XY values not
+     in WGS84 requires the \code{crs} parameter to be specified.
+     \code{sits_regularize()} function will crop the images
+     that contain the region of interest().
 }
 \description{
 plots a probability cube

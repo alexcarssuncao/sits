@@ -1,10 +1,7 @@
-SITS - Satellite Image Time Series Analysis for Earth Observation Data
-Cubes
-================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="inst/extdata/sticker/sits_sticker.png" alt="SITS icon" align="right" height="150" width="150"/>
+# SITS - Satellite Image Time Series Analysis for Earth Observation Data Cubes <img src="man/figures/sits_sticker.png" align="right" width="150" alt="SITS icon" />
 
 <!-- badges: start -->
 
@@ -56,7 +53,7 @@ earth observation data cubes. The basic workflow in `sits` is:
 
 <div class="figure" style="text-align: center">
 
-<img src="inst/extdata/markdown/figures/sits_general_view.jpg" alt="Conceptual view of data cubes (source: authors)" width="60%" height="60%" />
+<img src="man/figures/sits_general_view.jpg" alt="Conceptual view of data cubes (source: authors)" width="60%" height="60%" />
 <p class="caption">
 
 Conceptual view of data cubes (source: authors)
@@ -69,6 +66,9 @@ Conceptual view of data cubes (source: authors)
 Detailed documentation on how to use `sits` is available in the e-book
 [“Satellite Image Time Series Analysis on Earth Observation Data
 Cubes”](https://e-sensing.github.io/sitsbook/).
+
+Code documentation on the `sits` functions is available in the [pkgdown
+format](https://e-sensing.github.io/sits/).
 
 ## Installation
 
@@ -100,11 +100,9 @@ devtools::install_github("e-sensing/sits", dependencies = TRUE)
 # load the sits library
 library(sits)
 #> SITS - satellite image time series analysis.
-#> Loaded sits v1.5.3.
+#> Loaded sits v1.5.3-1.
 #>         See ?sits for help, citation("sits") for use in publication.
-#>         Documentation avaliable in https://e-sensing.github.io/sitsbook/.
-#> Important: Please read "Release Notes for SITS 1.5.3" in
-#>                 https://github.com/e-sensing/sits.
+#>         Documentation avaliable in https://e-sensing.github.io/sitsbook/
 ```
 
 ### Configuring the Python environment
@@ -141,8 +139,8 @@ configuration in most cases.
 ### Image Collections Accessible by `sits`
 
 Users create data cubes from analysis-ready data (ARD) image collections
-available in cloud services. The collections accessible in `sits` 1.5.3
-are:
+available in cloud services. The collections accessible in `sits`
+1.5.3.1 are:
 
 - Brazil Data Cube -
   [BDC](https://data.inpe.br/bdc/web/en/home-page-2/): Open data
@@ -205,7 +203,7 @@ described below.
 
 <div class="figure" style="text-align: center">
 
-<img src="inst/extdata/markdown/figures/datacube_conception.jpg" alt="Conceptual view of data cubes (source: authors)" width="90%" height="90%" />
+<img src="man/figures/datacube_conception.jpg" alt="Conceptual view of data cubes (source: authors)" width="90%" height="90%" />
 <p class="caption">
 
 Conceptual view of data cubes (source: authors)
@@ -297,14 +295,15 @@ available in `sits`:
 - Extreme gradient boosting (`sits_xgboost()`)
 - Multi-layer perceptrons (`sits_mlp()`)
 - 1D convolution neural networks (`sits_tempcnn()`)
+- Residual neural networks (`sits_resnet()`)
 - Temporal self-attention encoder (`sits_tae()`)
 - Lightweight temporal attention encoder (`sits_lighttae()`)
 
 The following example illustrate how to train a dataset and classify an
 individual time series. First we use the `sits_train()` function with
 two parameters: the training dataset (described above) and the chosen
-machine learning model (in this case, TempCNN). The trained model is
-then used to classify a time series from Mato Grosso Brazilian state,
+machine learning model (in this case, Random Forest). The trained model
+is then used to classify a time series from Mato Grosso Brazilian state,
 using `sits_classify()`. The results can be shown in text format using
 the function `sits_show_prediction()` or graphically using `plot`.
 
@@ -313,26 +312,26 @@ the function `sits_show_prediction()` or graphically using `plot`.
 data("samples_modis_ndvi")
 # point to be classified
 data("point_mt_6bands")
-# Train a deep learning model
-tempcnn_model <- sits_train(
+# Train a random forest model
+rfor_model <- sits_train(
     samples = samples_modis_ndvi,
-    ml_method = sits_tempcnn()
+    ml_method = sits_rfor()
 )
-# Select NDVI band of the  point to be classified
+# Select NDVI band of the point to be classified
 # Classify using TempCNN model
 # Plot the result
 point_mt_6bands |>
     sits_select(bands = "NDVI") |>
-    sits_classify(tempcnn_model) |>
+    sits_classify(rfor_model) |>
     plot()
 ```
 
 <div class="figure" style="text-align: center">
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" alt="Classification of NDVI time series using TempCNN"  />
+<img src="man/figures/README-unnamed-chunk-9-1.png" alt="Classification of NDVI time series using Random Forest"  />
 <p class="caption">
 
-Classification of NDVI time series using TempCNN
+Classification of NDVI time series using Random Forest
 </p>
 
 </div>
@@ -357,7 +356,7 @@ sinop <- sits_cube(
 # Filter the pixels in the cube to remove noise
 probs_cube <- sits_classify(
     data = sinop,
-    ml_model = tempcnn_model,
+    ml_model = rfor_model,
     output_dir = tempdir()
 )
 # apply a bayesian smoothing to remove outliers
@@ -371,9 +370,7 @@ label_cube <- sits_label_classification(
     output_dir = tempdir()
 )
 # plot the the labelled cube
-plot(label_cube,
-    title = "Land use and Land cover in Sinop, MT, Brazil in 2018"
-)
+plot(label_cube)
 ```
 
 <div class="figure" style="text-align: center">
