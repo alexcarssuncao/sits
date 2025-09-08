@@ -50,6 +50,7 @@
 #'
 #' @return A fitted model to be used for classification.
 #'
+#' @export
 sits_lstm_fcn <- function(samples = NULL,
                           samples_validation = NULL,
                           cnn_layers = c(128, 256, 128),
