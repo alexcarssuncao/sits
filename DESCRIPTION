@@ -57,6 +57,7 @@ Imports:
     purrr (>= 1.0.2),
     randomForest,
     Rcpp (>= 1.1.0),
+    Rtsne,
     rstac (>= 1.0.1),
     sf (>= 1.0-19),
     slider (>= 0.2.0),

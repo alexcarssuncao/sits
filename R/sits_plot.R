@@ -2293,10 +2293,12 @@ plot.sits_tsne <- function(x, y, palette = NULL, ...) {
     if (is.null(rounds)) rounds <- x$tsne$iter
     if (is.null(rounds) && !is.null(x$tsne$costs)) rounds <- length(x$tsne$costs)
 
-    subtitle_parts <- character()
-    if (!is.null(perp))   subtitle_parts <- c(subtitle_parts, paste0("perplexity = ", perp))
-    if (!is.null(rounds)) subtitle_parts <- c(subtitle_parts, paste0("rounds = ", rounds))
-    subtitle_txt <- if (length(subtitle_parts)) paste(subtitle_parts, collapse = " · ") else NULL
+    subtitle_txt <- if (length(subtitle_parts)) paste(subtitle_parts, collapse = " \u00B7 ") else NULL
+
+    #subtitle_parts <- character()
+    #if (!is.null(perp))   subtitle_parts <- c(subtitle_parts, paste0("perplexity = ", perp))
+    #if (!is.null(rounds)) subtitle_parts <- c(subtitle_parts, paste0("rounds = ", rounds))
+    #subtitle_txt <- if (length(subtitle_parts)) paste(subtitle_parts, collapse = " · ") else NULL
 
     labels <- as.character(x$labels)
 
