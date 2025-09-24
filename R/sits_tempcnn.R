@@ -364,7 +364,7 @@ sits_tempcnn <- function(samples = NULL,
         }
         # Set model class
         predict_fun <- .set_class(
-            predict_fun, "torch_model", "sits_model", class(predict_fun)
+            predict_fun, "torch_model", "sits_model", "torch_model_tempcnn", class(predict_fun)
         )
     }
     # If samples is informed, train a model and return a predict function

@@ -369,7 +369,7 @@ sits_lighttae <- function(samples = NULL,
         }
         # Set model class
         predict_fun <- .set_class(
-            predict_fun, "torch_model", "sits_model", class(predict_fun)
+            predict_fun, "torch_model", "sits_model", "sits_model_ltae", class(predict_fun)
         )
         predict_fun
     }
