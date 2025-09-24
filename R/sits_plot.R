@@ -2284,7 +2284,7 @@ plot.sits_tsne <- function(x, y, palette = NULL, ...) {
     .check_null(x$tsne$Y)
     .check_null(x$labels)
     if (ncol(x$tsne$Y) < 2L) {
-        stop(.config("messages", "sits_plot_tsne"))
+        warning(.config("messages", "sits_plot_tsne"))
     }
 
     # --- subtitle pieces: perplexity & rounds (if available) ---
