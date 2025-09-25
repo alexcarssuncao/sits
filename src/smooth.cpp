@@ -33,8 +33,8 @@ void neigh_vec(neigh_t& n,
             if (m_i + i >= w_leg_i && m_j + j >= w_leg_j &&
                 m_i + i < w_leg_i + m_nrow &&
                 m_j + j < w_leg_j + m_ncol &&
-                arma::is_finite(m(m_j + m_i * m_ncol, 0)) &&
-                arma::is_finite(m((m_j + j - w_leg_j) + (m_i + i - w_leg_i) * m_ncol, m_b))) {
+                std::isfinite(m(m_j + m_i * m_ncol, 0)) &&
+                std::isfinite(m((m_j + j - w_leg_j) + (m_i + i - w_leg_i) * m_ncol, m_b))) {
 
                 n.data(k, m_b) = m((m_j + j - w_leg_j) +
                                        (m_i + i - w_leg_i) * m_ncol, m_b);
