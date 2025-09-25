@@ -2284,7 +2284,7 @@ plot.sits_tsne <- function(x, y, palette = NULL, ...) {
     .check_null(x$tsne$Y)
     .check_null(x$labels)
     if (ncol(x$tsne$Y) < 2L) {
-        warning(.config("messages", "sits_plot_tsne"))
+        stop(utils::getFromNamespace(".config", "sits")("messages", "sits_plot_tsne"))
     }
 
     # --- subtitle pieces: perplexity & rounds (if available) ---
@@ -2293,13 +2293,8 @@ plot.sits_tsne <- function(x, y, palette = NULL, ...) {
     if (is.null(rounds)) rounds <- x$tsne$iter
     if (is.null(rounds) && !is.null(x$tsne$costs)) rounds <- length(x$tsne$costs)
 
+    subtitle_parts <- character(0)
     subtitle_txt <- if (length(subtitle_parts)) paste(subtitle_parts, collapse = " \u00B7 ") else NULL
-
-    #subtitle_parts <- character()
-    #if (!is.null(perp))   subtitle_parts <- c(subtitle_parts, paste0("perplexity = ", perp))
-    #if (!is.null(rounds)) subtitle_parts <- c(subtitle_parts, paste0("rounds = ", rounds))
-    #subtitle_txt <- if (length(subtitle_parts)) paste(subtitle_parts, collapse = " · ") else NULL
-
     labels <- as.character(x$labels)
 
     # Consistent SITS colors
