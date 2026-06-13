@@ -3118,6 +3118,20 @@
     .check_lgl_parameter(verbose)
 }
 
+#' @title Check encoder validation paramateres
+#' @name .check_sits_encode_validate
+#' @param samples            Time series with the training samples.
+#' @keywords internal
+#' @noRd
+#' @author Alexandre Assuncao, \email{alexcarssuncao@@gmail.com}
+#' @return  No value, called for side effects.
+.check_sits_encode_validate <- function(samples,
+                                        encoder) {
+    # Pre-conditions:
+    .check_samples_train(samples)
+    .check_that(is.function(encoder))
+}
+
 #' @title Check for block object consistency
 #' @name .check_raster_block
 #' @keywords internal
