@@ -164,7 +164,189 @@ sits_flow_density <- function(embeddings = NULL,
                 ),
                 verbose = verbose
             )
-        return(torch_model)
+        # Serialize trained model
+        serialized_model <- force(.torch_serialize_model(torch_model$model))
+
+        # Function that scores embedding values using the trained flow density
+        score_fun <- function(values, labels_values = NULL) {
+            # Verifies if torch package is installed
+            .check_require_packages("torch")
+
+            # Set torch threads to 1
+            suppressWarnings(torch::torch_set_num_threads(1L))
+
+            # Unserialize model
+            torch_model$model <- .torch_unserialize_model(
+                model = torch_model$model,
+                raw = serialized_model
+            )
+
+            # ------------------------------------------------------------
+            # Case 1: user passes a sits samples tibble
+            # ------------------------------------------------------------
+            # This supports:
+            #
+            #   scores <- density(embeddings)
+            #
+            # where `embeddings` is a sits samples object whose time_series
+            # column contains one-row embedding vectors.
+            # ------------------------------------------------------------
+            if (inherits(values, "sits")) {
+                pred <- .predictors(values)
+
+                if (conditional) {
+                    labels_values <- .pred_references(pred)
+                }
+
+            } else {
+                pred <- values
+            }
+
+            # ------------------------------------------------------------
+            # Extract feature matrix
+            # ------------------------------------------------------------
+            # If `pred` is a sits predictor table, use .pred_features().
+            # Otherwise assume `pred` is already a matrix-like object.
+            # ------------------------------------------------------------
+            feature_mat <- tryCatch(
+                {
+                    as.matrix(.pred_features(pred))
+                },
+                error = function(e) {
+                    as.matrix(pred)
+                }
+            )
+
+            n_samples <- nrow(feature_mat)
+
+            # ------------------------------------------------------------
+            # Normalize using the embedding statistics from training
+            # ------------------------------------------------------------
+            # If `pred` is a sits predictor table, use .pred_normalize().
+            # If it is a plain matrix, normalize through a temporary object.
+            # ------------------------------------------------------------
+            pred_norm <- tryCatch(
+                {
+                    .pred_normalize(pred = pred, stats = ml_stats)
+                },
+                error = function(e) {
+                    pred
+                }
+            )
+
+            feature_mat <- tryCatch(
+                {
+                    as.matrix(.pred_features(pred_norm))
+                },
+                error = function(e) {
+                    as.matrix(pred_norm)
+                }
+            )
+
+            # Represent values as [n_samples, embedding_dim]
+            values_arr <- array(
+                data = as.matrix(feature_mat),
+                dim = c(n_samples, embedding_dim)
+            )
+
+            # ------------------------------------------------------------
+            # Labels for conditional density
+            # ------------------------------------------------------------
+            # Conditional flow estimates:
+            #
+            #   log p(h | y)
+            #
+            # so labels are required.
+            # ------------------------------------------------------------
+            if (conditional) {
+                if (is.null(labels_values)) {
+                    stop(
+                        paste(
+                            "Conditional flow density scoring requires labels.",
+                            "Use density(samples) with labelled sits samples,",
+                            "or call density(values, labels_values = labels)."
+                        ),
+                        call. = FALSE
+                    )
+                }
+
+                # Convert factor labels to character
+                labels_values <- as.character(labels_values)
+
+                # Convert label names to integer class ids
+                labels_values <- unname(code_labels[labels_values])
+
+                if (any(is.na(labels_values))) {
+                    stop(
+                        "Some labels were not found in the flow model label set.",
+                        call. = FALSE
+                    )
+                }
+
+                score_ds <- .flow_embedding_dataset(
+                    x = values_arr,
+                    y = labels_values,
+                    conditional = TRUE
+                )
+
+            } else {
+                score_ds <- .flow_embedding_dataset(
+                    x = values_arr,
+                    y = NULL,
+                    conditional = FALSE
+                )
+            }
+
+            # ------------------------------------------------------------
+            # Create dataloader
+            # ------------------------------------------------------------
+            if (.torch_gpu_classification()) {
+                score_batch_size <- sits_env[["batch_size"]]
+            } else {
+                score_batch_size <- batch_size
+            }
+
+            score_dl <- torch::dataloader(
+                score_ds,
+                batch_size = score_batch_size,
+                shuffle = FALSE
+            )
+
+            # ------------------------------------------------------------
+            # Score embeddings
+            # ------------------------------------------------------------
+            if (.torch_gpu_classification()) {
+                scores <- .try(
+                    stats::predict(object = torch_model, score_dl),
+                    .msg_error = .conf("messages", ".check_gpu_memory_size")
+                )
+            } else {
+                scores <- stats::predict(object = torch_model, score_dl)
+            }
+
+            # Convert from tensor to R array
+            scores <- torch::as_array(scores)
+
+            # Return as matrix, close to sits predict_fun conventions
+            scores <- matrix(
+                data = as.numeric(scores),
+                ncol = 1
+            )
+
+            colnames(scores) <- "FLOW1"
+
+            scores
+        }
+
+        # Set model class
+        score_fun <- .set_class(
+            score_fun,
+            "torch_model",
+            "sits_flow_density",
+            class(score_fun)
+        )
+
+        return(score_fun)
     }
     # If embeddings is informed, train a model and return a predict function
     # Otherwise give back a train function to train model further
