@@ -351,8 +351,11 @@
         cond_dim <- embedding_dim
 
         if (conditional) {
+            # Use n_labels + 1L so that sits' 1-indexed class codes
+            # (seq_along(labels) = 1 … n_labels) are within the valid
+            # range [0, num_embeddings - 1] of torch::nn_embedding.
             self$label_emb <- torch::nn_embedding(
-                num_embeddings = n_labels,
+                num_embeddings = n_labels + 1L,
                 embedding_dim = label_dim
             )
             cond_dim <- cond_dim + label_dim
@@ -361,8 +364,10 @@
         self$net <- torch::nn_sequential(
             torch::nn_linear(cond_dim, hidden_dim),
             torch::nn_relu(),
+            torch::nn_batch_norm1d(hidden_dim),
             torch::nn_linear(hidden_dim, hidden_dim),
             torch::nn_relu(),
+            torch::nn_batch_norm1d(hidden_dim),
             torch::nn_linear(hidden_dim, 2L * embedding_dim)
         )
     },
