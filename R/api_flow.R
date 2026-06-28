@@ -700,3 +700,289 @@
         }
     }
 )
+
+# ---- spatial scoring helpers ----
+
+#' @title Build a predictor data frame for a flow density model from a pixel
+#'   block
+#'
+#' @description
+#' Constructs a predictor data frame in the format expected by the
+#' \code{predict_fun} closure returned by \code{\link[sits]{sits_flow_density}}.
+#' The resulting data frame has three sections of columns:
+#' \enumerate{
+#'   \item \code{sample_id}: integer row indices (required by
+#'     \code{.pred_features()}).
+#'   \item \code{label}: character vector with \code{class_name} repeated for
+#'     every pixel (used by the conditional flow for class conditioning).
+#'   \item Feature columns: one column per embedding dimension, named according
+#'     to \code{feat_names}, holding the raw embedding values read from the
+#'     raster.
+#' }
+#'
+#' Because \code{predict_fun} applies normalisation internally (using the
+#' statistics stored in its closure), the embedding values supplied here should
+#' be at their natural floating-point scale — i.e., already de-scaled by the
+#' INT2S factor applied during \code{sits_encode}.
+#'
+#' @param emb_matrix Numeric matrix of shape \code{[n_pixels, embedding_dim]}.
+#'   Each row is the embedding vector of one valid (non-NA) pixel.
+#' @param class_name Character scalar. The class label to assign to every pixel
+#'   in the \code{label} column. For a conditional flow this sets the
+#'   conditioning class; for an unconditional flow it is stored but ignored by
+#'   the model.
+#' @param feat_names Character vector of length \code{embedding_dim}. Column
+#'   names for the feature section of the data frame. These must match the names
+#'   used during flow training (recoverable from
+#'   \code{names(environment(flow_model)[["train_set"]])[-c(1, 2)]}).
+#'
+#' @return A \code{data.frame} with columns
+#'   \code{c("sample_id", "label", feat_names)}, compatible with
+#'   \code{.pred_features()}, \code{.pred_references()}, and
+#'   \code{.pred_normalize()}.
+#'
+#' @keywords internal
+#' @noRd
+.flow_build_pred_df <- function(emb_matrix, class_name, feat_names) {
+    n <- nrow(emb_matrix)
+    # Start with the two mandatory metadata columns
+    pred <- data.frame(
+        sample_id = seq_len(n),
+        label     = rep(class_name, n),
+        stringsAsFactors = FALSE
+    )
+    # Append one column per embedding dimension
+    emb_df <- as.data.frame(emb_matrix)
+    colnames(emb_df) <- feat_names
+    cbind(pred, emb_df)
+}
+
+#' @title Score an embeddings-cube tile with a trained flow density model
+#'
+#' @description
+#' Processes a single tile of an \code{embeddings_cube} through a trained
+#' \code{\link[sits]{sits_flow_density}} model and writes the resulting
+#' per-class density scores as a \code{probs_cube} tile.
+#'
+#' @section Computation:
+#' For each requested class \eqn{c} and each valid pixel \eqn{p}, the function
+#' evaluates the (conditional) log-density:
+#'
+#' \deqn{
+#'   q_{p,c} = \log p_\theta(h_p \mid c),
+#' }
+#'
+#' where \eqn{h_p} is the embedding vector of pixel \eqn{p}. For an
+#' unconditional model the class label is ignored and the function computes
+#' \eqn{\log p_\theta(h_p)} for every band.
+#'
+#' @section Normalization:
+#' Raw log-density values are transformed to the \code{[1, 10 000]} integer
+#' range expected by \code{probs_cube} using a per-block percentile stretch.
+#' Within each class band, the 2nd percentile of valid log-densities maps to 1
+#' and the 98th percentile maps to 10 000. Pixels outside this range are
+#' clipped. A higher stored value therefore indicates a more \emph{typical}
+#' embedding for that class; a lower value indicates an outlier.
+#'
+#' @param emb_tile Single tile (one-row tibble) of an \code{embeddings_cube}.
+#' @param label_tile Single tile (one-row tibble) of a \code{class_cube}
+#'   matching \code{emb_tile} spatially.
+#' @param flow_model Predict closure of class \code{"sits_flow_density"}
+#'   returned by \code{\link[sits]{sits_flow_density}}.
+#' @param classes Character vector of class names to score.
+#' @param emb_bands Character vector of embedding band names in the tile (e.g.
+#'   \code{c("E1", "E2", …)}).
+#' @param feat_names Character vector of feature-column names expected by
+#'   \code{flow_model} (one per embedding dimension).
+#' @param block List specifying the optimal processing block (rows/cols).
+#' @param roi Optional region of interest (passed to
+#'   \code{.chunks_filter_spatial()}).
+#' @param output_dir Character. Directory where output GeoTIFF files are
+#'   written.
+#' @param version Character. Version tag appended to output file names.
+#' @param verbose Logical. If \code{TRUE}, print per-tile timing information.
+#' @param progress Logical. If \code{TRUE}, show a progress bar during block
+#'   processing.
+#'
+#' @return A single-tile \code{probs_cube} tibble referencing the written
+#'   output file.
+#'
+#' @keywords internal
+#' @noRd
+.flow_score_tile <- function(emb_tile,
+                              label_tile,
+                              flow_model,
+                              classes,
+                              emb_bands,
+                              feat_names,
+                              block,
+                              roi,
+                              multicores,
+                              output_dir,
+                              version,
+                              verbose,
+                              progress) {
+    # Build the output file path (one multiband file, one band per class)
+    out_file <- .file_derived_name(
+        tile       = emb_tile,
+        band       = "probs",
+        version    = version,
+        output_dir = output_dir
+    )
+    # Recovery: if the output already exists and is valid, skip reprocessing
+    if (file.exists(out_file)) {
+        .check_recovery()
+        # Rebuild labels code map (integer index → class name)
+        labels_code <- stats::setNames(classes, seq_along(classes))
+        density_tile <- .tile_derived_from_file(
+            file          = out_file,
+            band          = "probs",
+            base_tile     = emb_tile,
+            labels        = labels_code,
+            derived_class = "probs_cube",
+            update_bbox   = TRUE
+        )
+        return(density_tile)
+    }
+    # Record start time for verbose output
+    tile_start_time <- .tile_classif_start(tile = emb_tile, verbose = verbose)
+    # Partition the tile into processing blocks (chunks)
+    chunks <- .tile_chunks_create(tile = emb_tile, overlap = 0L, block = block)
+    # Optionally restrict to ROI
+    update_bbox <- FALSE
+    if (.has(roi)) {
+        nchunks <- nrow(chunks)
+        chunks <- .chunks_filter_spatial(chunks = chunks, roi = roi)
+        update_bbox <- nrow(chunks) != nchunks
+    }
+    # Retrieve the band configuration for probs_cube storage (INT2U, scale 0.0001)
+    band_conf <- .conf_derived_band(derived_class = "probs_cube", band = "probs")
+    band_scale <- .scale(band_conf)   # 0.0001
+    n_classes <- length(classes)
+    # Process jobs in parallel - one job per chunk
+    block_files <- .jobs_map_parallel_chr(chunks, function(chunk) {
+        block_cur <- .block(chunk)
+        block_file <- .file_block_name(
+            pattern    = .file_pattern(out_file),
+            block      = block_cur,
+            output_dir = output_dir
+        )
+        # Skip already-written blocks (resume support)
+        if (all(.raster_is_valid(block_file))) {
+            return(block_file)
+        }
+        # ---- Step 1: read all embedding bands for this block ----------------
+        # .tile_read_block.eo_cube applies the INT2S scale automatically,
+        # returning values at their original floating-point scale.
+        emb_list <- lapply(emb_bands, function(band) {
+            .tile_read_block(tile = emb_tile, band = band, block = block_cur)
+        })
+        # Each element is a matrix [n_pixels, 1]; bind column-wise
+        emb_matrix <- do.call(cbind, emb_list)  # [n_pixels, embedding_dim]
+        n_pixels <- nrow(emb_matrix)
+        # ---- Step 2: build NA mask (any NA in any dimension → masked) -------
+        na_mask <- C_mask_na(emb_matrix)
+        # Valid pixels only
+        valid_emb <- emb_matrix[!na_mask, , drop = FALSE]
+        n_valid <- nrow(valid_emb)
+        # ---- Step 3: score each requested class at all valid pixels ---------
+        # scores_mat accumulates one column per class
+        scores_mat <- matrix(
+            NA_real_,
+            nrow     = n_pixels,
+            ncol     = n_classes,
+            dimnames = list(NULL, classes)
+        )
+        if (n_valid > 0L) {
+            for (ci in seq_len(n_classes)) {
+                class_name <- classes[[ci]]
+                # Build a predictor data frame with the target class label.
+                # The logic is inlined here (rather than calling the helper
+                # .flow_build_pred_df) so that PSOCK parallel workers on
+                # Windows — which only load the *installed* package — do not
+                # need to resolve the helper from the sits namespace.
+                n_valid_px <- nrow(valid_emb)
+                pred_df <- cbind(
+                    data.frame(
+                        sample_id        = seq_len(n_valid_px),
+                        label            = rep(class_name, n_valid_px),
+                        stringsAsFactors = FALSE
+                    ),
+                    stats::setNames(as.data.frame(valid_emb), feat_names)
+                )
+                # Call the flow model: returns [n_valid, 1] log-density matrix
+                log_dens <- flow_model(pred_df)   # column "log_density"
+                # Place results back into the full-pixel vector (NA for masked)
+                scores_mat[!na_mask, ci] <- log_dens[, 1L]
+            }
+        }
+        # ---- Step 4: percentile-stretch each class column to [1, 10 000] ---
+        # Within a block, the 2nd–98th percentile of log-densities is linearly
+        # mapped to 1–10 000 so that the result fits the INT2U probs_cube
+        # storage convention.  Higher values → more typical for that class.
+        out_mat <- matrix(
+            NA_real_,
+            nrow = n_pixels,
+            ncol = n_classes
+        )
+        for (ci in seq_len(n_classes)) {
+            col <- scores_mat[, ci]
+            valid_col <- col[!is.na(col)]
+            if (length(valid_col) >= 2L) {
+                p02 <- stats::quantile(valid_col, 0.02, names = FALSE)
+                p98 <- stats::quantile(valid_col, 0.98, names = FALSE)
+                # Guard against degenerate blocks (all values identical)
+                if (p98 > p02) {
+                    col_norm <- (col - p02) / (p98 - p02)  # → [0, 1] approx
+                } else {
+                    col_norm <- rep(0.5, length(col))
+                    col_norm[is.na(col)] <- NA
+                }
+            } else {
+                # Too few valid pixels in this block; fall back to mid-range
+                col_norm <- rep(0.5, length(col))
+                col_norm[is.na(col)] <- NA
+            }
+            # Clip to [0, 1] and scale to INT2U storage range [1, 10 000]
+            col_norm <- pmax(0, pmin(1, col_norm))
+            # Store as integer-scaled value (band_scale = 0.0001, range = 1–10000)
+            out_mat[, ci] <- col_norm / band_scale
+        }
+        colnames(out_mat) <- classes
+        # ---- Step 5: write block raster ------------------------------------
+        .raster_write_block(
+            files         = block_file,
+            block         = block_cur,
+            bbox          = .bbox(chunk),
+            values        = out_mat,
+            data_type     = .data_type(band_conf),
+            missing_value = .miss_value(band_conf),
+            crop_block    = NULL
+        )
+        gc()
+        block_file
+    }, progress = progress)
+
+    # Rebuild the labels code map (integer index → class name)
+    labels_code <- stats::setNames(classes, seq_along(classes))
+
+    # Merge all block files into a single tile raster.
+    # Pass `multicores` directly (not .jobs_multicores()) so that GDAL's
+    # NUM_THREADS is set correctly even when no PSOCK cluster is running.
+    density_tile <- .tile_derived_merge_blocks(
+        file          = out_file,
+        band          = "probs",
+        labels        = labels_code,
+        base_tile     = emb_tile,
+        block_files   = block_files,
+        derived_class = "probs_cube",
+        multicores    = multicores,
+        update_bbox   = update_bbox
+    )
+    # Clean GPU memory (if the flow model used GPU during scoring)
+    .ml_gpu_clean(flow_model)
+    # Print elapsed time for this tile
+    .tile_classif_end(tile = emb_tile, start_time = tile_start_time,
+                      verbose = verbose)
+    density_tile
+}
