@@ -7,6 +7,22 @@ test_that("Sample", {
 
     data2 <- sits_sample(cerrado_2classes, frac = 1.3, oversample = TRUE)
     expect_true(nrow(data2) > nrow(cerrado_2classes))
+
+    # minimum samples per class overrides frac
+    data3 <- sits_sample(cerrado_2classes, frac = 0.1,
+                         min_samples_class = 100)
+    expect_equal(nrow(dplyr::filter(data3, label == "Cerrado")), 100)
+    expect_equal(nrow(dplyr::filter(data3, label == "Pasture")), 100)
+    # frac prevails when it yields more samples than the minimum
+    data4 <- sits_sample(cerrado_2classes, frac = 0.1,
+                         min_samples_class = 35)
+    expect_equal(nrow(dplyr::filter(data4, label == "Cerrado")), 40)
+    expect_equal(nrow(dplyr::filter(data4, label == "Pasture")), 35)
+    # without oversampling, classes are capped at their size
+    data5 <- sits_sample(cerrado_2classes, frac = 0.1, oversample = FALSE,
+                         min_samples_class = 1000)
+    expect_equal(nrow(data5), nrow(cerrado_2classes))
+    expect_error(sits_sample(cerrado_2classes, min_samples_class = -1))
 })
 
 test_that("Sample reduce imbalance", {

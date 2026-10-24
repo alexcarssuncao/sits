@@ -72,6 +72,8 @@ remove deprecated functions. The highlights below are grouped by theme.
 
 ### Sampling
 * Add `sits_sample()` for sampling from EO data cubes
+* Add `min_samples_class` parameter to `sits_sample()` to set a minimum number
+  of samples per class, overriding `frac` when it yields fewer samples
 * Add point-in-polygon sampling using `terra` and `sf` spatial indexing
 * Add `sits_sf_to_tibble()` to convert `sf` objects to `sits` tibbles
 * Improve `sits_stratified_sampling()`, including vector-cube sampling and label

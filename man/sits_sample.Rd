@@ -4,7 +4,7 @@
 \alias{sits_sample}
 \title{Sample a time series}
 \usage{
-sits_sample(data, frac = 0.2, oversample = TRUE)
+sits_sample(data, frac = 0.2, oversample = TRUE, min_samples_class = 0L)
 }
 \arguments{
 \item{data}{Sits time series tibble}
@@ -14,6 +14,13 @@ sits_sample(data, frac = 0.2, oversample = TRUE)
 
 \item{oversample}{Logical: oversample classes with small number of samples?
 (TRUE/FALSE)}
+
+\item{min_samples_class}{Minimum number of samples per class
+(integer, default = 0). Overrides the number of samples
+obtained by \code{frac} when the latter is smaller.
+If \code{oversample} is FALSE, classes with fewer
+samples than \code{min_samples_class} return all
+their samples.}
 }
 \value{
 A sits tibble with a fixed quantity of samples.
@@ -24,6 +31,10 @@ Takes samples from a sits tibble
              this new tibble contains a percentage
              of the total number of samples per group.
              If frac > 1 , all sampling will be done with replacement.
+             The parameter \code{min_samples_class} sets a lower bound
+             on the number of samples per class. For each class, the
+             number of samples is the maximum of
+             \code{floor(frac * n_class)} and \code{min_samples_class}.
 }
 \examples{
 # Retrieve a set of time series with 2 classes
@@ -34,6 +45,10 @@ summary(cerrado_2classes)
 data_02 <- sits_sample(cerrado_2classes, frac = 0.2)
 # Print the labels
 summary(data_02)
+# Sample by fraction, with at least 50 samples per class
+data_min <- sits_sample(cerrado_2classes, frac = 0.05,
+                        min_samples_class = 50)
+summary(data_min)
 }
 \seealso{
 Other training data:

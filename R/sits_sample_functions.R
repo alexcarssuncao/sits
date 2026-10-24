@@ -6,12 +6,22 @@
 #'              this new tibble contains a percentage
 #'              of the total number of samples per group.
 #'              If frac > 1 , all sampling will be done with replacement.
-
+#'              The parameter \code{min_samples_class} sets a lower bound
+#'              on the number of samples per class. For each class, the
+#'              number of samples is the maximum of
+#'              \code{floor(frac * n_class)} and \code{min_samples_class}.
+#'
 #' @param  data       Sits time series tibble
 #' @param  frac       Percentage of samples to extract
 #'                    (range: 0.0 to 2.0, default = 0.2)
 #' @param  oversample Logical: oversample classes with small number of samples?
 #'                    (TRUE/FALSE)
+#' @param  min_samples_class Minimum number of samples per class
+#'                    (integer, default = 0). Overrides the number of samples
+#'                    obtained by \code{frac} when the latter is smaller.
+#'                    If \code{oversample} is FALSE, classes with fewer
+#'                    samples than \code{min_samples_class} return all
+#'                    their samples.
 #' @return            A sits tibble with a fixed quantity of samples.
 #' @examples
 #' # Retrieve a set of time series with 2 classes
@@ -22,11 +32,16 @@
 #' data_02 <- sits_sample(cerrado_2classes, frac = 0.2)
 #' # Print the labels
 #' summary(data_02)
+#' # Sample by fraction, with at least 50 samples per class
+#' data_min <- sits_sample(cerrado_2classes, frac = 0.05,
+#'                         min_samples_class = 50)
+#' summary(data_min)
 #' @family training data
 #' @export
 sits_sample <- function(data,
                         frac = 0.2,
-                        oversample = TRUE) {
+                        oversample = TRUE,
+                        min_samples_class = 0L) {
     # set caller to show in errors
     .check_set_caller("sits_sample")
     # verify if data and frac are valid
@@ -35,13 +50,20 @@ sits_sample <- function(data,
     .check_num_parameter(frac, min = 0.0, max = 2.0)
     # check oversample
     .check_lgl_parameter(oversample)
+    # check minimum number of samples per class
+    .check_int_parameter(min_samples_class, min = 0L, len_max = 1L)
     # group the data by label
     groups <- by(data, data[["label"]], list)
     # for each group of samples, obtain the required subset
     .map_dfr(groups, function(class_samples) {
+        # number of samples given by frac, bounded below by the minimum
+        n_samples <- max(
+            floor(frac * nrow(class_samples)),
+            min_samples_class
+        )
         dplyr::slice_sample(
             class_samples,
-            prop = frac,
+            n = n_samples,
             replace = oversample
         )
     })
