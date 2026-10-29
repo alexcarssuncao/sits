@@ -5,7 +5,7 @@
 #' @description
 #' Returns \code{TRUE} when torch and its native dependencies are functional,
 #' unless the environment variable \code{SITS_TEXTURE_FORCE_CPP} is set to
-#' \code{TRUE}, in which case the C++ backend is always used.
+#' \code{TRUE}, in which case the C++ version is always used.
 #'
 #' @return A logical scalar.
 .texture_torch_available <- function() {
@@ -91,8 +91,8 @@
 #' @author Alexandre Assuncao, \email{alexcarssuncao@@gmail.com}
 #'
 #' @description
-#' Drop-in replacement for the per-metric C++ functions
-#' (\code{C_glcm_contrast}, \code{C_glcm_dissimilarity}, ...).
+#' Calculates one of the metric functions (\code{C_glcm_contrast},
+#' \code{C_glcm_dissimilarity}, ...).
 #' Replicates the algorithm in \file{src/glcm_fns.cpp}:
 #' \enumerate{
 #'   \item For each angle \eqn{\theta}, compute
