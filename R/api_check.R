@@ -1156,6 +1156,7 @@
 #' @param  msg Error message
 #' @return Called for side effects.
 #' @keywords internal
+#' @noRd
 .check_date_parameter <- function(x,
                                   len_min = 1L,
                                   len_max = 1L,
@@ -1329,7 +1330,7 @@
 #' @title Check is period parameter is valid
 #' @name .check_period
 #' @describeIn Check if a character string is a valid \code{period}.
-#' @returns called for side effects
+#' @return called for side effects
 #' @noRd
 .check_period <- function(period) {
     .check_set_caller(".check_period")
@@ -1340,7 +1341,7 @@
 #' @describeIn Check if dates are part of the timeline of an object
 #' @param dates    Vector of dates
 #' @param tile     Tile
-#' @returns called for side effects
+#' @return called for side effects
 #' @noRd
 .check_dates_timeline <- function(dates, tile) {
     .check_set_caller(".check_dates_timeline")
@@ -1649,6 +1650,20 @@
     .check_that(!"embedding_dim" %in% params)
     invisible(NULL)
 }
+#' @title Were any time series retrieved?
+#' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
+#' @name .check_samples_retrieved
+#' @keywords internal
+#' @noRd
+#' @param n_retrieved Number of samples retrieved
+#' @return Called for side effects.
+#' @details
+#' Samples with no rows break later, far from the cause. Fail here instead.
+#' A partial retrieval is not an error: the samples retrieved are usable.
+.check_samples_retrieved <- function(n_retrieved) {
+    .check_set_caller(".check_samples_retrieved")
+    .check_that(n_retrieved > 0L)
+}
 #' @title Does the data contain the cols of sample data and is not empty?
 #' @noRd
 #' @param data a sits tibble
@@ -1658,11 +1673,18 @@
 .check_samples <- function(data) {
     # set caller to show in errors
     .check_set_caller(".check_samples")
-    .check_na_null_parameter(data)
     UseMethod(".check_samples", data)
 }
 #' @export
 .check_samples.sits <- function(data) {
+    .check_na_null_parameter(data)
+    .check_that(all(.conf("df_sample_columns") %in% colnames(data)))
+    .check_content_data_frame(data)
+}
+#' @export
+.check_samples.patterns <- function(data) {
+    # patterns have no location, so NA in the coordinates is expected
+    .check_na_null_parameter(data[setdiff(colnames(data), .pattern_no_loc)])
     .check_that(all(.conf("df_sample_columns") %in% colnames(data)))
     .check_content_data_frame(data)
 }
@@ -2206,19 +2228,6 @@
     # set caller to show in errors
     .check_set_caller(".check_cube_tiles")
     .check_that(all(tiles %in% .cube_tiles(cube)))
-}
-#' @title Check if all rows in a cube has the same bands
-#' @name .check_cube_row_same_bands
-#' @author Gilberto Camara, \email{gilberto.camara@@inpe.br}
-#' @param cube          Data cube
-#' @return Called for side effects.
-#' @keywords internal
-#' @noRd
-.check_cube_row_same_bands <- function(cube) {
-    bands <- purrr::map(.compact(slider::slide(cube, .tile_bands)), length)
-    bands <- .dissolve(bands)
-
-    .check_that(length(unique(bands)) == 1)
 }
 #' @title Check if  cubes have the same bbox
 #' @name .check_cubes_same_bbox
@@ -3391,6 +3400,7 @@
 #' @param epochs        Number of training iterations.
 #' @param batch_size    Number of samples per gradient update.
 #' @param encoder_model Encoder backbone factory function.
+#' @param bt_lambda     Weight of the redundancy-reduction (off-diagonal) term.
 #' @param bands_prefix  Character prefix for embedding dimension names.
 #' @param verbose       Verbosity flag (logical).
 #' @keywords internal
@@ -3400,16 +3410,14 @@
                                              epochs,
                                              batch_size,
                                              encoder_model,
-                                             augment_mean,
-                                             augment_variance,
+                                             bt_lambda,
                                              bands_prefix,
                                              verbose) {
     .check_samples_pre_train(samples)
     .check_int_parameter(epochs, min = 1L, max = 1000L)
     .check_int_parameter(batch_size, min = 16L, max = 2048L)
     .check_that(is.function(encoder_model))
-    .check_num_parameter(augment_mean)
-    .check_num_parameter(augment_variance, min = 0)
+    .check_num_parameter(bt_lambda, min = 0)
     .check_chr_parameter(
         x           = bands_prefix,
         allow_empty = FALSE,

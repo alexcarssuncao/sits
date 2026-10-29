@@ -32,3 +32,26 @@ A sits tibble.
 Takes an sf object with POINT geometry and produces
 a sits tibble
 }
+\examples{
+if (sits_run_examples()) {
+    # build an sf POINT object with start_date, end_date and label columns
+    sf_object <- sits_as_sf(cerrado_2classes)
+    # convert the sf object back into a sits tibble
+    samples <- sits_sf_to_tibble(sf_object)
+}
+}
+\seealso{
+Other data conversion:
+\code{\link[=sits_as_sf]{sits_as_sf()}},
+\code{\link[=sits_as_stars]{sits_as_stars()}},
+\code{\link[=sits_as_terra]{sits_as_terra()}},
+\code{\link[=sits_config_to_hf]{sits_config_to_hf()}},
+\code{\link[=sits_from_hf]{sits_from_hf()}},
+\code{\link[=sits_from_parquet]{sits_from_parquet()}},
+\code{\link[=sits_timeseries_to_csv]{sits_timeseries_to_csv()}},
+\code{\link[=sits_to_csv]{sits_to_csv()}},
+\code{\link[=sits_to_hf]{sits_to_hf()}},
+\code{\link[=sits_to_parquet]{sits_to_parquet()}},
+\code{\link[=sits_to_xlsx]{sits_to_xlsx()}}
+}
+\concept{data conversion}

@@ -27,6 +27,7 @@
 #'   c("003004", "003005"), grid_system = "BDC_LG_V2"
 #' )
 #' }
+#' @family data cube management
 #' @export
 sits_tiles_to_roi <- function(tiles, grid_system = "MGRS") {
     .check_set_caller("sits_tiles_to_roi")
@@ -63,6 +64,7 @@ sits_tiles_to_roi <- function(tiles, grid_system = "MGRS") {
 #'      To define a \code{roi} use one of:
 #'      \itemize{
 #'        \item{A path to a shapefile with polygons;}
+#'        \item{A path to a single-layer geopackage file ("gpkg") with polygons;}
 #'        \item{A \code{sfc} or \code{sf} object from \code{sf} package;}
 #'        \item{A \code{SpatExtent} object from \code{terra} package;}
 #'        \item{A named \code{vector} (\code{"lon_min"},
@@ -95,6 +97,7 @@ sits_tiles_to_roi <- function(tiles, grid_system = "MGRS") {
 #' }
 #' @return A \code{sf} object with the intersect tiles with three columns
 #' tile_id, epsg, and the percentage of coverage area.
+#' @family data cube management
 #' @export
 sits_roi_to_tiles <- function(roi, crs = NULL, grid_system = "MGRS") {
     .check_set_caller("sits_roi_to_tiles")

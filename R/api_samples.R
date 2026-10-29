@@ -1,3 +1,22 @@
+#' @title Location columns, absent from patterns
+#' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
+#' @noRd
+#' @keywords internal
+.pattern_no_loc <- c("longitude", "latitude")
+
+#' @title Check that samples carry a location
+#' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
+#' @noRd
+#' @keywords internal
+#' @description Refuses objects with no location, so that the caller names
+#'   the cause instead of reporting NA.
+#' @param samples Samples tibble
+#' @return Called for side effects
+.check_samples_located <- function(samples) {
+    .check_set_caller(".check_samples_located")
+    .check_that(!inherits(samples, "patterns"))
+}
+
 #' @title Merge fraction bands (mixture models)
 #' @noRd
 #' @param samples Original samples
@@ -110,20 +129,6 @@
         )
     }
     bands
-}
-#' @title Check if samples is base (has base property)
-#' @noRd
-#' @param samples Data.frame with samples
-#' @return TRUE/FALSE
-.samples_is_base <- function(samples) {
-    inherits(samples, "sits_base")
-}
-#' @title Get samples base data (if available)
-#' @noRd
-#' @param samples Data.frame with samples
-#' @return data.frame with base data.
-.samples_base_data <- function(samples) {
-    samples[["base_data"]]
 }
 #' @title Get bands of base data for samples
 #' @noRd
@@ -338,12 +343,14 @@
     cube_assets <- .cube_split_assets(cube)
     # Process each tile sequentially, collecting sampled points
     samples <- .jobs_map_sequential_dfr(cube_assets, function(tile) {
-        # Seed for reproducible sampling within this tile
-        tile_seed <- sample.int(.Machine$integer.max, 1)
         # Split tile into spatial chunks based on block size
         chunks <- .tile_chunks_create(
             tile = tile, overlap = 0L, block = block
         )
+        chunks[["chunk_id"]] <- seq_len(nrow(chunks))
+        # Chunk i seeds its draw with tile_seed + i: the same seed in every
+        # chunk would repeat the same cell offsets in each one
+        tile_seed <- sample.int(.Machine$integer.max - nrow(chunks), 1L)
         tile_path <- .tile_path(tile)
         # Compute stratified weights for each chunk in parallel
         chunk_weights <- .jobs_map_parallel(chunks, function(chunk) {
@@ -359,11 +366,10 @@
                 values = chunk_values,
                 size = size,
                 cells = chunk_cells,
-                seed = tile_seed
+                seed = tile_seed + chunk[["chunk_id"]]
             )
             # Free raster handles and large objects
             rm(tile_raster, chunk_raster, chunk_values, chunk_cells)
-            gc()
             result
         }, progress = FALSE)
         # Gather and flatten values, weights, and cell positions

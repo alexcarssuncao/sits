@@ -83,6 +83,7 @@ Imports:
     utils,
     vctrs
 Suggests:
+    arrow,
     caret,
     cli,
     cols4all (>= 0.8.0),
@@ -142,6 +143,7 @@ Collate:
     'api_combine_predictions.R'
     'api_comp.R'
     'api_conf.R'
+    'api_conf_hf.R'
     'api_contrastive_learning.R'
     'api_crop.R'
     'api_csv.R'
@@ -167,7 +169,7 @@ Collate:
     'api_message.R'
     'api_mosaic.R'
     'api_parallel.R'
-    'api_patterns.R'
+    'api_parquet.R'
     'api_period.R'
     'api_plot_time_series.R'
     'api_plot_raster.R'
@@ -198,6 +200,7 @@ Collate:
     'api_source_cdse.R'
     'api_source_deafrica.R'
     'api_source_deaustralia.R'
+    'api_source_hf.R'
     'api_source_hls.R'
     'api_source_local.R'
     'api_source_mpc.R'
@@ -208,6 +211,7 @@ Collate:
     'api_source_usgs.R'
     'api_space_time_operations.R'
     'api_ssl.R'
+    'api_ssl_barlow_twins.R'
     'api_ssl_lejepa.R'
     'api_ssl_mae.R'
     'api_ssl_vicreg.R'
@@ -251,10 +255,12 @@ Collate:
     'sits_cube.R'
     'sits_cube_copy.R'
     'sits_cube_local.R'
+    'sits_cube_replace_path.R'
     'sits_clean.R'
     'sits_cluster.R'
     'sits_encode.R'
     'sits_factory.R'
+    'sits_from_hf.R'
     'sits_geo_dist.R'
     'sits_get_data.R'
     'sits_get_class.R'
@@ -273,6 +279,7 @@ Collate:
     'sits_mosaic.R'
     'sits_model_export.R'
     'sits_parallel.R'
+    'sits_parquet.R'
     'sits_patterns.R'
     'sits_plot.R'
     'sits_pre_train.R'
@@ -287,6 +294,7 @@ Collate:
     'sits_segmentation.R'
     'sits_select.R'
     'sits_sf.R'
+    'sits_ssl_barlow_twins.R'
     'sits_ssl_lejepa.R'
     'sits_ssl_mae.R'
     'sits_ssl_vicreg.R'
@@ -300,6 +308,7 @@ Collate:
     'sits_texture.R'
     'sits_texture_torch.R'
     'sits_timeline.R'
+    'sits_to_hf.R'
     'sits_train.R'
     'sits_tuning.R'
     'sits_utils.R'

@@ -11,7 +11,9 @@ sits_cube(source, collection, ...)
 \code{"BDC"}, \code{"CDSE"},
 \code{"DEAFRICA"}, \code{"DEAUSTRALIA"}, \code{"HLS"},
 \code{"MPC"}, \code{"SDC"}, \code{"OGH"},
-\code{"PLANET"}, \code{"TERRASCOPE"}, \code{"USGS"}.}
+\code{"PLANET"}, \code{"TERRASCOPE"}, or
+\code{"USGS"}. Data shared on HuggingFace are read
+with \code{\link[sits]{sits_from_hf}}.}
 
 \item{collection}{Image collection in data source.
 To find out the supported collections,
@@ -135,6 +137,17 @@ if (sits_run_examples()) {
     )
 }
 }
+\seealso{
+Other data cube management:
+\code{\link[=sits_add_base_cube]{sits_add_base_cube()}},
+\code{\link[=sits_cube_copy]{sits_cube_copy()}},
+\code{\link[=sits_cube_replace_path]{sits_cube_replace_path()}},
+\code{\link[=sits_merge]{sits_merge()}},
+\code{\link[=sits_mosaic]{sits_mosaic()}},
+\code{\link[=sits_regularize]{sits_regularize()}},
+\code{\link[=sits_roi_to_tiles]{sits_roi_to_tiles()}},
+\code{\link[=sits_tiles_to_roi]{sits_tiles_to_roi()}}
+}
 \author{
 Felipe Carlos, \email{efelipecarlos@gmail.com}
 
@@ -144,3 +157,4 @@ Gilberto Camara, \email{gilberto.camara@inpe.br}
 
 Rolf Simoes, \email{rolfsimoes@gmail.com}
 }
+\concept{data cube management}

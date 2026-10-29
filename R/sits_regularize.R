@@ -87,6 +87,7 @@
 #'      To define a \code{roi} use one of:
 #'      \itemize{
 #'        \item{A path to a shapefile with polygons;}
+#'        \item{A path to a single-layer geopackage file ("gpkg") with polygons;}
 #'        \item{A \code{sfc} or \code{sf} object from \code{sf} package;}
 #'        \item{A \code{SpatExtent} object from \code{terra} package;}
 #'        \item{A named \code{vector} (\code{"lon_min"},
@@ -165,6 +166,7 @@
 #'     )
 #' }
 #'
+#' @family data cube management
 #' @export
 sits_regularize <- function(cube, ...) {
     .check_set_caller("sits_regularize")

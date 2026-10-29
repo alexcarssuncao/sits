@@ -201,6 +201,7 @@ The main \code{sits} classification workflow has the following steps:
      To define a \code{roi} use one of:
      \itemize{
        \item{A path to a shapefile with polygons;}
+       \item{A path to a single-layer geopackage file ("gpkg") with polygons;}
        \item{A \code{sfc} or \code{sf} object from \code{sf} package;}
        \item{A \code{SpatExtent} object from \code{terra} package;}
        \item{A named \code{vector} (\code{"lon_min"},
@@ -282,8 +283,20 @@ Appel, Marius; Pebesma, Edzer. On-demand processing of data cubes
  from satellite image collections with the gdalcubes library. Data, v. 4,
  n. 3, p. 92, 2019. \doi{10.3390/data4030092}.
 }
+\seealso{
+Other data cube management:
+\code{\link[=sits_add_base_cube]{sits_add_base_cube()}},
+\code{\link[=sits_cube]{sits_cube()}},
+\code{\link[=sits_cube_copy]{sits_cube_copy()}},
+\code{\link[=sits_cube_replace_path]{sits_cube_replace_path()}},
+\code{\link[=sits_merge]{sits_merge()}},
+\code{\link[=sits_mosaic]{sits_mosaic()}},
+\code{\link[=sits_roi_to_tiles]{sits_roi_to_tiles()}},
+\code{\link[=sits_tiles_to_roi]{sits_tiles_to_roi()}}
+}
 \author{
 Felipe Carvalho, \email{felipe.carvalho@inpe.br}
 
 Rolf Simoes, \email{rolfsimoes@gmail.com}
 }
+\concept{data cube management}

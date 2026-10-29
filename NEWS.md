@@ -19,6 +19,8 @@ remove deprecated functions. The highlights below are grouped by theme.
   (MAE)
 * Add `sits_ssl_lejepa()`: self-supervised LeJEPA (Lean Joint-Embedding
   Predictive Architecture) pre-training with resampling augmentation
+* Add `sits_ssl_barlow_twins()`: self-supervised Barlow Twins pre-training with
+  resampling augmentation
 * Add `sits_barlow_twins()`: encoder for image time series trained with the
   Barlow Twins loss
 * Add `sits_contrastive_learning()`: supervised contrastive (SupCon) pre-training
@@ -60,6 +62,8 @@ remove deprecated functions. The highlights below are grouped by theme.
   
 ### New data sources and collections
 * Add AlphaEarth (AEF) as a data source
+* Add `sits_from_hf()` to read data cubes, samples and models shared on HuggingFace
+* Add `sits_to_hf()` and `sits_config_to_hf()` to prepare collection definition for HuggingFace
 * Add support for the Amazonia-1 and GLAD image collections in the Brazil Data
   Cube (BDC)
 * Add support for the `SENTINEL-1-GRD` collection in CDSE
@@ -68,6 +72,8 @@ remove deprecated functions. The highlights below are grouped by theme.
 
 ### Sampling
 * Add `sits_sample()` for sampling from EO data cubes
+* Add `min_samples_class` parameter to `sits_sample()` to set a minimum number
+  of samples per class, overriding `frac` when it yields fewer samples
 * Add point-in-polygon sampling using `terra` and `sf` spatial indexing
 * Add `sits_sf_to_tibble()` to convert `sf` objects to `sits` tibbles
 * Improve `sits_stratified_sampling()`, including vector-cube sampling and label
@@ -78,6 +84,13 @@ remove deprecated functions. The highlights below are grouped by theme.
 * Add duplicate band/date conflict detection in `sits_merge()`
 * Refactor the merge timeline strategy to enforce symmetric interleaving
 * Restrict support to irregular cubes
+
+### Random numbers
+* Fix `sits_stratified_sampling()`: every chunk of a tile drew the same cell
+  offsets; each chunk now gets its own seed
+* `sits_stratified_sampling()` cuts the tiles in chunks of whole file blocks
+  about 1024 pixels on a side, so its result does not depend on `multicores`
+  and `memsize`
 
 ### Breaking changes and removals
 * Remove the time-series filter functions (`sits_filters()`, Whittaker and
@@ -103,6 +116,8 @@ remove deprecated functions. The highlights below are grouped by theme.
 * Replace `Rf_error` with `Rcpp::stop` in C++ code
 * Fix stack call error without `.check_set_caller()`
 * Fix flooded STAC requests to CDSE
+* Fix stale MPC SAS token reaching `gdalwarp` in long-running
+  `sits_regularize()` jobs on Sentinel-1 (SAR) cubes
 
 # What's new in SITS version 1.5
 

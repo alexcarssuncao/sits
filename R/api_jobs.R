@@ -6,7 +6,7 @@
 #' @param npaths      Number of inputs (n_bands * n_times)
 #' @param nbytes      Number of bytes per image
 #' @param proc_bloat  Estimated processing bloat
-#' @returns           Estimated job size in GB
+#' @return           Estimated job size in GB
 .jobs_block_memsize <- function(block_size, npaths, nbytes, proc_bloat) {
     # Memory needed per job
     block_size * npaths * nbytes * proc_bloat * 1e-09
@@ -20,7 +20,7 @@
 #' @param image_size         Size of image to be processed
 #' @param memsize            Memory available (in GB)
 #' @param multicores         Number of cores available for processing
-#' @returns                  Optimal estimate of block size
+#' @return                  Optimal estimate of block size
 .jobs_optimal_block <- function(job_block_memsize, block, image_size, memsize,
                                 multicores) {
     # Memory per core
@@ -61,6 +61,26 @@
     # polygon and not a line or point
     .block_regulate_size(block)
 }
+#' @title Block of the chunks of a function that draws per chunk
+#' @name .jobs_draw_block
+#' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
+#' @noRd
+#' @description The draw is made per chunk, so the chunk does not depend on
+#' `memsize` or `multicores`. Whole file blocks are read once; a fixed side
+#' keeps the chunks few, since the candidates grow with their number.
+#' @param block       File block size
+#' @param image_size  Size of the image to be processed
+#' @return            Block size of the chunks
+.jobs_draw_block <- function(block, image_size) {
+    side <- .conf("draw_chunk_side")
+    ncols <- max(1L, round(side / block[["ncols"]])) * block[["ncols"]]
+    nrows <- max(1L, round(side / block[["nrows"]])) * block[["nrows"]]
+    block <- c(
+        ncols = as.integer(min(ncols, image_size[["ncols"]])),
+        nrows = as.integer(min(nrows, image_size[["nrows"]]))
+    )
+    .block_regulate_size(block)
+}
 #' @title Estimate the number of multicores to be used
 #' @name  .job_max_multicore
 #' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
@@ -68,7 +88,7 @@
 #' @param job_block_memsize  Total memory required to process one block
 #' @param memsize            Memory available (in GB)
 #' @param multicores         Number of cores available for processing
-#' @returns            Number of cores required for processing
+#' @return            Number of cores required for processing
 .jobs_max_multicores <- function(job_block_memsize, memsize, multicores) {
     # set caller to show in errors
     .check_set_caller(".jobs_max_multicores")
@@ -82,7 +102,7 @@
 #' @title Return the number of multicores used
 #' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
 #' @noRd
-#' @returns         Number of multicores
+#' @return         Number of multicores
 .jobs_multicores <- function() {
     length(sits_env[["cluster"]])
 }
@@ -90,7 +110,7 @@
 #' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
 #' @noRd
 #' @param jobs      Jobs to be processed
-#' @returns         List of jobs
+#' @return         List of jobs
 .jobs_split <- function(jobs) {
     list(jobs)
 }
@@ -99,25 +119,16 @@
 #' @noRd
 #' @param jobs      Jobs to be processed
 #' @param fn        Function to be run sequentially
-#' @returns         List with function results
+#' @return         List with function results
 .jobs_map_sequential <- function(jobs, fn, ...) {
     slider::slide(jobs, fn, ...)
-}
-#' @title Run a sequential function for all jobs and return vector
-#' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
-#' @noRd
-#' @param jobs      Jobs to be processed
-#' @param fn        Function to be run sequentially
-#' @returns         Character vector with function results
-.jobs_map_sequential_chr <- function(jobs, fn, ...) {
-    slider::slide_chr(jobs, fn, ...)
 }
 #' @title Run a sequential function for all jobs and return data.frame
 #' @author Rolf Simoes, \email{rolfsimoes@@gmail.com}
 #' @noRd
 #' @param jobs      Jobs to be processed
 #' @param fn        Function to be run sequentially
-#' @returns         Data.frame with function results
+#' @return         Data.frame with function results
 .jobs_map_sequential_dfr <- function(jobs, fn, ...) {
     slider::slide_dfr(jobs, fn, ...)
 }
@@ -129,7 +140,7 @@
 #' @param ...       Additional parameters for function
 #' @param sync_fn   Function to be synchronize jobs
 #' @param progress  Show progress bar?
-#' @returns         List with function results
+#' @return         List with function results
 .jobs_map_parallel <- function(jobs, fn, ..., sync_fn = NULL,
                                progress = FALSE) {
     # Do split by rounds only if sync_fn is not NULL
@@ -149,7 +160,7 @@
 #' @param fn        Function to be run in parallel
 #' @param ...       Additional parameters for function
 #' @param progress  Show progress bar?
-#' @returns         Character vector with function results
+#' @return         Character vector with function results
 .jobs_map_parallel_chr <- function(jobs, fn, ..., progress = progress) {
     values_lst <- .jobs_map_parallel(jobs, fn, ..., progress = progress)
     vapply(values_lst, c, NA_character_)
@@ -161,7 +172,7 @@
 #' @param fn        Function to be run in parallel
 #' @param ...       Additional parameters for function
 #' @param progress  Show progress bar?
-#' @returns         Data.frame with function results
+#' @return         Data.frame with function results
 .jobs_map_parallel_dfr <- function(jobs, fn, ..., progress = progress) {
     values_lst <- .jobs_map_parallel(jobs, fn, ..., progress = progress)
     dplyr::bind_rows(values_lst)

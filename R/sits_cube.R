@@ -25,7 +25,9 @@
 #'                     \code{"BDC"}, \code{"CDSE"},
 #'                     \code{"DEAFRICA"}, \code{"DEAUSTRALIA"}, \code{"HLS"},
 #'                     \code{"MPC"}, \code{"SDC"}, \code{"OGH"},
-#'                     \code{"PLANET"}, \code{"TERRASCOPE"}, \code{"USGS"}.
+#'                     \code{"PLANET"}, \code{"TERRASCOPE"}, or
+#'                     \code{"USGS"}. Data shared on HuggingFace are read
+#'                     with \code{\link[sits]{sits_from_hf}}.
 #' @param collection   Image collection in data source.
 #'                     To find out the supported collections,
 #'                     use \code{\link{sits_list_collections}()}).
@@ -129,10 +131,15 @@
 #'         parse_info = c("satellite", "sensor", "tile", "band", "date")
 #'     )
 #' }
+#' @family data cube management
 #' @export
 sits_cube <- function(source, collection, ...) {
     # set caller to show in errors
     .check_set_caller("sits_cube")
+    # data shared on HuggingFace are read with sits_from_hf()
+    .check_that(
+        !.hf_is_source(source), msg = .conf("messages", "sits_cube_hf")
+    )
     # capture elipsis
     dots <- list(...)
     # if "data_dir" parameters is provided, assumes local cube
@@ -177,7 +184,7 @@ sits_cube <- function(source, collection, ...) {
 #' @param source       Data source: one of \code{"AWS"}, \code{"BDC"},
 #'                     \code{"CDSE"}, \code{"DEAFRICA"}, \code{"DEAUSTRALIA"},
 #'                     \code{"HLS"}, \code{"PLANETSCOPE"}, \code{"MPC"},
-#'                     \code{"SDC"} or \code{"USGS"}.
+#'                     \code{"SDC"}, or \code{"USGS"}.
 #' @param collection   Image collection in data source.
 #'                     To find out the supported collections,
 #'                     use \code{\link{sits_list_collections}()}).
@@ -248,6 +255,7 @@ sits_cube <- function(source, collection, ...) {
 #' To define a \code{roi} use one of:
 #'  \itemize{
 #'        \item{A path to a shapefile with polygons;}
+#'        \item{A path to a single-layer geopackage file ("gpkg") with polygons;}
 #'        \item{A \code{sfc} or \code{sf} object from \code{sf} package;}
 #'        \item{A \code{SpatExtent} object from \code{terra} package;}
 #'        \item{A named \code{vector} (\code{"lon_min"},

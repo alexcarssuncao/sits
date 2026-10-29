@@ -7,6 +7,22 @@ test_that("Sample", {
 
     data2 <- sits_sample(cerrado_2classes, frac = 1.3, oversample = TRUE)
     expect_true(nrow(data2) > nrow(cerrado_2classes))
+
+    # minimum samples per class overrides frac
+    data3 <- sits_sample(cerrado_2classes, frac = 0.1,
+                         min_samples_class = 100)
+    expect_equal(nrow(dplyr::filter(data3, label == "Cerrado")), 100)
+    expect_equal(nrow(dplyr::filter(data3, label == "Pasture")), 100)
+    # frac prevails when it yields more samples than the minimum
+    data4 <- sits_sample(cerrado_2classes, frac = 0.1,
+                         min_samples_class = 35)
+    expect_equal(nrow(dplyr::filter(data4, label == "Cerrado")), 40)
+    expect_equal(nrow(dplyr::filter(data4, label == "Pasture")), 35)
+    # without oversampling, classes are capped at their size
+    data5 <- sits_sample(cerrado_2classes, frac = 0.1, oversample = FALSE,
+                         min_samples_class = 1000)
+    expect_equal(nrow(data5), nrow(cerrado_2classes))
+    expect_error(sits_sample(cerrado_2classes, min_samples_class = -1))
 })
 
 test_that("Sample reduce imbalance", {
@@ -73,7 +89,7 @@ test_that("Sampling design", {
     )
     expect_true(file.exists(shp_file))
 
-    sd <- unlist(sampling_design[, 5], use.names = FALSE)
+    sd <- sampling_design[, 5]
     expect_equal(sum(ceiling(sd * overhead)), nrow(samples), tolerance = 10)
 
     sf_shp <- sf::st_read(shp_file)
@@ -231,4 +247,57 @@ test_that("samples_transform",{
     expect_true(x1 >= xmin)
     expect_true(y1 >= ymin)
 
+})
+test_that("stratified sampling does not repeat the draw of each chunk", {
+    # one class everywhere, 4096 x 4096 pixels in blocks of 256
+    data_dir <- file.path(tempdir(), "strata_uniform")
+    dir.create(data_dir, showWarnings = FALSE)
+    r <- terra::rast(
+        nrows = 4096L, ncols = 4096L, xmin = 0, xmax = 122880,
+        ymin = 0, ymax = 122880, crs = "EPSG:32723", vals = 1L
+    )
+    terra::writeRaster(
+        r,
+        file.path(
+            data_dir,
+            "LANDSAT_OLI_000000_2020-01-01_2020-12-31_class_v1.tif"
+        ),
+        datatype = "INT1U", overwrite = TRUE,
+        gdal = c("TILED=YES", "BLOCKXSIZE=256", "BLOCKYSIZE=256")
+    )
+    cube <- sits_cube(
+        source = "BDC", collection = "LANDSAT-OLI-16D", data_dir = data_dir,
+        bands = "class", version = "v1", labels = c("1" = "A", "2" = "B"),
+        parse_info = c("X1", "X2", "tile", "start_date", "end_date",
+                       "band", "version"),
+        progress = FALSE
+    )
+    draw <- function(multicores, memsize, seed) {
+        set.seed(seed)
+        p <- sits_stratified_sampling(
+            cube, samples_per_class = 1000L, multicores = multicores,
+            memsize = memsize, progress = FALSE
+        )
+        xy <- sf::st_coordinates(sf::st_transform(p, 32723))
+        rc <- terra::rowColFromCell(r, terra::cellFromXY(r, xy)) - 1L
+        rc[order(rc[, 1L], rc[, 2L]), , drop = FALSE]
+    }
+    # offset of a point inside its 256 x 256 block
+    repeats <- function(rc) {
+        sum(duplicated(paste(rc[, 1L] %% 256L, rc[, 2L] %% 256L)))
+    }
+    a <- draw(multicores = 2L, memsize = 1L, seed = 1L)
+    expect_identical(nrow(a), 1000L)
+    # oracle: uniform draws of as many cells with base R
+    set.seed(2L)
+    uniform <- replicate(50L, {
+        k <- sample.int(4096L * 4096L, 1000L) - 1L
+        repeats(cbind(k %/% 4096L, k %% 4096L))
+    })
+    expect_lte(repeats(a), 2L * max(uniform))
+    # the chunks of the draw do not depend on multicores and memsize
+    expect_identical(draw(multicores = 1L, memsize = 1L, seed = 1L), a)
+    expect_identical(draw(multicores = 1L, memsize = 2L, seed = 1L), a)
+    expect_false(identical(draw(multicores = 2L, memsize = 1L, seed = 2L), a))
+    unlink(data_dir, recursive = TRUE)
 })

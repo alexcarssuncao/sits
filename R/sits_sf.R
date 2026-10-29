@@ -24,6 +24,7 @@
 #'     )
 #'     sf_object <- sits_as_sf(cube)
 #' }
+#' @family data conversion
 #' @export
 sits_as_sf <- function(data, ...) {
     .check_set_caller("sits_as_sf")
@@ -33,6 +34,7 @@ sits_as_sf <- function(data, ...) {
 #' @export
 #' @rdname sits_as_sf
 sits_as_sf.sits <- function(data, ..., crs = "EPSG:4326", as_crs = NULL) {
+    .check_samples_located(data)
     # Pre-conditions
     .check_samples(data)
     data <- .samples_convert_to_sits(data)
@@ -91,6 +93,14 @@ sits_as_sf.default <- function(data, ...) {
 #' @param crs  CRS to reproject coordinates to before extracting
 #'   lon/lat (default: \code{"EPSG:4326"}).
 #' @return A sits tibble.
+#' @examples
+#' if (sits_run_examples()) {
+#'     # build an sf POINT object with start_date, end_date and label columns
+#'     sf_object <- sits_as_sf(cerrado_2classes)
+#'     # convert the sf object back into a sits tibble
+#'     samples <- sits_sf_to_tibble(sf_object)
+#' }
+#' @family data conversion
 #' @export
 sits_sf_to_tibble <- function(sf_object,
                          start_date = NULL,

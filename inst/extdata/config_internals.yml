@@ -14,6 +14,8 @@ processing_bloat_seg    : 2
 processing_bloat_seg_class : 10
 # materialized float32 tensors per pixel and window position in torch smooth
 processing_bloat_smooth_torch: 10
+# side in pixels of the chunks of a function that draws per chunk
+draw_chunk_side: 1024
 
 # number of items returned by stac service
 rstac_pagination_limit  : 100
@@ -35,6 +37,9 @@ sits_tibble_cols :  ["longitude", "latitude", "start_date",
 ts_predicted_cols:  ["from", "to", "class"]
 
 # mandatory columns in CSV input files
+# minimum number of dates for sits_patterns (basis dimension of s(x))
+patterns_min_times : 10
+
 df_sample_columns : ["longitude", "latitude", "start_date", "end_date", "label"]
 
 # supported shp types
@@ -50,6 +55,8 @@ results_parse_info_def : ["X1", "X2", "tile", "start_date", "end_date",
 "band", "version"]
 results_parse_info_col : ["tile", "start_date", "end_date", "band"]
 
+# version of results whose files do not follow results_parse_info_def
+results_version_def    : "v1"
 
 # bands resulting from classification and post-classification
 sits_results_bands : ["probs", "bayes", "uncert", "entropy",
@@ -106,6 +113,10 @@ grid_systems:
         nrows: 10560
         ncols: 10560
         crs_scope: "unique"
+
+# grid systems used in internal routines that are not available to all users
+# (e.g., a grid system used only to facilitate search operations)
+grid_systems_internal:
     ALPHAEARTH:
         path: "extdata/grids/aef_tiles.rds"
         xres: 10

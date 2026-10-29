@@ -22,7 +22,7 @@ sits_ssl_lejepa(
   patience = 20L,
   min_delta = 0.01,
   verbose = FALSE,
-  seed = 10L
+  seed = 428L
 )
 }
 \arguments{
@@ -138,6 +138,17 @@ Saget, A., Lafabregue, B., Cornuéjols, A., & Gançarski, P. (2025).
 \emph{Resampling Augmentation for Time Series Contrastive Learning:
 Application to Remote Sensing}. arXiv:2506.18587.
 }
+\seealso{
+Other self-supervised learning and embeddings:
+\code{\link[=sits_barlow_twins]{sits_barlow_twins()}},
+\code{\link[=sits_contrastive_learning]{sits_contrastive_learning()}},
+\code{\link[=sits_encode]{sits_encode()}},
+\code{\link[=sits_pre_train]{sits_pre_train()}},
+\code{\link[=sits_ssl_barlow_twins]{sits_ssl_barlow_twins()}},
+\code{\link[=sits_ssl_mae]{sits_ssl_mae()}},
+\code{\link[=sits_ssl_vicreg]{sits_ssl_vicreg()}}
+}
 \author{
 Gilberto Camara, \email{gilberto.camara@inpe.br}
 }
+\concept{self-supervised learning and embeddings}
